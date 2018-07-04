@@ -77,16 +77,29 @@ $this->params['title'] = 'List'.$this->title;
             // 'timestamp',
                 [
                 'class' => 'yii\grid\ActionColumn',
-                        'contentOptions' => ['style' => 'width:90px;', 'class' => 'text-center'],
-                        'template' => '{wawancara}',
+                        'contentOptions' => ['style' => 'width:160px;', 'class' => 'text-center'],
+                        'template' => '{view} &nbsp {interview}',
                         'header' => Yii::t('app', 'Options'),
                         'buttons' => [
-                            'wawancara' => function ($url, $model) {
+                            'view' => function ($url, $model) {
                                 $icon = '<span class="btn btn-xs btn-default"><i class="fa fa-search-plus"></i></span>';
                                 $url = ['/jadwal-wawancara/view', 'id' => $model['id']];
 
                                 return Html::a($icon, $url, [
                                             'title' => Yii::t('app', 'View'),
+                                            'url' => $url,
+                                            'id' => 'btn-view',
+                                            'data-pjax' => 0,
+//                            'data-toggle' => 'modal',
+//                            'data-target' => '#modal-view',
+                                ]);
+                            },
+                            'interview' => function ($url, $model) {
+                                $icon = '<span class="btn btn-xs btn-success"><i class="fa fa-arrow-circle-o-right"></i> Mulai Interview</span>';
+                                $url = ['/mulai-interview/create', 'id' => $model['id']];
+
+                                return Html::a($icon, $url, [
+                                            'title' => Yii::t('app', 'Mulai Interview'),
                                             'url' => $url,
                                             'id' => 'btn-view',
                                             'data-pjax' => 0,

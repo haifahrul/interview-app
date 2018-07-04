@@ -18,16 +18,29 @@ $this->params['title'] = $this->title;
 
     <div class="box">
         <div class="jadwal-wawancara-view box-body">
-            <?= Buttons::back(); ?>
             <h1>
                 <?php echo  Html::encode('Jadwal Wawancara') ?>
             </h1>
             <p>
                 <?php 
+                        if (Yii::$app->user->can('Interviewer')) {
+                            echo Html::a('<span class="fa fa-arrow-left"></span>', ['/site/index'], ['class' => 'btn btn-default btn-sm', 'title' => Yii::t('app', 'Back')]);
+                        } else {
+                            echo Buttons::goToIndex();
+                        }
+                    ?>
+                    &nbsp &nbsp
+                <?php 
+                    if (Yii::$app->user->can('Interviewer')) {
+                        echo Html::a('<span class="fa fa-arrow-circle-o-right"></span> Mulai Interview', ['/mulai-interview/create', 'id' => $model->id], ['class' => 'btn btn-success btn-sm', 'title' => Yii::t('app', 'Mulai Interview')]); 
+                        echo '&nbsp &nbsp';
+                    }
+                ?> 
+                <?php 
                 if(Helper::checkRoute('delete')) {
                     echo Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary btn-sm']);
                 }
-                ?> &nbsp &nbsp
+                ?>
                 <?php
                     if(Helper::checkRoute('delete')) {
                     Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
