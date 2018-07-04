@@ -1,3 +1,5 @@
-# yarsi_ibnu
+# README #
 
-Aplikasi Formulir Wawancara
+This is application for management percetakan
+
+### What is this repository for? ###
