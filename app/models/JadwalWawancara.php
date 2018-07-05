@@ -21,6 +21,10 @@ use yii\behaviors\BlameableBehavior;
  */
 class JadwalWawancara extends \yii\db\ActiveRecord
 {    
+    
+    public $nama_calon;
+    public $usia;
+    
     // public function behaviors() {
     //     return [
     //         [

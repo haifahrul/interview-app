@@ -4,6 +4,7 @@ use yii\helpers\Html;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
+
 ?>
 
 <header class="main-header">        
@@ -17,6 +18,7 @@ use yii\helpers\Html;
                     <?php
                     //$img = Yii::$app->params['publicUrl'] . '/images/logo.jpeg';
                     //echo Html::a('<img style="width: 30px;" src="' . $img . '">', Yii::$app->homeUrl, ['class' => 'logo'])
+
                     ?>
                 </li>
                 <!-- Messages: style can be found in dropdown.less-->
@@ -259,6 +261,9 @@ use yii\helpers\Html;
                             <!-- <div class="pull-left">
                                 <a href="/profile/" class="btn btn-default btn-flat">Profil</a>
                             </div> -->
+                            <div class="pull-left">
+                                <a href="/profile/change-password" class="btn btn-default btn-flat">Ubah Password</a>
+                            </div> 
                             <div class="pull-right">
                                 <?= Html::a('Keluar', ['/site/logout'], ['data-method' => 'post', 'class' => 'btn btn-default btn-flat']) ?>
                             </div>

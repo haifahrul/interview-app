@@ -1,5 +1,4 @@
 <?php
-
 namespace app\models;
 
 use Yii;
@@ -22,8 +21,7 @@ use yii\helpers\ArrayHelper;
  * @property User $user
  */
 class UserInterviewer extends \yii\db\ActiveRecord
-{    
-    public $email;
+{
     // public function behaviors() {
     //     return [
     //         [
@@ -103,7 +101,8 @@ class UserInterviewer extends \yii\db\ActiveRecord
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 
-    public static function getInterviewerList() {
+    public static function getInterviewerList()
+    {
         $query = Yii::$app->db->createCommand("SELECT id, nama_pewawancara as nama FROM user_interviewer WHERE `is_active`=1")->queryAll();
 
         return ArrayHelper::map($query, 'id', 'nama');

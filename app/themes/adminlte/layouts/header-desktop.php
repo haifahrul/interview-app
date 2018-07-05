@@ -305,6 +305,9 @@ use yii\helpers\Url;
                             <!-- <div class="pull-left">
                                 <a href="/profile/" class="btn btn-default btn-flat">Profil</a>
                             </div> -->
+                            <div class="pull-left">
+                                <a href="/profile/change-password" class="btn btn-default btn-flat">Ubah Password</a>
+                            </div> 
                             <div class="pull-right">
                                 <?= Html::a('Keluar', ['/site/logout'], ['data-method' => 'post', 'class' => 'btn btn-default btn-flat']); ?>
                             </div>

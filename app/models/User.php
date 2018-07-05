@@ -70,7 +70,6 @@ class User extends ActiveRecord implements IdentityInterface
             }"],
             [['old_password', 'new_password', 'repeat_password'], 'required', 'on' => 'password'],
             [['email'], 'required', 'on' => 'createInterviewer'],
-            [['apps_id'], 'integer'],
         ];
     }
 
@@ -87,7 +86,6 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             'id' => 'ID',
-            'apps_id' => 'Apps ID',
             'username' => 'Username',
             'email' => 'Email',
             'status' => 'Status'
@@ -227,10 +225,5 @@ class User extends ActiveRecord implements IdentityInterface
     public function getUserProfile()
     {
         return $this->hasOne(UserProfile::className(), ['user_id' => 'id']);
-    }
-
-    public function getCompany()
-    {
-        // return $this->hasOne(Applications::className(), ['apps_id' => 'apps_id']);
     }
 }

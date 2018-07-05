@@ -1,5 +1,4 @@
 <?php
-
 namespace app\models\search;
 
 use Yii;
@@ -14,6 +13,8 @@ class UserInterviewerSearch extends UserInterviewer
 {
 
     public $page;
+    public $email;
+
     public function rules()
     {
         return [
@@ -22,7 +23,6 @@ class UserInterviewerSearch extends UserInterviewer
             ['page', 'safe']
         ];
     }
-
 
     public function scenarios()
     {
@@ -34,14 +34,14 @@ class UserInterviewerSearch extends UserInterviewer
     {
         $query = UserInterviewer::find()->asArray();
         $query->joinWith(['jabatan', 'fakultasUnit', 'user']);
-  
+
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
 
         $this->load($params);
-        if(isset($this->page)){
-            $dataProvider->pagination->pageSize=$this->page; 
+        if (isset($this->page)) {
+            $dataProvider->pagination->pageSize = $this->page;
         }
 
         $query->andFilterWhere([

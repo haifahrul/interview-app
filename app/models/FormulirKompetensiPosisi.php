@@ -1,5 +1,4 @@
 <?php
-
 namespace app\models;
 
 use Yii;
@@ -17,23 +16,23 @@ use yii\behaviors\BlameableBehavior;
  * @property Formulir $formulir
  */
 class FormulirKompetensiPosisi extends \yii\db\ActiveRecord
-{    
-    public function behaviors() {
-        return [
-            [
-                'class' => BlameableBehavior::className(),
-                'createdByAttribute' => 'created_by',
-                'updatedByAttribute' => 'updated_by',
-            ],
-            'timestamp' => [
-                'class' => 'yii\behaviors\TimestampBehavior',
-                'attributes' => [
-                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
-                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
-                ],
-            ],
-        ];
-    }
+{
+//    public function behaviors() {
+//        return [
+//            [
+//                'class' => BlameableBehavior::className(),
+//                'createdByAttribute' => 'created_by',
+//                'updatedByAttribute' => 'updated_by',
+//            ],
+//            'timestamp' => [
+//                'class' => 'yii\behaviors\TimestampBehavior',
+//                'attributes' => [
+//                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+//                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+//                ],
+//            ],
+//        ];
+//    }
 
     /**
      * @inheritdoc
@@ -49,7 +48,7 @@ class FormulirKompetensiPosisi extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['formulir_id', 'aspek_penilaian', 'kriteria_penilaian'], 'required'],
+//            [['formulir_id', 'aspek_penilaian', 'kriteria_penilaian'], 'required'],
             [['formulir_id', 'kriteria_penilaian'], 'integer'],
             [['aspek_penilaian'], 'string', 'max' => 50],
             [['formulir_id'], 'exist', 'skipOnError' => true, 'targetClass' => Formulir::className(), 'targetAttribute' => ['formulir_id' => 'id']],

@@ -6,8 +6,8 @@ $permissions = require(__DIR__ . '/permissions.php');
 $db = require(__DIR__ . '/db.php');
 
 $config = [
-    'id' => 'm2fleet_apps_log',
-    'name' => 'm2fleet_apps_log',
+    'id' => 'wawancaraftig',
+    'name' => 'wawancarafti',
     'homeUrl' => '/',
     'timeZone' => 'Asia/Jakarta',
     'language' => 'id-ID',

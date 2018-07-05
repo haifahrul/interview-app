@@ -60,7 +60,7 @@ class UserInterviewerController extends Controller
         $modelUser->scenario = 'createInterviewer';
         $is_ajax = Yii::$app->request->isAjax;
         $postdata = Yii::$app->request->post();
-        
+
         if (($model->load($postdata) && $model->validate()) && $modelUser->load($postdata)) {
             $transaction = Yii::$app->db->beginTransaction();
             try {
@@ -75,14 +75,14 @@ class UserInterviewerController extends Controller
                     'email' => $modelUser->email,
                     'password' => $passwordDefault,
                 ];
-                
+
                 $mailer = Yii::$app->mailer->compose('@app/mail/user/information-account', ['params' => $params])
                     ->setFrom('mailer@afsyah.com')
                     ->setTo($modelUser->email)
                     ->setSubject('Informasi Pembuatan Akun Anda - Yarsi Formulir');
                 // End Send Email
 
-                if ($modelUser->validate() && $modelUser->save()) {                    
+                if ($modelUser->validate() && $modelUser->save()) {
                     $model->user_id = $modelUser->id;
 
                     // Set Role Access
@@ -123,22 +123,27 @@ class UserInterviewerController extends Controller
     {
         $model = $this->findModel($id);
         $modelUser = $this->findModelUser($model->user_id);
+        $modelUser->scenario = 'createInterviewer';
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', ' Data has been saved!');
-            return $this->redirect(['index']);
-        } else {
-            if (Yii::$app->request->isAjax) {
-                return $this->renderAjax('update', [
-                        'model' => $model,
-                        'modelUser' => $modelUser,
-                ]);
-            } else {
-                return $this->render('update', [
-                        'model' => $model,
-                        'modelUser' => $modelUser,
-                ]);
+        if ($model->load(Yii::$app->request->post()) && $modelUser->load(Yii::$app->request->post())) {
+            $modelUser->username = $modelUser->email;
+
+            if ($model->save() && $modelUser->save()) {
+                Yii::$app->session->setFlash('success', ' Data has been saved!');
+                return $this->redirect(['index']);
             }
+        }
+
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('update', [
+                    'model' => $model,
+                    'modelUser' => $modelUser,
+            ]);
+        } else {
+            return $this->render('update', [
+                    'model' => $model,
+                    'modelUser' => $modelUser,
+            ]);
         }
     }
 

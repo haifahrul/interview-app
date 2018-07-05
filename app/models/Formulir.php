@@ -1,5 +1,4 @@
 <?php
-
 namespace app\models;
 
 use Yii;
@@ -15,7 +14,6 @@ use yii\behaviors\BlameableBehavior;
  * @property string $tanggal_wawancara
  * @property string $catatan
  * @property integer $keputusan_id
- * @property integer $jadwal_wawancara_id
  * @property double $nilai
  * @property string $timestamp
  *
@@ -26,7 +24,7 @@ use yii\behaviors\BlameableBehavior;
  * @property FormulirKriteriaPenilaian[] $formulirKriteriaPenilaians
  */
 class Formulir extends \yii\db\ActiveRecord
-{    
+{
     // public function behaviors() {
     //     return [
     //         [
@@ -59,14 +57,13 @@ class Formulir extends \yii\db\ActiveRecord
     {
         return [
             [['calon_id', 'interviewer_id', 'tanggal_wawancara', 'catatan', 'keputusan_id', 'nilai'], 'required'],
-            [['calon_id', 'interviewer_id', 'keputusan_id', 'jadwal_wawancara_id'], 'integer'],
+            [['calon_id', 'interviewer_id', 'keputusan_id'], 'safe'],
             [['tanggal_wawancara', 'timestamp'], 'safe'],
             [['catatan'], 'string'],
             [['nilai'], 'number'],
             [['keputusan_id'], 'exist', 'skipOnError' => true, 'targetClass' => KeputusanTipe::className(), 'targetAttribute' => ['keputusan_id' => 'id']],
             [['calon_id'], 'exist', 'skipOnError' => true, 'targetClass' => UserCalon::className(), 'targetAttribute' => ['calon_id' => 'id']],
             [['interviewer_id'], 'exist', 'skipOnError' => true, 'targetClass' => UserInterviewer::className(), 'targetAttribute' => ['interviewer_id' => 'id']],
-            [['jadwal_wawancara_id'], 'exist', 'skipOnError' => true, 'targetClass' => JadwalWawancara::className(), 'targetAttribute' => ['jadwal_wawancara_id' => 'id']],
         ];
     }
 
@@ -77,8 +74,8 @@ class Formulir extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'calon_id' => Yii::t('app', 'Calon'),
-            'interviewer_id' => Yii::t('app', 'Interviewer'),
+            'calon_id' => Yii::t('app', 'Nama Calon'),
+            'interviewer_id' => Yii::t('app', 'Nama Interviewer'),
             'tanggal_wawancara' => Yii::t('app', 'Tanggal Wawancara'),
             'catatan' => Yii::t('app', 'Catatan'),
             'keputusan_id' => Yii::t('app', 'Keputusan'),

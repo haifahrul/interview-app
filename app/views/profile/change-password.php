@@ -12,7 +12,7 @@ $this->params['title'] = 'List' . $this->title;
 ?>
 
 <div class="nav-tabs-custom">
-    <?= \app\widgets\adminlte\Menu::widget(\app\components\Menus::getMenuProfileTab()) ?>
+    <?php // \app\widgets\adminlte\Menu::widget(\app\components\Menus::getMenuProfileTab()) ?>
     <div class="box-body">
         <div class="row">
             <div class="col-xs-12">

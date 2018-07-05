@@ -28,5 +28,6 @@ return [
     'Last' => 'Terakhir',
     'Options' => 'Aksi',
     'Active' => 'Aktif',
-    'InActive' => 'Tidak Aktif'
+    'InActive' => 'Tidak Aktif',
+    'Cancel' => 'Batal'
 ];

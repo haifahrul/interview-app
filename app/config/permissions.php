@@ -15,6 +15,6 @@ return [
         'site/logout',
         'debug/*',
     //    'administrator/*', // only in dev mode
-         '*'
+        //  '*'
     ]
 ];
