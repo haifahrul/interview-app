@@ -8,6 +8,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\Json;
+use yii\helpers\ArrayHelper;
 
 /**
  * created haifahrul
@@ -40,69 +41,116 @@ class FormulirController extends Controller
 
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+        $model->scenario = Formulir::SCENARIO_KEPUTUSAN_INTERVIEWER;
+        $modelKomPos = $model->formulirKompetensiPosisis;
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $model->update();
+
+            Yii::$app->session->setFlash('success', ' Keputusan telah disimpan!');
+            return $this->redirect(['index']);
+        }
+
+        $modelKriPen = Yii::$app->db->createCommand('SELECT apt.nama as aspek_penilaian_tipe, ap.nama as aspek_penilaian, fkp.kriteria_penilaian FROM formulir_kriteria_penilaian as fkp
+        LEFT JOIN aspek_penilaian as ap ON ap.id = fkp.aspek_penilaian_id
+        LEFT JOIN aspek_penilaian_tipe as apt ON apt.id = ap.aspek_penilaian_tipe_id
+        WHERE fkp.formulir_id = :id')->bindValue('id', $id)->queryAll();
+
+        $modelKriPen = ArrayHelper::map($modelKriPen, 'aspek_penilaian', 'kriteria_penilaian', 'aspek_penilaian_tipe');
+
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('view', [
-                    'model' => $this->findModel($id),
+                    'model' => $model,
+                    'modelKriPen' => $modelKriPen,
+                    'modelKomPos' => $modelKomPos,
             ]);
         } else {
             return $this->render('view', [
-                    'model' => $this->findModel($id),
+                    'model' => $model,
+                    'modelKriPen' => $modelKriPen,
+                    'modelKomPos' => $modelKomPos,
             ]);
         }
     }
 
-    public function actionCreate()
+    public function actionCetak($id)
     {
-        $model = new Formulir();
-        $is_ajax = Yii::$app->request->isAjax;
-        $postdata = Yii::$app->request->post();
-        if ($model->load($postdata) && $model->validate()) {
-            $transaction = Yii::$app->db->beginTransaction();
-            try {
-
-                if ($model->save()) {
-                    $transaction->commit();
-                    Yii::$app->session->setFlash('success', ' Data telah disimpan!');
-                    return $this->redirect(['index']);
-                }
-//end if (save) 
-            } catch (Exception $e) {
-                $transaction->rollback();
-                throw $e;
-            }
-        }
-
-        if ($is_ajax) {
-//render view
-            return $this->renderAjax('create', [
-                    'model' => $model,
-            ]);
-        } else {
-            return $this->render('create', [
-                    'model' => $model,
-            ]);
-        }
-    }
-
-    public function actionUpdate($id)
-    {
+        $this->layout = '@app/themes/adminlte/layouts/blank';
         $model = $this->findModel($id);
+        $model->scenario = Formulir::SCENARIO_KEPUTUSAN_INTERVIEWER;
+        $modelKomPos = $model->formulirKompetensiPosisis;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', ' Data has been saved!');
-            return $this->redirect(['index']);
+        $modelKriPen = Yii::$app->db->createCommand('SELECT apt.nama as aspek_penilaian_tipe, ap.nama as aspek_penilaian, fkp.kriteria_penilaian FROM formulir_kriteria_penilaian as fkp
+        LEFT JOIN aspek_penilaian as ap ON ap.id = fkp.aspek_penilaian_id
+        LEFT JOIN aspek_penilaian_tipe as apt ON apt.id = ap.aspek_penilaian_tipe_id
+        WHERE fkp.formulir_id = :id')->bindValue('id', $id)->queryAll();
+
+        $modelKriPen = ArrayHelper::map($modelKriPen, 'aspek_penilaian', 'kriteria_penilaian', 'aspek_penilaian_tipe');
+
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('cetak', [
+                    'model' => $model,
+                    'modelKriPen' => $modelKriPen,
+                    'modelKomPos' => $modelKomPos,
+            ]);
         } else {
-            if (Yii::$app->request->isAjax) {
-                return $this->renderAjax('update', [
-                        'model' => $model,
-                ]);
-            } else {
-                return $this->render('update', [
-                        'model' => $model,
-                ]);
-            }
+            return $this->render('cetak', [
+                    'model' => $model,
+                    'modelKriPen' => $modelKriPen,
+                    'modelKomPos' => $modelKomPos,
+            ]);
         }
     }
+
+//     public function actionCreate()
+//     {
+//         $model = new Formulir();
+//         $is_ajax = Yii::$app->request->isAjax;
+//         $postdata = Yii::$app->request->post();
+//         if ($model->load($postdata) && $model->validate()) {
+//             $transaction = Yii::$app->db->beginTransaction();
+//             try {
+//                 if ($model->save()) {
+//                     $transaction->commit();
+//                     Yii::$app->session->setFlash('success', ' Data telah disimpan!');
+//                     return $this->redirect(['index']);
+//                 }
+// //end if (save) 
+//             } catch (Exception $e) {
+//                 $transaction->rollback();
+//                 throw $e;
+//             }
+//         }
+//         if ($is_ajax) {
+// //render view
+//             return $this->renderAjax('create', [
+//                     'model' => $model,
+//             ]);
+//         } else {
+//             return $this->render('create', [
+//                     'model' => $model,
+//             ]);
+//         }
+//     }
+    // public function actionUpdate($id)
+    // {
+    //     $model = $this->findModel($id);
+    //     if ($model->load(Yii::$app->request->post()) && $model->save()) {
+    //         Yii::$app->session->setFlash('success', ' Data has been saved!');
+    //         return $this->redirect(['index']);
+    //     } else {
+    //         if (Yii::$app->request->isAjax) {
+    //             return $this->renderAjax('update', [
+    //                     'model' => $model,
+    //             ]);
+    //         } else {
+    //             return $this->render('update', [
+    //                     'model' => $model,
+    //             ]);
+    //         }
+    //     }
+    // }
 
     public function actionDelete($id)
     {
@@ -126,33 +174,38 @@ class FormulirController extends Controller
     }
 
 // hapus menggunakan ajax
-    public function actionDeleteItems()
-    {
-        $status = 0;
-        if (isset($_POST['keys'])) {
-            $keys = $_POST['keys'];
-            foreach ($keys as $key):
-
-                $model = Formulir::findOne($key);
-                if ($model->delete())
-                    $status = 1;
-                else
-                    $status = 2;
-            endforeach;
-
-//$model = Formulir::findOne($keys);
-//$model->delete();
-//$status=3;
-        }
-// retrun nya json
-        echo Json::encode([
-            'status' => $status,
-        ]);
-    }
+//    public function actionDeleteItems()
+//    {
+//        $status = 0;
+//        if (isset($_POST['keys'])) {
+//            $keys = $_POST['keys'];
+//            foreach ($keys as $key):
+//
+//                $model = Formulir::findOne($key);
+//                if ($model->delete())
+//                    $status = 1;
+//                else
+//                    $status = 2;
+//            endforeach;
+//
+////$model = Formulir::findOne($keys);
+////$model->delete();
+////$status=3;
+//        }
+//// retrun nya json
+//        echo Json::encode([
+//            'status' => $status,
+//        ]);
+//    }
 
     protected function findModel($id)
     {
-        if (($model = Formulir::findOne($id)) !== null) {
+        if (Yii::$app->user->can('Super User')) {
+            $data = Formulir::findOne(['id' => $id]);
+        } else {
+            $data = Formulir::findOne(['id' => $id, 'interviewer_id' => Yii::$app->user->identity->userInterviewer->id]);
+        }
+        if (($model = $data) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

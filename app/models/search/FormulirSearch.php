@@ -18,7 +18,7 @@ class FormulirSearch extends Formulir
     {
         return [
             [['id', 'calon_id'], 'integer'],
-            [['tanggal_wawancara', 'catatan', 'timestamp', 'interviewer_id', 'keputusan_id'], 'safe'],
+            [['tanggal_wawancara', 'catatan', 'timestamp', 'interviewer_id', 'keputusan_id', 'keputusan_interviewer'], 'safe'],
             [['nilai'], 'number'],
             ['page', 'safe']
         ];
@@ -34,8 +34,8 @@ class FormulirSearch extends Formulir
     public function search($params)
     {
         $query = Formulir::find()->asArray();
-        $query->joinWith(['calon', 'interviewer', 'keputusan']);
-
+        $query->joinWith(['calon', 'interviewer', 'keputusan', 'keputusanInterviewer']);
+        
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -48,6 +48,7 @@ class FormulirSearch extends Formulir
         $query->andFilterWhere([
             'id' => $this->id,
             'keputusan_id' => $this->keputusan_id,
+            'keputusan_interviewer' => $this->keputusan_interviewer,
             'nilai' => $this->nilai,
             // 'timestamp' => $this->timestamp,
         ]);

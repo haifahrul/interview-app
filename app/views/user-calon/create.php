@@ -16,6 +16,7 @@ $this->params['title'] = $this->title;
 
     <?= $this->render('_form', [
         'model' => $model,
+        'modelUploadCv' => $modelUploadCv,
     ]) ?>
 
 </div>

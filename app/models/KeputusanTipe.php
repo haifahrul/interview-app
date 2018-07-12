@@ -89,11 +89,16 @@ class KeputusanTipe extends \yii\db\ActiveRecord
         return $this->hasMany(UserCalon::className(), ['keputusan_id' => 'id']);
     }
 
-    public static function getListData() 
+    public static function getListData($param = null) 
     {
-        $query = Yii::$app->db->createCommand('SELECT * FROM keputusan_tipe WHERE is_active=1')->queryAll();
+        if (empty($param)) {
+            $query = Yii::$app->db->createCommand('SELECT * FROM keputusan_tipe WHERE is_active=1')->queryAll();
+            $result = ArrayHelper::map($query, 'id', 'nama');
+        } else {
+            $result = Yii::$app->db->createCommand('SELECT nama FROM keputusan_tipe WHERE is_active=1 AND id=:id')->bindValue(':id', $param)->queryScalar();
+        }
         
-        return ArrayHelper::map($query, 'id', 'nama');
+        return $result;
     }
 
 }

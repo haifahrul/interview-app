@@ -6,6 +6,7 @@ use yii\bootstrap\Modal;
 use yii\grid\GridView;
 use app\messages\Text;
 use app\widgets\admin\components\Helper;
+use app\models\UserCalon;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\search\JadwalWawancaraSearch */
@@ -80,7 +81,13 @@ $this->params['title'] = 'List'.$this->title;
                     return $data['userInterviewer']['nama_pewawancara'];
                 }
             ],
-            // 'status',
+            [
+                'filter' => UserCalon::getStatus(),
+                'attribute' => 'status',
+                'value' => function($data) {
+                    return UserCalon::getStatus($data['status']);
+                }
+            ],
             // 'timestamp',
                 [
                 'class' => 'yii\grid\ActionColumn',

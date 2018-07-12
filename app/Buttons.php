@@ -15,7 +15,7 @@ namespace app\components;
 use Yii;
 use yii\helpers\Html;
 use app\widgets\admin\components\Helper;
-use app\messages\Text;
+use app\messages\text;
 
 class Buttons {
 

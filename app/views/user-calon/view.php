@@ -18,16 +18,17 @@ $this->params['title'] = $this->title;
 <div class="box">
     <div class="user-calon-view box-body">
 
-            <h1><?php  Html::encode($this->title) ?></h1>
+        <h1><?php Html::encode($this->title) ?></h1>
         <p>
-            <?php 
-            if(Helper::checkRoute('update')){
+            <?php
+            if (Helper::checkRoute('update')) {
                 echo Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary btn-sm']);
             }
+
             ?>
             &nbsp &nbsp
             <?php
-            if(Helper::checkRoute('delete')){
+            if (Helper::checkRoute('delete')) {
                 echo Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
                     'class' => 'btn btn-danger btn-sm',
                     'data' => [
@@ -35,25 +36,34 @@ $this->params['title'] = $this->title;
                         'method' => 'post',
                     ],
                 ]);
-            } 
+            }
+
             ?>
         </p>
-        <?= DetailView::widget([
+        <?=
+        DetailView::widget([
             'model' => $model,
             'attributes' => [
                 // 'id',
-            // 'user_id',
-            'nama_calon',
-            'usia',
-            'pendidikan:ntext',
-            'jabatan_yang_dilamar:ntext',
-            'phone',
-            'email:email',
-            [
-                'attribute' => 'keputusan_id',
-                'value' => $model['keputusan']['nama']
+                // 'user_id',
+                'nama_calon',
+                'usia',
+                'pendidikan:ntext',
+                'jabatan_yang_dilamar:ntext',
+                'phone',
+                'email:email',
+                [
+                    'attribute' => 'keputusan_id',
+                    'value' => $model['keputusan']['nama']
+                ],
+                [
+                    'attribute' => 'cv',
+                    'format' => 'raw',
+                    'value' => !empty($downloadCv) ? $downloadCv : 'File tidak tersedia'
+                ]
             ],
-            ],
-        ]) ?>
+        ])
+
+        ?>
     </div>
 </div>

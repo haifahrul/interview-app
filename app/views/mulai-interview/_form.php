@@ -95,19 +95,7 @@ use yii\bootstrap\ActiveForm;
 
         <p>Berilah penilaian dengan mengisi pada kolom yang sesuai dengan kriteria penilaian</p>
 
-        <?php
-        $form = ActiveForm::begin([
-//                'options' => ['class' => 'form-horizontal'],
-//                'layout' => 'horizontal',
-//                'fieldConfig' => [
-//                    'template' => "<div class=\"col-md-1\">{label}</div>\n<div class=\"col-md-5\">{input}{error}</div><div class=\"col-md-3\"></div>\n",
-//                    'labelOptions' => ['class' => 'text-left1'],
-//                ],
-        ]);
-
-        ?>    
-        <?php // $form->field($model, 'keputusan_id')->textInput() ?>
-        <?php // $form->field($modelJadwal, 'catatan')->textarea(['rows' => 6]) ?>
+        <form id=form-interview action="create?id=<?= $modelJadwal->id ?>" method="post">
 
         <div class="table-responsive">
             <table class="table table-condensed table-bordered table-hover">
@@ -138,21 +126,21 @@ use yii\bootstrap\ActiveForm;
                             </tr>
                             <?php
                         }
-                        foreach ($dataAspekPenilaian as $value) {
-
+                        foreach ($dataAspekPenilaian as $k => $value) {
+                            
                             ?>
                             <tr>
                                 <td><?= $no . '. ' . $value ?></td>
                                 <td>
-                                    <select id="formulirkriteriapenilaian-kriteria_penilaian" class="form-control" name="FormulirKriteriaPenilaian[kriteria_penilaian]" aria-required="true" aria-invalid="true">
-                                        <option value=""></option>
-                                        <option value="0">1</option>
-                                        <option value="1">2</option>
-                                        <option value="2">3</option>
-                                        <option value="3">4</option>
-                                        <option value="4">5</option>
-                                        <option value="5">6</option>
-                                        <option value="6">7</option>
+                                    <select id="formulirkriteriapenilaian-kriteria_penilaian" class="form-control" name="FormulirKriteriaPenilaian[kriteria_penilaian][<?= $k ?>]" aria-required="true" aria-invalid="true">
+                                        <option></option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
                                     </select>
                                 </td>
                             </tr>
@@ -183,25 +171,23 @@ use yii\bootstrap\ActiveForm;
                                 <div class="form-group field-formulirkompetensiposisi-aspek_penilaian">
                                     <label style="font-weight: normal" class="pull-left" for="formulirkompetensiposisi-aspek_penilaian"><?= $no ?>.</label>
                                     <div class="col-sm-11">
-                                        <input type="text" id="formulirkompetensiposisi-aspek_penilaian" class="form-control" name="FormulirKompetensiPosisi[aspek_penilaian]">
+                                        <input type="text" id="formulirkompetensiposisi-aspek_penilaian" class="form-control" name="FormulirKompetensiPosisi[aspek_penilaian][<?= $a ?>]">
                                         <div class="help-block help-block-error "></div>
                                     </div>
 
                                 </div>
                             </td>
                             <td>
-                                <!--<div class="col-sm-12">-->
-                                <select id="formulirkompetensiposisi-kriteria_penilaian" class="form-control" name="FormulirKompetensiPosisi[kriteria_penilaian]" aria-required="true" aria-invalid="true">
+                                <select id="formulirkompetensiposisi-kriteria_penilaian" class="form-control" name="FormulirKompetensiPosisi[kriteria_penilaian][<?= $a ?>]" aria-required="true" aria-invalid="true">
                                     <option value=""></option>
-                                    <option value="0">1</option>
-                                    <option value="1">2</option>
-                                    <option value="2">3</option>
-                                    <option value="3">4</option>
-                                    <option value="4">5</option>
-                                    <option value="5">6</option>
-                                    <option value="6">7</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
                                 </select>
-                                <!--</div>-->
                             </td>
                         </tr>
                         <?php
@@ -215,18 +201,21 @@ use yii\bootstrap\ActiveForm;
             <label class="control-label col-sm-3">Catatan dari interviewer mengenai calon : </label>
             <div class="col-sm-5">
                 <div class="">
-                    <textarea id="formulirkompetensiposisi-aspek_penilaian" class="form-control" name="FormulirKompetensiPosisi[aspek_penilaian]"></textarea>
+                    <textarea id="formulir-catatan" class="form-control" name="Formulir[catatan]"></textarea>
                     <div class="help-block help-block-error "></div>
                 </div>
             </div>
         </div>
 
         <div class="form-group pull-right">
-            <?= Html::submitButton('<i class="glyphicon glyphicon-floppy-disk glyphicon-sm"> </i> Selesai & Simpan', ['class' => 'btn btn-primary btn-sm']) ?> &nbsp
+            <?= Html::submitButton('<i class="glyphicon glyphicon-floppy-disk glyphicon-sm"> </i> Selesai & Simpan', ['class' => 'btn btn-primary btn-sm', 'data' => [
+                                                // 'confirm' => 'asd',
+                                                'method' => 'post',
+                                            ]]) ?> &nbsp
             <?= Html::a('<i class="glyphicon glyphicon-remove glyphicon-sm"></i> ' . Yii::t('app', 'Cancel'), Yii::$app->request->referrer, ['class' => 'btn btn-danger btn-sm']) ?>
         </div>
 
-        <?php ActiveForm::end(); ?>
+        </form>
     </div>
 </div>
 

@@ -6,11 +6,12 @@ use yii\bootstrap\Modal;
 use yii\grid\GridView;
 use app\widgets\admin\components\Helper;
 use app\messages\Text;
+use app\models\KeputusanTipe;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\search\FormulirSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-$this->title = Yii::t('app', 'Formulirs');
+$this->title = Yii::t('app', 'Hasil Wawancara');
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = 'List'.$this->title;
 ?>
@@ -65,8 +66,7 @@ $this->params['title'] = 'List'.$this->title;
                 'contentOptions' =>['class' =>'text-center' ],
                 ],
                             // 'id',
-            // 'calon.nama_calon',
-            // 'interviewer.nama_pewawancara',
+            'tanggal_wawancara:date',
             [
                 'attribute' => 'calon_id',
                 'value' => function ($data) {
@@ -79,16 +79,28 @@ $this->params['title'] = 'List'.$this->title;
                     return $data['interviewer']['nama_pewawancara'];
                 }
             ],
-            'tanggal_wawancara:date',
             'catatan:ntext',
             // 'keputusan_id',
-            // 'nilai',
+            [
+                'filter' => KeputusanTipe::getListData(),
+                'attribute' => 'keputusan_id',
+                'value' => function ($data) {
+                    return $data['keputusan']['nama'];
+                }
+            ],
+            [
+                'filter' => KeputusanTipe::getListData(),
+                'attribute' => 'keputusan_interviewer',
+                'value' => function ($data) {
+                    return $data['keputusanInterviewer']['nama'];
+                }
+            ],
+            'nilai',
             // 'timestamp',
-                
                 [
                 'class' => 'yii\grid\ActionColumn',
                         'contentOptions' => ['style' => 'width:90px;', 'class' => 'text-center'],
-                        'template' => Helper::filterActionColumn('{view} {update} {delete}'),
+                        'template' => Helper::filterActionColumn('{view} {delete}'),
                         'header' => Yii::t('app', 'Options'),
                         'buttons' => [
                             'view' => function ($url, $model) {
@@ -104,17 +116,17 @@ $this->params['title'] = 'List'.$this->title;
 //                            'data-target' => '#modal-view',
                                 ]);
                             },
-                            'update' => function ($url, $model) {
-                                $icon = '<span class="btn btn-xs btn-default"><i class="fa fa-pencil"></i></span>';
-                                $url = ['update', 'id' => $model['id']];
+                            // 'update' => function ($url, $model) {
+                            //     $icon = '<span class="btn btn-xs btn-default"><i class="fa fa-pencil"></i></span>';
+                            //     $url = ['update', 'id' => $model['id']];
 
-                                return Html::a($icon, $url, [
-                                            'title' => Yii::t('app', 'Update'),
-                                            'url' => $url,
-                                            'id' => 'btn-update',
-                                            'data-pjax' => 0,
-                                ]);
-                            },
+                            //     return Html::a($icon, $url, [
+                            //                 'title' => Yii::t('app', 'Update'),
+                            //                 'url' => $url,
+                            //                 'id' => 'btn-update',
+                            //                 'data-pjax' => 0,
+                            //     ]);
+                            // },
                             'delete' => function($url, $model) {
                                 $icon = '<span class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></span>';
                                 $url = ['delete', 'id' => $model['id']];

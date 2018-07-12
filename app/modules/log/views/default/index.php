@@ -7,7 +7,7 @@ use yii\bootstrap\Modal;
 //use yii\grid\GridView;
 use kartik\grid\GridView;
 use app\components\Buttons;
-use app\messages\text;
+use app\messages\Text;
 use app\components\GlobalFunction;
 
 /* @var $this yii\web\View */

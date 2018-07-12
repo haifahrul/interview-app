@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use app\models\KeputusanTipe;
+use app\models\UserCalon;
 
 /* @var $model app\models\UserCalon */
 /* @var $form yii\widgets\ActiveForm 
@@ -14,7 +15,9 @@ use app\models\KeputusanTipe;
     <div class="user-calon-form box-body">
         <?php $form = ActiveForm::begin([
             'options' => [
-            'class' => 'form-horizontal'],
+                'class' => 'form-horizontal',
+                'enctype' => 'multipart/form-data'
+            ],
             'layout' => 'horizontal',
             'fieldConfig' => [
                 'template' => "<div class=\"col-md-2\">{label}</div>\n<div class=\"col-md-7\">{input}{error}</div><div class=\"col-md-3\"></div>\n",
@@ -31,7 +34,8 @@ use app\models\KeputusanTipe;
         <?= $form->field($model, 'jabatan_yang_dilamar')->textarea(['rows' => 6]) ?>
         <?= $form->field($model, 'phone')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
-        <?= $form->field($model, 'cv')->fileInput(['maxlength' => true]) ?>
+        <?= $form->field($modelUploadCv, 'fileCv')->fileInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'status')->dropDownList(UserCalon::getStatus(), ['prompt' => '']) ?>
         <?php // $form->field($model, 'keputusan_id')->dropDownList(KeputusanTipe::getListData(), ['prompt' => '']) ?>
 
         <div class="col-md-2"></div>    

@@ -1,5 +1,4 @@
 <?php
-
 namespace app\controllers;
 
 use app\models\JadwalWawancara;
@@ -13,9 +12,9 @@ use yii\web\NotFoundHttpException;
 /**
  * created haifahrul
  */
-
 class JadwalWawancaraController extends Controller
 {
+
     public function behaviors()
     {
         return [
@@ -34,20 +33,30 @@ class JadwalWawancaraController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
         ]);
     }
 
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+
+        if (!empty($model->userCalon->cv)) {
+            $downloadCv = $model->userCalon->downloadFile($model->userCalon->cv, $model->userCalon->nama_calon);
+        } else {
+            $downloadCv = null;
+        }
+
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('view', [
-                'model' => $this->findModel($id),
+                    'model' => $model,
+                    'downloadCv' => $downloadCv,
             ]);
         } else {
             return $this->render('view', [
-                'model' => $this->findModel($id),
+                    'model' => $model,
+                    'downloadCv' => $downloadCv,
             ]);
         }
     }
@@ -81,15 +90,13 @@ class JadwalWawancaraController extends Controller
         if ($is_ajax) {
 //render view
             return $this->renderAjax('create', [
-                'model' => $model,
+                    'model' => $model,
             ]);
         } else {
             return $this->render('create', [
-                'model' => $model,
+                    'model' => $model,
             ]);
-
         }
-
     }
 
     public function actionUpdate($id)
@@ -100,21 +107,20 @@ class JadwalWawancaraController extends Controller
             if ($model->save()) {
                 $model->tanggal = date('Y-m-d', strtotime($model->tanggal));
                 Yii::$app->session->setFlash('success', ' Data has been saved!');
-                
+
                 return $this->redirect(['index']);
             }
-        } 
-          
-        if (Yii::$app->request->isAjax) {
-                return $this->renderAjax('update', [
-                    'model' => $model,
-                ]);
-            } else {
-                return $this->render('update', [
-                    'model' => $model,
-                ]);
+        }
 
-            }
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('update', [
+                    'model' => $model,
+            ]);
+        } else {
+            return $this->render('update', [
+                    'model' => $model,
+            ]);
+        }
     }
 
     public function actionDelete($id)
@@ -131,7 +137,6 @@ class JadwalWawancaraController extends Controller
                 $transaction->rollback();
                 Yii::$app->session->setFlash('warning', 'Data failed removed!');
             endif;
-
         } catch (Exception $e) {
             $transaction->rollback();
             Yii::$app->session->setFlash('danger', 'Failure, Data failed removed');

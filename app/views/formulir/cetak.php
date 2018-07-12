@@ -13,83 +13,98 @@ $this->title = Yii::t('app', 'Detail Wawancara');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Hasil Wawancara'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = 'Detail Wawancara';
 
+$script = '
+
+body {
+    font-size: 12px;
+}
+
+table > thead > tr > th > p {
+    margin:0;
+}
+
+.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+    line-height: 100%;
+}
+
+';
+$this->registerCss($script)
+
 ?>
 <div class="box">
-    <div class="box-header">
-        <h1 style="text-decoration: underline;" class="text-center">HASIL WAWANCARA</h1>
-    </div>
     <div class="formulir-form box-body">
+        <p style="text-decoration: underline; font-size: 16px; font-weight: bold" class="text-center">HASIL WAWANCARA</p>
         <div class="row">
-            <div class="col-xs-12 col-md-6">
+            <div class="col-xs-6 col-md-6">
                 <div class="row">
-                    <label class="control-label col-xs-12 col-md-4">Nama Calon</label>
-                    <div class="col-xs-12 col-md-6">
-                        <div class="form-control">
+                    <label class="control-label col-xs-5 col-md-4">Nama Calon</label>
+                    <div class="col-xs-7 col-md-6">
+                        <div class="">
                             <?php echo $model->calon->nama_calon ?>
                         </div>
                         <div class="help-block help-block-error"></div>
                     </div>
                 </div>
                 <div class="row">
-                    <label class="control-label col-xs-12 col-md-4">Usia</label>
-                    <div class="col-xs-12 col-md-6">
-                        <div class="form-control">
+                    <label class="control-label col-xs-5 col-md-4">Usia</label>
+                    <div class="col-xs-7 col-md-6">
+                        <div class="">
                             <?php echo $model->calon->usia . ' tahun' ?>
                         </div>
                         <div class="help-block help-block-error"></div>
                     </div>
                 </div>
                 <div class="row">
-                    <label class="control-label col-xs-12 col-md-4">Pendidikan</label>
-                    <div class="col-xs-12 col-md-6">
-                        <div class="form-control">
+                    <label class="control-label col-xs-5 col-md-4">Pendidikan</label>
+                    <div class="col-xs-7 col-md-6">
+                        <div class="">
                             <?php echo $model->calon->pendidikan ?>
                         </div>
                         <div class="help-block help-block-error"></div>
                     </div>
                 </div>
                 <div class="row">
-                    <label class="control-label col-xs-12 col-md-4">Jabatan yang dilamar</label>
-                    <div class="col-xs-12 col-md-6">
-                        <div class="form-control">
+                    <label class="control-label col-xs-5">Jabatan yang dilamar</label>
+                    <div class="col-xs-7 col-md-6">
+                        <div class="">
                             <?php echo $model->calon->jabatan_yang_dilamar ?>
                         </div>
                         <div class="help-block help-block-error"></div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-xs-6 col-md-6">
                 <div class="row">
-                    <label class="control-label col-xs-12 col-md-4">Nama Pewawancara</label>
-                    <div class="col-xs-12 col-md-6">
-                        <div class="form-control">
+                    <label class="control-label col-xs-5">Nama Pewawancara</label>
+                    <div class="col-xs-7">
+                        <div class="">
                             <?php echo $model->interviewer->nama_pewawancara ?>
                         </div>
                         <div class="help-block help-block-error"></div>
                     </div>
                 </div>
                 <div class="row">
-                    <label class="control-label col-xs-12 col-md-4">Jabaran Pewawancara</label>
-                    <div class="col-xs-12 col-md-6">
-                        <div class="form-control">
+                    <label class="control-label col-xs-5">Jabaran Pewawancara</label>
+                    <div class="col-xs-7">
+                        <div class="">
                             <?php echo $model->interviewer->jabatan->nama ?>
                         </div>
                         <div class="help-block help-block-error"></div>
                     </div>
                 </div>
                 <div class="row">
-                    <label class="control-label col-xs-12 col-md-4">Fakultas/Unit</label>
-                    <div class="col-xs-12 col-md-6">
-                        <div class="form-control">
+                    <label class="control-label col-xs-5">Fakultas/Unit</label>
+                    <div class="col-xs-7">
+                        <div class="">
                             <?php echo $model->interviewer->fakultasUnit->nama ?>
                         </div>
                         <div class="help-block help-block-error"></div>
                     </div>
                 </div>
                 <div class="row">
-                    <label class="control-label col-xs-12 col-md-4">Tanggal Wawancara</label>
-                    <div class="col-xs-12 col-md-6">
-                        <div class="form-control">
+                    <label class="control-label col-xs-5">Tanggal Wawancara</label>
+                    <div class="col-xs-7">
+                        <div class="">
                             <?php echo Yii::$app->formatter->asDate($model->tanggal_wawancara) ?>
                         </div>
                         <div class="help-block help-block-error"></div>
@@ -101,11 +116,11 @@ $this->params['breadcrumbs'][] = 'Detail Wawancara';
         <p>Berilah penilaian dengan mengisi pada kolom yang sesuai dengan kriteria penilaian</p>
 
         <div class="table-responsive">
-            <table class="table table-condensed table-bordered table-hover">
+            <table class="table table-condensed table-bordered">
                 <thead>
                     <tr>
-                        <th class="text-center" colspan=""><h4><b>ASPEK PENILAIAN</b></h4></th>
-                        <th class="text-center" rowspan="1" style="vertical-align: middle;"><h4><b>KRITERIA PENILAIAN</b></h4></th>
+                        <th class="text-center" colspan=""><p><b>ASPEK PENILAIAN</b></p></th>
+                        <th class="text-center" rowspan="1" style="vertical-align: middle;"><p><b>KRITERIA PENILAIAN</b></p></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -118,7 +133,7 @@ $this->params['breadcrumbs'][] = 'Detail Wawancara';
                             ?>
                             <tr>
                                 <th colspan="1"><?= $key ?></th>
-                                <th class="text-center">Ket. 1-2 Kurang, 3-5 Cukup, 6-7 Baik</th>
+                                <th width="215px" class="text-center">Ket. 1-2 Kurang, 3-5 Cukup, 6-7 Baik</th>
                             </tr>
                             <?php
                         } else {
@@ -165,16 +180,16 @@ $this->params['breadcrumbs'][] = 'Detail Wawancara';
                         <tr>
                             <td>
                                 <?php // $form->field($modelKomPos, 'aspek_penilaian')->textInput()->label($no)    ?>
-                                <div class="form-group field-formulirkompetensiposisi-aspek_penilaian">
-                                    <label style="font-weight: normal" class="pull-left" for="formulirkompetensiposisi-aspek_penilaian"><?= $no ?>.</label>
-                                    <div class="col-xs-11">
-                                        <!-- <div class="form-control"> -->
-                                        <?= $value['aspek_penilaian'] ?>
-                                        <!-- </div> -->
-                                        <div class="help-block help-block-error "></div>
-                                    </div>
+                                <!--<div class="form-group field-formulirkompetensiposisi-aspek_penilaian">-->
+                                <!--<label style="font-weight: normal" class="pull-left" for="formulirkompetensiposisi-aspek_penilaian">.</label>-->
+                                <!--<div class="col-xs-11">-->
+                                <!-- <div class="form-control"> -->
+                                <?= $no . '. ' . $value['aspek_penilaian'] ?>
+                                <!-- </div> -->
+                                <!--<div class="help-block help-block-error "></div>-->
+                                <!--</div>-->
 
-                                </div>
+                                <!--</div>-->
                             </td>
                             <td>
                                 <!-- <div class="form-control"> -->
@@ -189,61 +204,33 @@ $this->params['breadcrumbs'][] = 'Detail Wawancara';
                     ?>
                 </tbody>
             </table>
-
         </div>
-
         <div class="row">
-            <div class="col-xs-12 col-md-2"><b>Catatan dari interviewer mengenai calon :</b></div>
-            <div class="col-xs-12 col-md-8">
+            <div class="col-xs-12">
                 <p>
+                    <b>Catatan dari interviewer mengenai calon :</b> 
                     <?= Html::encode($model->catatan) ?>
                 </p>
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-xs-12 col-md-2">
                 <p>
-                    <b>Keputusan dari sistem</b>
+                    <b>Keputusan dari sistem &nbsp &nbsp &nbsp : </b> <?= !empty($model->keputusan) ? $model->keputusan->nama : '-' ?>
                 </p>
-            </div>
-            <div class="col-xs-12 col-md-2">
                 <p>
-                    <?= !empty($model->keputusan) ? $model->keputusan->nama : '-' ?>
-                </p>
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-xs-12 col-md-2">
-                <p>
-                    <b>Keputusan Interviewer</b>
-                </p>
-            </div>
-            <div class="col-xs-12 col-md-2">
-                <?php if (Yii::$app->user->can('Interviewer')) { ?>
-                    <?php
-                    $form = ActiveForm::begin([
-                            'id' => 'keputusan-intervewer-form',
-                            'options' => ['class' => 'form-horizontal'],
-                        ])
-
-                    ?>                    
-                    <?= $form->field($model, 'keputusan_interviewer')->dropDownList(KeputusanTipe::getListData(), ['prompt' => ''])->label(false) ?>
-                    <div class="form-group">
-                        <div class="">
-                            <?= Html::submitButton('Selesai & Simpan', ['class' => 'btn btn-primary btn-sm']) ?>
-                        </div>
-                    </div>
-                    <?php ActiveForm::end() ?>
-                <?php } else { ?>
+                    <b>Keputusan Interviewer &nbsp &nbsp :</b>
                     <?= KeputusanTipe::getListData($model->keputusan_interviewer) ?>
-                <?php } ?>
+                </p>
             </div>
         </div>
-    </div>
-    <div class="panel-footer">
-        <?= Html::a('<i class="glyphicon glyphicon-arrow-left glyphicon-xs"></i> ' . Yii::t('app', 'Kembali'), ['index'], ['class' => 'btn btn-default btn-md']) ?> &nbsp
-        <?= Html::a('<i class="glyphicon glyphicon-print glyphicon-xs"></i> ' . Yii::t('app', 'Cetak'), ['cetak', 'id' => $model->id], ['class' => 'btn btn-success btn-md', 'target' => '_blank']) ?>
     </div>
 </div>
+
+
+<?php
+$script = <<<JS
+    
+    window.print();
+    window.close();
+    
+JS;
+$this->registerJs($script);
+
+?>

@@ -48,7 +48,7 @@ class FormulirKompetensiPosisi extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-//            [['formulir_id', 'aspek_penilaian', 'kriteria_penilaian'], 'required'],
+        //    [['formulir_id', 'aspek_penilaian', 'kriteria_penilaian'], 'required'],
             [['formulir_id', 'kriteria_penilaian'], 'integer'],
             [['aspek_penilaian'], 'string', 'max' => 50],
             [['formulir_id'], 'exist', 'skipOnError' => true, 'targetClass' => Formulir::className(), 'targetAttribute' => ['formulir_id' => 'id']],

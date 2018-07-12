@@ -46,7 +46,7 @@ class JadwalWawancaraSearch extends JadwalWawancara
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'status' => $this->status,
+            'jadwal_wawancara.status' => $this->status,
             'timestamp' => $this->timestamp,
         ]);
 
@@ -62,6 +62,7 @@ class JadwalWawancaraSearch extends JadwalWawancara
         $query = JadwalWawancara::find()->asArray();
         $query->joinWith(['userCalon', 'userInterviewer']);
         $query->where(['user_interviewer.user_id' => Yii::$app->user->id]);
+        $query->andWHere(['jadwal_wawancara.status' => 2]); // Belum di wawancara
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

@@ -5,7 +5,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\bootstrap\Modal;
 use yii\grid\GridView;
-use app\messages\text;
+use app\messages\Text;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\search\LogErrorSearch */
