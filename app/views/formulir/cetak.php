@@ -216,7 +216,7 @@ $this->registerCss($script)
                 </p>
                 <p>
                     <b>Keputusan Interviewer &nbsp &nbsp :</b>
-                    <?= KeputusanTipe::getListData($model->keputusan_interviewer) ?>
+                    <?= !empty($model->keputusan_interviewer) ? KeputusanTipe::getListData($model->keputusan_interviewer) : '-' ?>
                 </p>
             </div>
         </div>

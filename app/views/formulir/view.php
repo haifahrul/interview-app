@@ -237,7 +237,7 @@ $this->params['breadcrumbs'][] = 'Detail Wawancara';
                     </div>
                     <?php ActiveForm::end() ?>
                 <?php } else { ?>
-                    <?= KeputusanTipe::getListData($model->keputusan_interviewer) ?>
+                    <?= !empty($model->keputusan_interviewer) ? KeputusanTipe::getListData($model->keputusan_interviewer) : '-' ?>
                 <?php } ?>
             </div>
         </div>

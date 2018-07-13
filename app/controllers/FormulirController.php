@@ -200,11 +200,12 @@ class FormulirController extends Controller
 
     protected function findModel($id)
     {
-        if (Yii::$app->user->can('Super User')) {
+        if (Yii::$app->user->can('Super User') || Yii::$app->user->can('Administrator')) {
             $data = Formulir::findOne(['id' => $id]);
         } else {
             $data = Formulir::findOne(['id' => $id, 'interviewer_id' => Yii::$app->user->identity->userInterviewer->id]);
         }
+        
         if (($model = $data) !== null) {
             return $model;
         } else {
