@@ -31,7 +31,12 @@ class FormulirController extends Controller
     public function actionIndex()
     {
         $searchModel = new FormulirSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        
+        if (Yii::$app->user->can('Super User') || Yii::$app->user->can('Administrator')) {
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        } elseif (Yii::$app->user->can('Interviewer')) {
+            $dataProvider = $searchModel->searchInterviewer(Yii::$app->request->queryParams);
+        }
 
         return $this->render('index', [
                 'searchModel' => $searchModel,

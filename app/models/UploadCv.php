@@ -28,7 +28,7 @@ class UploadCv extends Model
         if ($this->validate()) {
             $this->filename = sha1($this->fileCv->baseName . microtime()) . '.' . $this->fileCv->extension;
             $this->fileExtension = $this->fileCv->extension;
-            $this->fileCv->saveAs(Yii::$app->params['uploadsPath'] . '/cv/' . $this->filename);
+            $this->fileCv->saveAs(Yii::$app->params['uploadsPath'] . 'cv/' . $this->filename);
             return true;
         } else {
             return false;

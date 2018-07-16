@@ -127,7 +127,8 @@ class UserCalonController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $oldFileCv = Yii::$app->params['uploadsPath'] . '/cv/' . $model->cv;
+        $oldFilename = $model->cv;
+        $oldFileCv = Yii::$app->params['uploadsPath'] . 'cv/' . $model->cv;
         $modelUploadCv = new UploadCv();
         $postdata = Yii::$app->request->post();
 
@@ -139,7 +140,7 @@ class UserCalonController extends Controller
                 if ($modelUploadCv->upload()) {
                     // file is uploaded successfully
 
-                    if (file_exists($oldFileCv)) {
+                    if (file_exists($oldFileCv) && !empty($oldFilename)) {
                         unlink($oldFileCv);
                     }
 

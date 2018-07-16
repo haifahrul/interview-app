@@ -60,4 +60,35 @@ class FormulirSearch extends Formulir
 
         return $dataProvider;
     }
+
+    public function searchInterviewer($params)
+    {
+        $query = Formulir::find()->asArray();
+        $query->joinWith(['calon', 'interviewer', 'keputusan', 'keputusanInterviewer']);
+        $query->where(['interviewer_id' => Yii::$app->user->identity->userInterviewer->id]);
+        
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        $this->load($params);
+        if(isset($this->page)){
+            $dataProvider->pagination->pageSize=$this->page; 
+        }
+
+        $query->andFilterWhere([
+            'id' => $this->id,
+            'keputusan_id' => $this->keputusan_id,
+            'keputusan_interviewer' => $this->keputusan_interviewer,
+            'nilai' => $this->nilai,
+            // 'timestamp' => $this->timestamp,
+        ]);
+
+        $query->andFilterWhere(['like', 'user_calon.nama_calon', $this->calon_id])
+            ->andFilterWhere(['like', 'user_interviewer.nama_pewawancara', $this->interviewer_id])
+            ->andFilterWhere(['like', 'tanggal_wawancara', $this->tanggal_wawancara])
+            ->andFilterWhere(['like', 'catatan', $this->catatan]);
+
+        return $dataProvider;
+    }
 }

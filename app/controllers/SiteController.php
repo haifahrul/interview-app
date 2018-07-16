@@ -96,23 +96,24 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        if (Yii::$app->user->can('Administrator') || Yii::$app->user->can('Super User')) {
-            $searchModel = new UserCalonSearch();
-            $dataProvider = $searchModel->searchBeranda(Yii::$app->request->queryParams);
+        return $this->redirect(['/jadwal-wawancara/index']);
+        // if (Yii::$app->user->can('Administrator') || Yii::$app->user->can('Super User')) {
+        //     $searchModel = new UserCalonSearch();
+        //     $dataProvider = $searchModel->searchBeranda(Yii::$app->request->queryParams);
 
-            return $this->render('index', [
-                'searchModel' => $searchModel,
-                'dataProvider' => $dataProvider,
-            ]);
-        } else if (Yii::$app->user->can('Interviewer')) {
-            $searchModel = new JadwalWawancaraSearch();
-            $dataProvider = $searchModel->searchInterviewer(Yii::$app->request->queryParams);
+        //     return $this->render('index', [
+        //         'searchModel' => $searchModel,
+        //         'dataProvider' => $dataProvider,
+        //     ]);
+        // } else if (Yii::$app->user->can('Interviewer')) {
+        //     $searchModel = new JadwalWawancaraSearch();
+        //     $dataProvider = $searchModel->searchInterviewer(Yii::$app->request->queryParams);
 
-            return $this->render('index-interviewer', [
-                'searchModel' => $searchModel,
-                'dataProvider' => $dataProvider,
-            ]);
-        }
+        //     return $this->render('index-interviewer', [
+        //         'searchModel' => $searchModel,
+        //         'dataProvider' => $dataProvider,
+        //     ]);
+        // }
     }
 
     /**

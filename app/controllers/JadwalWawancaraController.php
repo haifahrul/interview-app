@@ -8,6 +8,7 @@ use yii\filters\VerbFilter;
 use yii\helpers\Json;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\helpers\ArrayHelper;
 
 /**
  * created haifahrul
@@ -29,13 +30,23 @@ class JadwalWawancaraController extends Controller
 
     public function actionIndex()
     {
-        $searchModel = new JadwalWawancaraSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        if (Yii::$app->user->can('Administrator') || Yii::$app->user->can('Super User')) {
+            $searchModel = new JadwalWawancaraSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
+            return $this->render('index', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+            ]);
+        } else if (Yii::$app->user->can('Interviewer')) {
+            $searchModel = new JadwalWawancaraSearch();
+            $dataProvider = $searchModel->searchInterviewer(Yii::$app->request->queryParams);
+
+            return $this->render('index-interviewer', [
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
-        ]);
+            ]);
+        }
     }
 
     public function actionView($id)
@@ -169,6 +180,33 @@ class JadwalWawancaraController extends Controller
         echo Json::encode([
             'status' => $status,
         ]);
+    }
+
+    public function actionAjaxGetListInterviewer() {
+        $calonId = $_POST['calon_id'];
+
+        $dataFormulir = Yii::$app->db->createCommand('SELECT interviewer_id FROM formulir f WHERE f.calon_id=:calon_id')->bindValue(':calon_id', $calonId)->queryAll();
+        
+        $interviewerId = [];
+        foreach ($dataFormulir as $key => $value) {
+            $interviewerId[] = $value['interviewer_id'];
+        }
+
+        $dataJadwal = Yii::$app->db->createCommand('SELECT user_interviewer_id FROM jadwal_wawancara f WHERE f.user_calon_id=:user_calon_id')->bindValue(':user_calon_id', $calonId)->queryAll();
+        
+        foreach ($dataJadwal as $key => $value) {
+            $interviewerId[] = $value['user_interviewer_id'];
+        }
+
+        $dataInterviewer = (new \yii\db\Query())
+            ->select(['id', 'nama_pewawancara'])
+            ->from('user_interviewer')
+            ->where(['not in', 'id', $interviewerId])
+            ->all();
+
+        $data = ArrayHelper::map($dataInterviewer, 'id', 'nama_pewawancara');
+
+        echo json_encode($data);
     }
 
     protected function findModel($id)

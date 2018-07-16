@@ -26,9 +26,9 @@ $this->params['title'] = 'List'.$this->title;
             ]); ?>
                     </div>
                     <?php 
-        if(Helper::checkRoute('create')){
-            echo Html::a('<i class="glyphicon glyphicon-plus glyphicon-sm"></i> Create ' , ['create'], ['data-pjax'=>0,'class' => 'btn btn-primary btn-sm btn-tambah1']);
-        }
+        // if(Helper::checkRoute('create')){
+        //     echo Html::a('<i class="glyphicon glyphicon-plus glyphicon-sm"></i> Create ' , ['create'], ['data-pjax'=>0,'class' => 'btn btn-primary btn-sm btn-tambah1']);
+        // }
         ?>
                 </p>
                 <div class="clearfix"></div>

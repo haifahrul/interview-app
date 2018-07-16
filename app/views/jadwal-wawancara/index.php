@@ -20,15 +20,26 @@ $this->params['title'] = 'List'.$this->title;
     <div class="jadwal-wawancara-index">
                         <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
         <p>
+        <h3> Jadwal Wawancara </h3>
         <div class="pull-right">
 <?=  \app\widgets\PageSize::widget([
             'id'=>'select_page'
             ]); ?>
         </div>
-        <?= Html::a('<i class="glyphicon glyphicon-plus glyphicon-sm"></i> Create ' , ['create'],
-        ['data-pjax'=>0,'class' => 'btn btn-primary btn-sm btn-tambah1']) ?> &nbsp &nbsp
-<?= Html::button('<span class="glyphicon glyphicon-remove glyphicon-sm"></span> Delete',
-        ['data-pjax'=>0, 'class' => 'btn btn-danger btn-sm', 'title'=>'hapus','id'=>'btn-deletes']) ?>
+        
+        <?php 
+        if(Helper::checkRoute('delete')){
+            echo Html::a('<i class="glyphicon glyphicon-plus glyphicon-sm"></i> Create ' , ['create'],
+            ['data-pjax'=>0,'class' => 'btn btn-primary btn-sm btn-tambah1']);
+        }
+        ?> &nbsp &nbsp
+        
+        <?php 
+        if(Helper::checkRoute('delete')){
+            Html::button('<span class="glyphicon glyphicon-remove glyphicon-sm"></span> Delete', ['data-pjax'=>0, 'class' => 'btn btn-danger btn-sm', 'title'=>'hapus','id'=>'btn-deletes']);
+        }
+        ?>
+
         </p>
         <div class="clearfix"></div>
         <div class="table-responsive">
@@ -60,9 +71,10 @@ $this->params['title'] = 'List'.$this->title;
                 'dataProvider' => $dataProvider,
     'filterModel' => $searchModel,
         'columns' => [
-                ['class' => 'yii\grid\CheckboxColumn',
-                'name'=>'select'
-                ],
+                // [
+                //     'class' => 'yii\grid\CheckboxColumn',
+                //     'name'=>'select'
+                // ],
                 ['class' => 'yii\grid\SerialColumn',
                 'header'=>'No',
                 'contentOptions' =>['class' =>'text-center' ],

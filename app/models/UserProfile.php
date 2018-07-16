@@ -107,11 +107,19 @@ class UserProfile extends \yii\db\ActiveRecord {
     }
 
     public static function getImageAvatar() {
-	if (!empty(Yii::$app->user->identity->userProfile->avatar) && file_exists(Yii::$app->params['uploadsPath'] . '/avatar/' . Yii::$app->user->identity->userProfile->avatar)) {
-	    return Yii::$app->params['uploadsUrl'] . '/avatar/' . Yii::$app->user->identity->userProfile->avatar;
-	} else {
-	    return Yii::$app->params['defaultImage'];
-	}
+		if (Yii::$app->user->can('Interviewer')) {
+			if (!empty(Yii::$app->user->identity->userInterviewer->avatar) && file_exists(Yii::$app->params['uploadsPath'] . '/avatar/' . Yii::$app->user->identity->userInterviewer->avatar)) {
+				return Yii::$app->params['uploadsUrl'] . '/avatar/' . Yii::$app->user->identity->userInterviewer->avatar;
+			} else {
+				return Yii::$app->params['defaultImage'];
+			}
+		} else {
+			if (!empty(Yii::$app->user->identity->userProfile->avatar) && file_exists(Yii::$app->params['uploadsPath'] . '/avatar/' . Yii::$app->user->identity->userProfile->avatar)) {
+				return Yii::$app->params['uploadsUrl'] . '/avatar/' . Yii::$app->user->identity->userProfile->avatar;
+			} else {
+				return Yii::$app->params['defaultImage'];
+			}
+		}
     }
 
     public function getFullname() {

@@ -187,18 +187,18 @@ $(document).ready(function () {
     });
 });
 
-function logData() {
-    $("#logdata1search-apps_id, #logdata2search-apps_id, #logdata3search-apps_id").change(function () {
-        var appsId = $(this).val();
-
+function getListInterviewer() {
+    $("#jadwalwawancara-user_calon_id").change(function () {
+        var id = $(this).val();
+        
         $.ajax({
             type: "POST",
-            url: '/area/ajax-get-area-list',
-            data: {apps_id: appsId},
+            url: '/jadwal-wawancara/ajax-get-list-interviewer',
+            data: {calon_id: id},
             success: function (data) {
-                $('#logdata1search-area, #logdata2search-area, #logdata3search-area').find('option').remove().end().append('<option value=""></option>').val('');
+                $('#jadwalwawancara-user_interviewer_id').find('option').remove().end().append('<option value=""></option>').val('');
                 $.each(JSON.parse(data), function (key, value) {
-                    $("#logdata1search-area, #logdata2search-area, #logdata3search-area").append('<option value="' + key + '">' + key + '</option>');
+                    $("#jadwalwawancara-user_interviewer_id").append('<option value="' + key + '">' + value + '</option>');
                 });
             },
         });
@@ -206,26 +206,26 @@ function logData() {
         return false;
     });
 
-    var apps_id = $("#logdata1search-apps_id, #logdata2search-apps_id, #logdata3search-apps_id").val();
-    if (apps_id !== '') {
-        $.ajax({
-            type: "POST",
-            url: '/area/ajax-get-area-list',
-            data: {apps_id: apps_id},
-            success: function (data) {
-                $('#logdata1search-area, #logdata2search-area, #logdata3search-area').find('option').remove().end().append('<option value=""></option>').val('');
-                var appsName = $("#logdata1-value-area, #logdata2-value-area, #logdata3-value-area").val();
-                $.each(JSON.parse(data), function (key, value) {
+    // var apps_id = $("#logdata1search-apps_id, #logdata2search-apps_id, #logdata3search-apps_id").val();
+    // if (apps_id !== '') {
+    //     $.ajax({
+    //         type: "POST",
+    //         url: '/area/ajax-get-area-list',
+    //         data: {apps_id: apps_id},
+    //         success: function (data) {
+    //             $('#logdata1search-area, #logdata2search-area, #logdata3search-area').find('option').remove().end().append('<option value=""></option>').val('');
+    //             var appsName = $("#logdata1-value-area, #logdata2-value-area, #logdata3-value-area").val();
+    //             $.each(JSON.parse(data), function (key, value) {
 
-                    if (appsName === key) {
-                        $("#logdata1search-area, #logdata2search-area, #logdata3search-area").append('<option value="' + key + '" selected>' + key + '</option>');
-                    } else {
-                        $("#logdata1search-area, #logdata2search-area, #logdata3search-area").append('<option value="' + key + '">' + key + '</option>');
-                    }
-                });
-            },
-        });
+    //                 if (appsName === key) {
+    //                     $("#logdata1search-area, #logdata2search-area, #logdata3search-area").append('<option value="' + key + '" selected>' + key + '</option>');
+    //                 } else {
+    //                     $("#logdata1search-area, #logdata2search-area, #logdata3search-area").append('<option value="' + key + '">' + key + '</option>');
+    //                 }
+    //             });
+    //         },
+    //     });
 
-        return false;
-    }
+    //     return false;
+    // }
 }
