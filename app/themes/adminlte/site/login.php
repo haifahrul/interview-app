@@ -63,11 +63,10 @@ $fieldOptions2 = [
                         using Facebook</a>
                     <a href="#" class="btn btn-block btn-social btn-google-plus btn-flat"><i class="fa fa-google-plus"></i> Sign
                         in using Google+</a>
-                </div>
-                 /.social-auth-links 
-        
-                <a href="#">I forgot my password</a><br>
-                <a href="register.html" class="text-center">Register a new membership</a>-->
+                </div>-->
+        <hr>
+        <a href="#">Lupa password</a><br>
+        <!--<a href="register.html" class="text-center">Register a new membership</a>-->
 
     </div>
     <!-- /.login-box-body -->

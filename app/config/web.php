@@ -1,4 +1,5 @@
 <?php
+
 require(__DIR__ . '/bootstrap.php');
 $params = require(__DIR__ . '/params.php');
 $modules = require(__DIR__ . '/modules.php');
@@ -6,7 +7,7 @@ $permissions = require(__DIR__ . '/permissions.php');
 $db = require(__DIR__ . '/db.php');
 
 $config = [
-    'id' => 'wawancaraftig',
+    'id' => 'wawancarafti',
     'name' => 'wawancarafti',
     'homeUrl' => '/',
     'timeZone' => 'Asia/Jakarta',
@@ -113,7 +114,7 @@ $config = [
             'class' => 'yii\web\UrlManager',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            'enableStrictParsing' => FALSE, // membatasi akses hanya pada aturan yang dikonfigurasi            
+            'enableStrictParsing' => FALSE, // membatasi akses hanya pada aturan yang dikonfigurasi
             'rules' => [
                 '/' => 'site/index',
                 '/dashboard' => 'site/dashboard',
@@ -241,8 +242,8 @@ if (YII_ENV_DEV) {
     $config['bootstrap'][] = 'debug';
     $config['modules']['debug'] = [
         'class' => 'yii\debug\Module',
-        // uncomment the following to add your IP if you are not connecting from localhost.
-        //'allowedIPs' => ['127.0.0.1', '::1'],
+            // uncomment the following to add your IP if you are not connecting from localhost.
+            // 'allowedIPs' => ['127.0.0.1', '::1'],
     ];
 
     $config['bootstrap'][] = 'gii';

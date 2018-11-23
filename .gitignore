@@ -34,3 +34,5 @@ tests/_support/_generated
 /app/config/web-local.php
 /yii
 /index.php
+
+.log
