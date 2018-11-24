@@ -1,4 +1,5 @@
 <?php
+
 namespace app\modules\admin\controllers;
 
 use Yii;
@@ -19,11 +20,9 @@ use app\components\Model;
 /**
  * created haifahrul
  */
-class MulaiInterviewController extends Controller
-{
+class MulaiInterviewController extends Controller {
 
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -34,28 +33,25 @@ class MulaiInterviewController extends Controller
         ];
     }
 
-    public function beforeAction($action) 
-    { 
-        $this->enableCsrfValidation = false; 
-        return parent::beforeAction($action); 
+    public function beforeAction($action) {
+        $this->enableCsrfValidation = false;
+        return parent::beforeAction($action);
     }
 
-    public function actionView($id)
-    {
+    public function actionView($id) {
         exit(var_dump($id));
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('view', [
-                    'model' => $this->findModel($id),
+                        'model' => $this->findModel($id),
             ]);
         } else {
             return $this->render('view', [
-                    'model' => $this->findModel($id),
+                        'model' => $this->findModel($id),
             ]);
         }
     }
 
-    public function actionCreate($id)
-    {
+    public function actionCreate($id) {
         // CHeck if calon sudah di interview
         if (empty(JadwalWawancara::findOne(['id' => $id, 'status' => 1]))) {
             $model = new Formulir();
@@ -101,22 +97,21 @@ class MulaiInterviewController extends Controller
                                 $skor[] = $arrayKomPosPenilaian[$key];
                             }
                         }
-                        
+
                         $modelJadwal->status = 1; // Sudah di wawancara
                         $modelJadwal->update();
 
                         // $this->findModelCalon($model->);
-
                         // Hitung Nilai
                         $jumlahPertanyaan = count($skor) * 7;
                         $skor = array_sum($skor);
-                        $x_rataRataIdeal = number_format((int)$jumlahPertanyaan / 2, 2);
+                        $x_rataRataIdeal = number_format((int) $jumlahPertanyaan / 2, 2);
                         $s_tandarDeviasi = number_format($x_rataRataIdeal / 3, 2);
                         $z_nilai = 1.00;
-                        
+
                         $min = number_format($x_rataRataIdeal - ($z_nilai * $s_tandarDeviasi), 2);
                         $max = number_format($x_rataRataIdeal + ($z_nilai * $s_tandarDeviasi), 2);
-                        
+
                         $model->nilai = $skor;
                         if ($skor < $min) {
                             $model->keputusan_id = 3; // Ditolak
@@ -130,7 +125,7 @@ class MulaiInterviewController extends Controller
 
                         $transaction->commit();
                         Yii::$app->session->setFlash('success', ' Data telah disimpan!');
-                        return $this->redirect(['/formulir/view', 'id' => $model->id]);
+                        return $this->redirect(['/admin/formulir/view', 'id' => $model->id]);
                     }
                 } catch (Exception $e) {
                     $transaction->rollback();
@@ -139,29 +134,28 @@ class MulaiInterviewController extends Controller
                 }
             } else if ($is_ajax) {
                 return $this->renderAjax('create', [
-                        'model' => $model,
-                        'modelJadwal' => $modelJadwal,
-                        'modelKriPen' => $modelKriPen,
-                        'modelKomPos' => $modelKomPos,
-                        'modelAskepPenilaian' => $modelAskepPenilaian
+                            'model' => $model,
+                            'modelJadwal' => $modelJadwal,
+                            'modelKriPen' => $modelKriPen,
+                            'modelKomPos' => $modelKomPos,
+                            'modelAskepPenilaian' => $modelAskepPenilaian
                 ]);
             } else {
                 return $this->render('create', [
-                        'model' => $model,
-                        'modelJadwal' => $modelJadwal,
-                        'modelKriPen' => $modelKriPen,
-                        'modelKomPos' => $modelKomPos,
-                        'modelAskepPenilaian' => $modelAskepPenilaian
+                            'model' => $model,
+                            'modelJadwal' => $modelJadwal,
+                            'modelKriPen' => $modelKriPen,
+                            'modelKomPos' => $modelKomPos,
+                            'modelAskepPenilaian' => $modelAskepPenilaian
                 ]);
             }
         } else {
             Yii::$app->session->setFlash('danger', ' Data yang Anda cari tidak ditemukan atau Kandidat sudah di Wawancara!');
-            return $this->redirect(['/site/index']);
+            return $this->redirect(['/admin/site/index']);
         }
     }
 
-    protected function findModel($id)
-    {
+    protected function findModel($id) {
         if (($model = Formulir::findOne($id)) !== null) {
             return $model;
         } else {
@@ -169,8 +163,7 @@ class MulaiInterviewController extends Controller
         }
     }
 
-    protected function findModelJadwal($id)
-    {
+    protected function findModelJadwal($id) {
         if (($model = JadwalWawancara::findOne($id)) !== null) {
             return $model;
         } else {
@@ -178,8 +171,7 @@ class MulaiInterviewController extends Controller
         }
     }
 
-    protected function findModelCalon($id)
-    {
+    protected function findModelCalon($id) {
         if (($model = UserCalon::findOne($id)) !== null) {
             return $model;
         } else {
@@ -187,12 +179,12 @@ class MulaiInterviewController extends Controller
         }
     }
 
-    protected function findModelInterviewer($id)
-    {
+    protected function findModelInterviewer($id) {
         if (($model = UserInterviewer::findOne(['user_id' => $id])) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
 }
