@@ -57,7 +57,7 @@ class UserInterviewer extends \yii\db\ActiveRecord
             [['user_id', 'jabatan_id', 'fakultas_unit_id', 'is_active'], 'integer'],
             [['nama_pewawancara', 'jabatan_id', 'fakultas_unit_id', 'is_active'], 'required'],
             [['nama_pewawancara'], 'string', 'max' => 50],
-            [['avatar'], 'string', 'max' => 150],
+//            [['avatar'], 'string', 'max' => 150],
             [['fakultas_unit_id'], 'exist', 'skipOnError' => true, 'targetClass' => FakultasUnit::className(), 'targetAttribute' => ['fakultas_unit_id' => 'id']],
             [['jabatan_id'], 'exist', 'skipOnError' => true, 'targetClass' => Jabatan::className(), 'targetAttribute' => ['jabatan_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
@@ -75,7 +75,7 @@ class UserInterviewer extends \yii\db\ActiveRecord
             'nama_pewawancara' => Yii::t('app', 'Nama Pewawancara'),
             'jabatan_id' => Yii::t('app', 'Jabatan'),
             'fakultas_unit_id' => Yii::t('app', 'Fakultas/Unit'),
-            'avatar' => Yii::t('app', 'Avatar'),
+//            'avatar' => Yii::t('app', 'Avatar'),
             'is_active' => Yii::t('app', 'Status'),
         ];
     }
