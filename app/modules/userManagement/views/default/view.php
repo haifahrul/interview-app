@@ -41,7 +41,7 @@ $formatter = Yii::$app->formatter;
                     <label class="col-sm-5 control-label">Company</label>
 
                     <div class="col-sm-7">
-                        <?= $model->company['name'] ?>
+                        <?php // $model->company['name'] ?>
                     </div>
                 </div>
                 <div class="form-group">

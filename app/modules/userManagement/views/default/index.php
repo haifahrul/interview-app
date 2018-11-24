@@ -46,14 +46,14 @@ $rolesItem = ArrayHelper::map($data, 'name', 'name');
                 ['class' => 'yii\grid\SerialColumn'],
                 //'id',
                 'apps_id',
-                [
-                    'label' => 'Company',
-//                    'attribute' => 'apps_id',
-                    'format' => 'raw',
-                    'value' => function($data) {
-                        return $data->company['name'];
-                    }
-                ],
+//                [
+//                    'label' => 'Company',
+////                    'attribute' => 'apps_id',
+//                    'format' => 'raw',
+//                    'value' => function($data) {
+//                        return $data->company['name'];
+//                    }
+//                ],
                 [
                     'attribute' => 'username',
                     'format' => 'raw',

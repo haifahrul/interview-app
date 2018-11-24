@@ -4,7 +4,6 @@ use yii\helpers\Html;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
-
 ?>
 
 <header class="main-header">        
@@ -18,7 +17,6 @@ use yii\helpers\Html;
                     <?php
                     //$img = Yii::$app->params['publicUrl'] . '/images/logo.jpeg';
                     //echo Html::a('<img style="width: 30px;" src="' . $img . '">', Yii::$app->homeUrl, ['class' => 'logo'])
-
                     ?>
                 </li>
                 <!-- Messages: style can be found in dropdown.less-->
@@ -231,7 +229,9 @@ use yii\helpers\Html;
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <img src="<?= app\models\UserProfile::getImageAvatar() ?>" class="user-image" alt="User Image"/>
-                        <span class="hidden-xs"><?= isset(Yii::$app->user->identity->company->name) ? Yii::$app->user->identity->company->name : '-' ?></span>
+                        <span class="hidden-xs">
+                            <?php // isset(Yii::$app->user->identity->company->name) ? Yii::$app->user->identity->company->name : '-'  ?>
+                        </span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
