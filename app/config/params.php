@@ -2,7 +2,7 @@
 
 return [
     'adminEmail' => 'admin@example.com',
-    'resetEmail' => 'no-reply@afsyah.com',
+    'noReplyEmail' => 'no-reply@afsyah.com',
     // Storage
     'uploadsPath' => Yii::getAlias('@web') . '/uploads/',
     'publicPath' => Yii::getAlias('@web') . '/',

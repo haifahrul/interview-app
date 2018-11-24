@@ -26,7 +26,7 @@ $fieldOptions2 = [
         <img width="100%" src="<?= Yii::$app->urlManager->baseUrl . '/images/image3.jpg' ?>">        
     </div> -->
     <div class="text-center">
-        <h2>Login</h2>
+        <h2><b>Login</b></h2>
     </div>
     <hr>
     <div class="login-box-body">        
@@ -71,7 +71,6 @@ $fieldOptions2 = [
                 </div>-->
         <hr>
         <a href="<?= Url::to(['site/forgot-password']) ?>">Lupa password</a><br>
-        <a href="<?= Url::to(['site/apply-lamaran']) ?>">Apply Lamaran</a><br>
         <!--<a href="register.html" class="text-center">Register a new membership</a>-->
 
     </div>

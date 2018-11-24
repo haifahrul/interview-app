@@ -1,4 +1,5 @@
 <?php
+
 namespace app\models;
 
 use Yii;
@@ -25,8 +26,10 @@ use yii\helpers\Url;
  * @property KeputusanTipe $keputusan
  * @property User $user
  */
-class UserCalon extends \yii\db\ActiveRecord
-{
+class UserCalon extends \yii\db\ActiveRecord {
+
+    public $verifyCode;
+
     // public function behaviors() {
     //     return [
     //         [
@@ -47,16 +50,14 @@ class UserCalon extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'user_calon';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['user_id', 'keputusan_id'], 'integer'],
             ['usia', 'number'],
@@ -73,12 +74,11 @@ class UserCalon extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'id' => Yii::t('app', 'ID'),
             'user_id' => Yii::t('app', 'User ID'),
-            'nama_calon' => Yii::t('app', 'Nama Calon'),
+            'nama_calon' => Yii::t('app', 'Nama Lengkap'),
             'usia' => Yii::t('app', 'Usia'),
             'pendidikan' => Yii::t('app', 'Pendidikan'),
             'jabatan_yang_dilamar' => Yii::t('app', 'Jabatan yang Dilamar'),
@@ -92,21 +92,18 @@ class UserCalon extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getKeputusan()
-    {
+    public function getKeputusan() {
         return $this->hasOne(KeputusanTipe::className(), ['id' => 'keputusan_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getUser()
-    {
+    public function getUser() {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 
-    public static function getStatus($param = null)
-    {
+    public static function getStatus($param = null) {
         $array = [
             1 => 'Sudah di Interview',
             2 => 'Belum di Interview'
@@ -115,15 +112,14 @@ class UserCalon extends \yii\db\ActiveRecord
         return !empty($param) ? $array[$param] : $array;
     }
 
-    public static function getCalonList()
-    {
+    public static function getCalonList() {
         $query = Yii::$app->db->createCommand("SELECT id, concat(nama_calon, ' (Telp: ', phone, ')') as nama FROM user_calon WHERE `status`=2")->queryAll();
 
         return ArrayHelper::map($query, 'id', 'nama');
     }
 
-    public function downloadFile($filename, $namaCalon)
-    {
+    public function downloadFile($filename, $namaCalon) {
         return '<a target="_blank" href="' . Url::to(['/user-calon/download-cv', 'f' => $filename, 'i' => $namaCalon]) . '"> Download CV </a>';
     }
+
 }

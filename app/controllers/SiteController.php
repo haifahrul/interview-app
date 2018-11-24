@@ -17,6 +17,9 @@ use app\models\search\UserCalonSearch;
 use app\models\search\JadwalWawancaraSearch;
 use \app\models\ForgotPasswordForm;
 use \app\models\User;
+use \app\models\UserCalon;
+use \app\models\UploadCv;
+use \yii\web\UploadedFile;
 
 //class SiteController extends \app\modules\log\controllers\MainController 
 class SiteController extends Controller {
@@ -206,7 +209,7 @@ class SiteController extends Controller {
                 ];
 
                 $mailer = Yii::$app->mailer->compose('@app/mail/user/reset-password', ['params' => $params])
-                        ->setFrom(Yii::$app->params['resetEmail'])
+                        ->setFrom(Yii::$app->params['noReplyEmail'])
                         ->setTo($email)
                         ->setSubject('Informasi Pembuatan Akun Anda - ' . Yii::$app->name);
                 // End Send Email
@@ -232,10 +235,56 @@ class SiteController extends Controller {
     }
 
     public function actionApplyLamaran() {
-//        \Yii::$app->homeUrl = '/dashboard/main/index';
-        Yii::$app->layoutPath = '@app/views/layouts';
-        Yii::$app->layout = 'main';
-        return $this->render('apply-lamaran');
+        $model = new UserCalon();
+        $modelUploadCv = new UploadCv();
+        $model->status = 2;
+        $postdata = Yii::$app->request->post();
+
+        if ($model->load($postdata) && $model->validate()) {
+            $transaction = Yii::$app->db->beginTransaction();
+            try {
+
+                $modelUploadCv->fileCv = UploadedFile::getInstance($modelUploadCv, 'fileCv');
+                if ($modelUploadCv->upload()) {
+                    // if file is uploaded successfully
+                    $model->cv = $modelUploadCv->filename;
+
+                    // Send Email
+                    $params = [
+                        'nama' => $model->nama_calon,
+                        'usia' => $model->usia,
+                        'pendidikan' => $model->pendidikan,
+                        'jabatan' => $model->jabatan_yang_dilamar,
+                        'no_telp' => $model->phone,
+                        'cv' => $model->cv
+                    ];
+
+                    $mailer = Yii::$app->mailer->compose('@app/mail/user/notif-apply-pelamar', ['params' => $params])
+                            ->setFrom(Yii::$app->params['noReplyEmail'])
+                            ->setTo($model->email)
+                            ->setSubject('Informasi Data yang Anda masukkan - ' . Yii::$app->name);
+                    // End Send Email
+
+                    if ($mailer->send() && $model->save()) {
+                        $transaction->commit();
+                        Yii::$app->session->setFlash('success', ' Data telah disimpan! Silahkan cek email Anda');
+                        return $this->redirect(['index']);
+                    } else {
+                        if (!empty($model->cv) && file_exists($model->cv)) {
+                            unlink($model->cv);
+                        }
+                    }
+                }
+            } catch (Exception $e) {
+                $transaction->rollback();
+                throw $e;
+            }
+        }
+
+        return $this->render('apply-lamaran', [
+                    'model' => $model,
+                    'modelUploadCv' => $modelUploadCv,
+        ]);
     }
 
     //    public function actionFlushCache() {
