@@ -11,7 +11,8 @@ return [
 //        'class' => '\hscstudio\mimin\Module',
 //    ],
     'webmaster' => [
-        'class' => 'app\widgets\admin\Module',
+//        'class' => 'app\widgets\admin\Module',
+        'class' => 'mdm\admin\Module',
         'layout' => 'left-menu',
         'mainLayout' => '@app/themes/adminlte/layouts/main.php',
         'menus' => [

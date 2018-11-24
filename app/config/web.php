@@ -30,13 +30,13 @@ $config = [
         'session' => [
             'class' => 'yii\web\Session',
             // 'cookieParams' => ['httponly' => true, 'lifetime' => 3600 * 4],
-            // 'timeout' => 3600 * 4, //session expire
+             'timeout' => 3600 * 1, //session expire
             'useCookies' => true,
         ],
-//        'cache' => [
-//            'class' => 'yii\caching\FileCache',
-//            'cachePath' => '@app/runtime/cache'
-//        ],
+        'cache' => [
+            'class' => 'yii\caching\FileCache',
+            'cachePath' => '@app/runtime/cache'
+        ],
 //        'cache' => [
 //            'class' => 'yii\caching\FileCache',
 //            'class' => 'yii\caching\MemCache',
@@ -51,7 +51,7 @@ $config = [
         'user' => [
             'identityClass' => 'app\models\User',
 //            'enableAutoLogin' => false,
-//            'authTimeout' => 3600, // auth expire     
+            'authTimeout' => 3600, // auth expire     
         ],
 //        'user' => [
 //            'identityClass' => 'mdm\admin\models\User',
