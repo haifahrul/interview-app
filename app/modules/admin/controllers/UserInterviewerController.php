@@ -1,4 +1,5 @@
 <?php
+
 namespace app\modules\admin\controllers;
 
 use Yii;
@@ -14,11 +15,9 @@ use app\modules\userManagement\models\AuthAssignment;
 /**
  * created haifahrul
  */
-class UserInterviewerController extends Controller
-{
+class UserInterviewerController extends Controller {
 
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -29,32 +28,29 @@ class UserInterviewerController extends Controller
         ];
     }
 
-    public function actionIndex()
-    {
+    public function actionIndex() {
         $searchModel = new UserInterviewerSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-                'searchModel' => $searchModel,
-                'dataProvider' => $dataProvider,
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
         ]);
     }
 
-    public function actionView($id)
-    {
+    public function actionView($id) {
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('view', [
-                    'model' => $this->findModel($id),
+                        'model' => $this->findModel($id),
             ]);
         } else {
             return $this->render('view', [
-                    'model' => $this->findModel($id),
+                        'model' => $this->findModel($id),
             ]);
         }
     }
 
-    public function actionCreate()
-    {
+    public function actionCreate() {
         $model = new UserInterviewer();
         $modelUser = new User();
         $modelUser->scenario = 'createInterviewer';
@@ -77,9 +73,9 @@ class UserInterviewerController extends Controller
                 ];
 
                 $mailer = Yii::$app->mailer->compose('@app/mail/user/information-account', ['params' => $params])
-                    ->setFrom(Yii::$app->params['resetEmail'])
-                    ->setTo($modelUser->email)
-                    ->setSubject('Informasi Pembuatan Akun Anda - ' . Yii::$app->name);
+                        ->setFrom(Yii::$app->params['resetEmail'])
+                        ->setTo($modelUser->email)
+                        ->setSubject('Informasi Pembuatan Akun Anda - ' . Yii::$app->name);
                 // End Send Email
 
                 if ($modelUser->validate() && $modelUser->save()) {
@@ -108,19 +104,18 @@ class UserInterviewerController extends Controller
         if ($is_ajax) {
             //render view
             return $this->renderAjax('create', [
-                    'model' => $model,
-                    'modelUser' => $modelUser,
+                        'model' => $model,
+                        'modelUser' => $modelUser,
             ]);
         } else {
             return $this->render('create', [
-                    'model' => $model,
-                    'modelUser' => $modelUser,
+                        'model' => $model,
+                        'modelUser' => $modelUser,
             ]);
         }
     }
 
-    public function actionUpdate($id)
-    {
+    public function actionUpdate($id) {
         $model = $this->findModel($id);
         $modelUser = $this->findModelUser($model->user_id);
         $modelUser->scenario = 'createInterviewer';
@@ -136,19 +131,18 @@ class UserInterviewerController extends Controller
 
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('update', [
-                    'model' => $model,
-                    'modelUser' => $modelUser,
+                        'model' => $model,
+                        'modelUser' => $modelUser,
             ]);
         } else {
             return $this->render('update', [
-                    'model' => $model,
-                    'modelUser' => $modelUser,
+                        'model' => $model,
+                        'modelUser' => $modelUser,
             ]);
         }
     }
 
-    public function actionDelete($id)
-    {
+    public function actionDelete($id) {
         $transaction = Yii::$app->db->beginTransaction();
         try {
             $model = $this->findModel($id);
@@ -158,18 +152,22 @@ class UserInterviewerController extends Controller
                 return $this->redirect(['index']);
             else:
                 $transaction->rollback();
+
                 Yii::$app->session->setFlash('warning', 'Data failed removed!');
             endif;
         } catch (Exception $e) {
             $transaction->rollback();
             Yii::$app->session->setFlash('danger', 'Failure, Data failed removed');
+        } catch (\yii\db\IntegrityException $e) {
+            $transaction->rollback();
+            Yii::$app->session->setFlash('danger', 'Failure, Data failed removed');
+            throw new \yii\web\HttpException(500, "Data ini sedang digunakan di menu Jadwal Wawancara dan atau HHasil Wawancara.", 405);
         }
         return $this->redirect(['index']);
     }
 
 // hapus menggunakan ajax
-    public function actionDeleteItems()
-    {
+    public function actionDeleteItems() {
         $status = 0;
         if (isset($_POST['keys'])) {
             $keys = $_POST['keys'];
@@ -192,8 +190,7 @@ class UserInterviewerController extends Controller
         ]);
     }
 
-    protected function findModel($id)
-    {
+    protected function findModel($id) {
         if (($model = UserInterviewer::findOne($id)) !== null) {
             return $model;
         } else {
@@ -201,12 +198,12 @@ class UserInterviewerController extends Controller
         }
     }
 
-    protected function findModelUser($userId)
-    {
+    protected function findModelUser($userId) {
         if (($model = User::findOne($userId)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
 }
