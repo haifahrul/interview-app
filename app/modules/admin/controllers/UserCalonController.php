@@ -1,4 +1,5 @@
 <?php
+
 namespace app\modules\admin\controllers;
 
 use Yii;
@@ -15,11 +16,9 @@ use yii\web\UploadedFile;
 /**
  * created haifahrul
  */
-class UserCalonController extends Controller
-{
+class UserCalonController extends Controller {
 
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -30,42 +29,31 @@ class UserCalonController extends Controller
         ];
     }
 
-    public function actionIndex()
-    {
+    public function actionIndex() {
         $searchModel = new UserCalonSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-                'searchModel' => $searchModel,
-                'dataProvider' => $dataProvider,
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
         ]);
     }
 
-    public function actionView($id)
-    {
+    public function actionView($id) {
         $model = $this->findModel($id);
-
-        if (!empty($model->cv)) {
-            $downloadCv = $model->downloadFile($model->cv, $model->nama_calon);
-        } else {
-            $downloadCv = null;
-        }
 
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('view', [
-                    'model' => $model,
-                    'downloadCv' => $downloadCv,
+                        'model' => $model,
             ]);
         } else {
             return $this->render('view', [
-                    'model' => $model,
-                    'downloadCv' => $downloadCv,
+                        'model' => $model,
             ]);
         }
     }
 
-    public function actionDownloadCv($f, $i)
-    {
+    public function actionDownloadCv($f, $i) {
 
         // The location of the PDF file on the server.
         $filename = Yii::$app->params['uploadsPath'] . 'cv/' . $f;
@@ -81,8 +69,7 @@ class UserCalonController extends Controller
         exit;
     }
 
-    public function actionCreate()
-    {
+    public function actionCreate() {
         $model = new UserCalon();
         $modelUploadCv = new UploadCv();
         $model->status = 2;
@@ -113,19 +100,18 @@ class UserCalonController extends Controller
         if ($is_ajax) {
 //render view
             return $this->renderAjax('create', [
-                    'model' => $model,
-                    'modelUploadCv' => $modelUploadCv,
+                        'model' => $model,
+                        'modelUploadCv' => $modelUploadCv,
             ]);
         } else {
             return $this->render('create', [
-                    'model' => $model,
-                    'modelUploadCv' => $modelUploadCv,
+                        'model' => $model,
+                        'modelUploadCv' => $modelUploadCv,
             ]);
         }
     }
 
-    public function actionUpdate($id)
-    {
+    public function actionUpdate($id) {
         $model = $this->findModel($id);
         $oldFilename = $model->cv;
         $oldFileCv = Yii::$app->params['uploadsPath'] . 'cv/' . $model->cv;
@@ -160,20 +146,19 @@ class UserCalonController extends Controller
         } else {
             if (Yii::$app->request->isAjax) {
                 return $this->renderAjax('update', [
-                        'model' => $model,
-                        'modelUploadCv' => $modelUploadCv,
+                            'model' => $model,
+                            'modelUploadCv' => $modelUploadCv,
                 ]);
             } else {
                 return $this->render('update', [
-                        'model' => $model,
-                        'modelUploadCv' => $modelUploadCv,
+                            'model' => $model,
+                            'modelUploadCv' => $modelUploadCv,
                 ]);
             }
         }
     }
 
-    public function actionDelete($id)
-    {
+    public function actionDelete($id) {
         $model = $this->findModel($id);
         $oldFile = $model->cv;
         $transaction = Yii::$app->db->beginTransaction();
@@ -199,8 +184,7 @@ class UserCalonController extends Controller
     }
 
 // hapus menggunakan ajax
-    public function actionDeleteItems()
-    {
+    public function actionDeleteItems() {
         $status = 0;
         if (isset($_POST['keys'])) {
             $keys = $_POST['keys'];
@@ -223,12 +207,12 @@ class UserCalonController extends Controller
         ]);
     }
 
-    protected function findModel($id)
-    {
+    protected function findModel($id) {
         if (($model = UserCalon::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
 }

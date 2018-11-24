@@ -12,7 +12,6 @@ $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Data Calon'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
-
 ?>
 
 <div class="box">
@@ -24,7 +23,6 @@ $this->params['title'] = $this->title;
             if (Helper::checkRoute('update')) {
                 echo Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary btn-sm']);
             }
-
             ?>
             &nbsp &nbsp
             <?php
@@ -37,7 +35,6 @@ $this->params['title'] = $this->title;
                     ],
                 ]);
             }
-
             ?>
         </p>
         <?=
@@ -59,11 +56,11 @@ $this->params['title'] = $this->title;
                 [
                     'attribute' => 'cv',
                     'format' => 'raw',
-                    'value' => !empty($downloadCv) ? $downloadCv : 'File tidak tersedia'
+                    'value' => !empty($model->cv) ?
+                            Html::a('Download', [Yii::$app->params['uploadUrl'] . 'cv/' . $model->cv], ['target' => '_blank']) : 'File tidak tersedia'
                 ]
             ],
         ])
-
         ?>
     </div>
 </div>
