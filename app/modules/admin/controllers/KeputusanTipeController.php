@@ -1,10 +1,10 @@
 <?php
 
-namespace app\controllers;
+namespace app\modules\admin\controllers;
 
 use Yii;
-use app\models\FakultasUnit;
-    use app\models\search\FakultasUnitSearch;
+use app\models\KeputusanTipe;
+    use app\models\search\KeputusanTipeSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -14,7 +14,7 @@ use yii\helpers\Json;
 * created haifahrul
 */
 
-class FakultasUnitController extends Controller
+class KeputusanTipeController extends Controller
  {
     public function behaviors() {
         return [
@@ -29,7 +29,7 @@ class FakultasUnitController extends Controller
 
 public function actionIndex()
 {
-    $searchModel = new FakultasUnitSearch();
+    $searchModel = new KeputusanTipeSearch();
     $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
     return $this->render('index', [
@@ -55,7 +55,7 @@ return $this->render('view', [
 
 public function actionCreate()
 {
-$model = new FakultasUnit();
+$model = new KeputusanTipe();
 $is_ajax= Yii::$app->request->isAjax;
 $postdata= Yii::$app->request->post(); 
 if ($model->load($postdata)&& $model->validate()) {
@@ -141,14 +141,14 @@ if(isset($_POST['keys'])){
 $keys = $_POST['keys'];
 foreach ($keys as $key ):
 
-$model = FakultasUnit::findOne($key);
+$model = KeputusanTipe::findOne($key);
 if($model->delete())
 $status=1;
 else
 $status=2;
 endforeach;
 
-//$model = FakultasUnit::findOne($keys);
+//$model = KeputusanTipe::findOne($keys);
 //$model->delete();
 //$status=3;
 }
@@ -161,7 +161,7 @@ echo Json::encode([
 
 protected function findModel($id)
 {
-if (($model = FakultasUnit::findOne($id)) !== null) {
+if (($model = KeputusanTipe::findOne($id)) !== null) {
 return $model;
 } else {
 throw new NotFoundHttpException('The requested page does not exist.');

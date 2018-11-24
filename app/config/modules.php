@@ -41,6 +41,9 @@ return [
     'userManagement' => [
         'class' => 'app\modules\userManagement\Module',
     ],
+    'admin' => [
+        'class' => 'app\modules\admin\Module',
+    ],
     'log' => [
         'class' => 'app\modules\log\Module',
     ],

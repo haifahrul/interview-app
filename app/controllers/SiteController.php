@@ -1,4 +1,5 @@
 <?php
+
 namespace app\controllers;
 
 use Yii;
@@ -14,10 +15,16 @@ use app\modules\rekapitulasi\models\JumlahSurat;
 use app\models\UserProfile;
 use app\models\search\UserCalonSearch;
 use app\models\search\JadwalWawancaraSearch;
+use \app\models\ForgotPasswordForm;
 
 //class SiteController extends \app\modules\log\controllers\MainController 
-class SiteController extends Controller
-{
+class SiteController extends Controller {
+//    public function beforeAction($action) {
+//        Yii::$app->layoutPath = '@app/themes/basic';
+//        Yii::$app->layoutPath = '@app/themes/basic';
+//        $this->layout = '@app/themes/basic';
+//        parent::beforeAction($action);
+//    }
 //	public function afterAction($action, $result) {
 //		if ($action->id == 'login') {
 //			\app\modules\log\models\Login::saveLog($action);
@@ -29,8 +36,7 @@ class SiteController extends Controller
     /**
      * @inheritdoc
      */
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             'access' => [
                 'class' => AccessControl::className(),
@@ -55,8 +61,7 @@ class SiteController extends Controller
     /**
      * @inheritdoc
      */
-    public function actions()
-    {
+    public function actions() {
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
@@ -65,15 +70,14 @@ class SiteController extends Controller
                 'class' => 'yii\captcha\CaptchaAction',
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
-            //            'lang' => [
-            //                'class' => 'app\components\actions\SetLocaleAction',
-            //                'locales' => ['en-US', 'id-ID'],
-            //            ]
+                //            'lang' => [
+                //                'class' => 'app\components\actions\SetLocaleAction',
+                //                'locales' => ['en-US', 'id-ID'],
+                //            ]
         ];
     }
 
-    public function actionLang()
-    {
+    public function actionLang() {
         if (isset($_GET['locale'])) {
             $language = $_GET['locale'];
             Yii::$app->language = $language;
@@ -94,13 +98,12 @@ class SiteController extends Controller
      *
      * @return string
      */
-    public function actionIndex()
-    {
-        return $this->redirect(['/jadwal-wawancara/index']);
+    public function actionIndex() {
+        return $this->render('index');
+//        return $this->redirect(['/jadwal-wawancara/index']);
         // if (Yii::$app->user->can('Administrator') || Yii::$app->user->can('Super User')) {
         //     $searchModel = new UserCalonSearch();
         //     $dataProvider = $searchModel->searchBeranda(Yii::$app->request->queryParams);
-
         //     return $this->render('index', [
         //         'searchModel' => $searchModel,
         //         'dataProvider' => $dataProvider,
@@ -108,7 +111,6 @@ class SiteController extends Controller
         // } else if (Yii::$app->user->can('Interviewer')) {
         //     $searchModel = new JadwalWawancaraSearch();
         //     $dataProvider = $searchModel->searchInterviewer(Yii::$app->request->queryParams);
-
         //     return $this->render('index-interviewer', [
         //         'searchModel' => $searchModel,
         //         'dataProvider' => $dataProvider,
@@ -121,9 +123,8 @@ class SiteController extends Controller
      *
      * @return Response|string
      */
-    public function actionLogin()
-    {
-        $this->layout = 'main-login';
+    public function actionLogin() {
+//        $this->layout = 'main-login';
 
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -132,11 +133,15 @@ class SiteController extends Controller
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
 
+            if (YIi::$app->user->can('Super User')) {
+                return $this->redirect(['/admin/site/index']);
+            }
+
             return $this->goBack();
         }
 
         return $this->render('login', [
-                'model' => $model,
+                    'model' => $model,
         ]);
     }
 
@@ -145,8 +150,7 @@ class SiteController extends Controller
      *
      * @return Response
      */
-    public function actionLogout()
-    {
+    public function actionLogout() {
         Yii::$app->user->logout();
 
         return $this->goHome();
@@ -157,8 +161,7 @@ class SiteController extends Controller
      *
      * @return Response|string
      */
-    public function actionContact()
-    {
+    public function actionContact() {
         $model = new ContactForm();
         if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
             Yii::$app->session->setFlash('contactFormSubmitted');
@@ -166,7 +169,7 @@ class SiteController extends Controller
             return $this->refresh();
         }
         return $this->render('contact', [
-                'model' => $model,
+                    'model' => $model,
         ]);
     }
 
@@ -175,16 +178,32 @@ class SiteController extends Controller
      *
      * @return string
      */
-    public function actionAbout()
-    {
+    public function actionAbout() {
         return $this->render('about');
     }
+
+    public function actionForgotPassword() {
+        $model = new ForgotPasswordForm();
+        return $this->render('forgot-password', [
+                    'model' => $model
+        ]);
+    }
+
+    public function actionApplyLamaran() {
+//        \Yii::$app->homeUrl = '/dashboard/main/index';
+        Yii::$app->layoutPath = '@app/views/layouts';
+        Yii::$app->layout = 'main';
+        return $this->render('apply-lamaran');
+    }
+
     //    public function actionFlushCache() {
     //        Yii::$app->cache->flush();
     //        Yii::$app->session->setFlash('success', Yii::t('app', 'Cache flushed'));
     //        return $this->redirect(Yii::$app->request->referrer);
     //    }
-//    public function siteError() {
-//        return $this->render('error');
-//    }
+
+    public function siteError() {
+        return $this->render('error');
+    }
+
 }

@@ -117,9 +117,11 @@ $config = [
             'enableStrictParsing' => FALSE, // membatasi akses hanya pada aturan yang dikonfigurasi
             'rules' => [
                 '/' => 'site/index',
-                '/dashboard' => 'site/dashboard',
                 '/login' => 'site/login',
+                '/dashboard' => 'admin/site/dashboard',
                 '/about' => 'site/about',
+                '/forgot-password' => 'site/forgot-password',
+                '/apply-lamaran' => 'site/apply-lamaran',
                 '<alias:\w+>' => 'site/<alias>',
                 '<controller:\w+>/<id:\d+>' => '<controller>/view',
                 '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
@@ -169,16 +171,16 @@ $config = [
                 NumberFormatter::MAX_FRACTION_DIGITS => 0,
             ]
         ],
-        'view' => [
-            'theme' => [
-                'basePath' => '@app/themes/',
-                'baseUrl' => '@app/themes/',
-                'pathMap' => [
-                    // '@app/views' => '@app/themes/basic',
-                    '@app/views' => '@app/themes/adminlte',
-                ],
-            ],
-        ],
+//        'view' => [
+//            'theme' => [
+//                'basePath' => '@app/themes/',
+//                'baseUrl' => '@app/themes/',
+//                'pathMap' => [
+//                    // '@app/views' => '@app/themes/basic',
+//                    '@app/views' => '@app/themes/adminlte',
+//                ],
+//            ],
+//        ],
         'menus' => [
             'class' => 'app\components\Menus',
         ],

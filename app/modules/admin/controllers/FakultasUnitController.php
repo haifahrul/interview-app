@@ -1,10 +1,10 @@
 <?php
 
-namespace app\controllers;
+namespace app\modules\admin\controllers;
 
 use Yii;
-use app\models\AspekPenilaian;
-    use app\models\search\AspekPenilaianSearch;
+use app\models\FakultasUnit;
+    use app\models\search\FakultasUnitSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -14,7 +14,7 @@ use yii\helpers\Json;
 * created haifahrul
 */
 
-class AspekPenilaianController extends Controller
+class FakultasUnitController extends Controller
  {
     public function behaviors() {
         return [
@@ -29,7 +29,7 @@ class AspekPenilaianController extends Controller
 
 public function actionIndex()
 {
-    $searchModel = new AspekPenilaianSearch();
+    $searchModel = new FakultasUnitSearch();
     $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
     return $this->render('index', [
@@ -55,8 +55,7 @@ return $this->render('view', [
 
 public function actionCreate()
 {
-$model = new AspekPenilaian();
-$model->is_active =  1;
+$model = new FakultasUnit();
 $is_ajax= Yii::$app->request->isAjax;
 $postdata= Yii::$app->request->post(); 
 if ($model->load($postdata)&& $model->validate()) {
@@ -142,14 +141,14 @@ if(isset($_POST['keys'])){
 $keys = $_POST['keys'];
 foreach ($keys as $key ):
 
-$model = AspekPenilaian::findOne($key);
+$model = FakultasUnit::findOne($key);
 if($model->delete())
 $status=1;
 else
 $status=2;
 endforeach;
 
-//$model = AspekPenilaian::findOne($keys);
+//$model = FakultasUnit::findOne($keys);
 //$model->delete();
 //$status=3;
 }
@@ -162,7 +161,7 @@ echo Json::encode([
 
 protected function findModel($id)
 {
-if (($model = AspekPenilaian::findOne($id)) !== null) {
+if (($model = FakultasUnit::findOne($id)) !== null) {
 return $model;
 } else {
 throw new NotFoundHttpException('The requested page does not exist.');

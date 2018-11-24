@@ -12,10 +12,13 @@ return [
 //    'class' => 'app\widgets\admin\components\AccessControl',
     'allowActions' => [
         // add wildcard allowed action here!
+        'site/index',
+        'site/apply-lamaran',
         'site/login',
         'site/logout',
+        'site/forgot-password',
         'debug/*',
     //    'administrator/*', // only in dev mode
-    //  '*'
+//      '*'
     ]
 ];
