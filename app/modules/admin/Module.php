@@ -22,7 +22,7 @@ class Module extends \yii\base\Module {
         parent::init();
         // custom initialization code goes here
         \Yii::$app->homeUrl = '/admin/site/index';
-        $this->layoutPath = '@app/themes/adminlte/layouts';
+        $this->layoutPath = '@app/modules/admin/views/layouts';
         $this->layout = 'main';
         \Yii::configure($this, [
             'components' => [
