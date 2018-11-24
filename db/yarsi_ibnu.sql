@@ -803,11 +803,11 @@ CREATE TABLE IF NOT EXISTS `formulir` (
 -- Dumping data for table yarsi_ibnu.formulir: ~3 rows (approximately)
 /*!40000 ALTER TABLE `formulir` DISABLE KEYS */;
 REPLACE INTO `formulir` (`id`, `calon_id`, `interviewer_id`, `tanggal_wawancara`, `catatan`, `keputusan_id`, `keputusan_interviewer`, `nilai`, `timestamp`) VALUES
-	(52, 1, 5, '2018-07-12', '', 2, 2, 0, '2018-11-24 10:29:41');
+	(52, 1, 5, '2018-07-12', '', 2, 2, 0, '2018-11-24 17:29:41');
 REPLACE INTO `formulir` (`id`, `calon_id`, `interviewer_id`, `tanggal_wawancara`, `catatan`, `keputusan_id`, `keputusan_interviewer`, `nilai`, `timestamp`) VALUES
-	(53, 14, 5, '2018-01-02', 'asd', 3, NULL, 2, '2018-11-24 13:36:12');
+	(53, 14, 5, '2018-01-02', 'asd', 3, NULL, 2, '2018-11-24 20:36:12');
 REPLACE INTO `formulir` (`id`, `calon_id`, `interviewer_id`, `tanggal_wawancara`, `catatan`, `keputusan_id`, `keputusan_interviewer`, `nilai`, `timestamp`) VALUES
-	(54, 5, 5, '2018-01-01', 'mantab', 2, 1, 4, '2018-11-24 13:37:56');
+	(54, 5, 5, '2018-01-01', 'mantab', 2, 1, 4, '2018-11-24 20:37:56');
 /*!40000 ALTER TABLE `formulir` ENABLE KEYS */;
 
 -- Dumping structure for table yarsi_ibnu.formulir_kompetensi_posisi
@@ -1020,9 +1020,9 @@ CREATE TABLE IF NOT EXISTS `jadwal_wawancara` (
 -- Dumping data for table yarsi_ibnu.jadwal_wawancara: ~2 rows (approximately)
 /*!40000 ALTER TABLE `jadwal_wawancara` DISABLE KEYS */;
 REPLACE INTO `jadwal_wawancara` (`id`, `tanggal`, `user_calon_id`, `user_interviewer_id`, `status`, `timestamp`) VALUES
-	(12, '2018-01-01', 5, 5, 1, '2018-11-24 13:37:56');
+	(12, '2018-01-01', 5, 5, 1, '2018-11-24 20:37:56');
 REPLACE INTO `jadwal_wawancara` (`id`, `tanggal`, `user_calon_id`, `user_interviewer_id`, `status`, `timestamp`) VALUES
-	(13, '2018-01-02', 14, 5, 1, '2018-11-24 13:36:12');
+	(13, '2018-01-02', 14, 5, 1, '2018-11-24 20:36:12');
 /*!40000 ALTER TABLE `jadwal_wawancara` ENABLE KEYS */;
 
 -- Dumping structure for table yarsi_ibnu.keputusan_tipe
@@ -1142,8 +1142,6 @@ REPLACE INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `password_re
 REPLACE INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `password_reset_token`, `password_default`, `email`, `status`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES
 	(2, 'admin', NULL, '$2y$13$me/6YM31QFhxlM6DY8UYDuWnYE/EUNXpghP/xVg8ql6JiZX5LteK.', NULL, NULL, NULL, 10, NULL, NULL, NULL, NULL);
 REPLACE INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `password_reset_token`, `password_default`, `email`, `status`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES
-	(10, 'hifahrul@gmail.com', NULL, '$2y$13$KeIkMqRwzMdmQ8tbqiF3/OvSdNRZ6TL1yHskXRpH2fWhCU9TkS8kG', NULL, 'udhvqz', 'hifahrul@gmail.com', 10, 1530634470, 1530814252, NULL, NULL);
-REPLACE INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `password_reset_token`, `password_default`, `email`, `status`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES
 	(15, 'haifahrul@gmail.com', NULL, '$2y$13$V8In0fZUiguxIXi60JS1YOSwb0yi8EU5AYboNFWVRjAxNMFzwAjuy', NULL, 'zrxyhifa', 'haifahrul@gmail.com', 10, 1530636027, 1530636027, NULL, NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 
@@ -1197,8 +1195,6 @@ CREATE TABLE IF NOT EXISTS `user_interviewer` (
 
 -- Dumping data for table yarsi_ibnu.user_interviewer: ~1 rows (approximately)
 /*!40000 ALTER TABLE `user_interviewer` DISABLE KEYS */;
-REPLACE INTO `user_interviewer` (`id`, `user_id`, `nama_pewawancara`, `jabatan_id`, `fakultas_unit_id`, `is_active`) VALUES
-	(4, 10, 'Arsini', 2, 2, 1);
 REPLACE INTO `user_interviewer` (`id`, `user_id`, `nama_pewawancara`, `jabatan_id`, `fakultas_unit_id`, `is_active`) VALUES
 	(5, 15, 'Fahrul Pewawancara', 1, 1, 1);
 /*!40000 ALTER TABLE `user_interviewer` ENABLE KEYS */;
