@@ -36,6 +36,7 @@ AppAsset::register($this);
                 ],
             ]);
 
+            $menuItems[] = ['label' => 'Apply Lamaran', 'url' => 'apply-lamaran'];
             if (Yii::$app->user->isGuest) {
                 $menuItems[] = ['label' => 'Login', 'url' => 'login'];
             } else {
