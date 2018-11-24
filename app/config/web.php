@@ -60,19 +60,6 @@ $config = [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        'mailer' => [
-            'class' => 'yii\swiftmailer\Mailer',
-            'viewPath' => '@app/mail',
-            'useFileTransport' => false, // false agar bisa kirim lewat online
-            'transport' => [
-                'class' => 'Swift_SmtpTransport',
-                'host' => 'mail.afsyah.com',
-                'username' => 'mailer@afsyah.com',
-                'password' => 'L?!#bmnju_#W', // setting sesuai kebutuhan
-                'port' => '587',
-                'encryption' => 'tls',
-            ],
-        ],
 //        'log' => [
 //            'traceLevel' => YII_DEBUG ? 3 : 0,
 //            'targets' => [
