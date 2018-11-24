@@ -74,9 +74,44 @@ class JadwalWawancaraController extends Controller {
             $model->tanggal = date('Y-m-d', strtotime($model->tanggal));
             $transaction = Yii::$app->db->beginTransaction();
             try {
-                if ($model->save()) {
+
+                $kandidat = Yii::$app->db->createCommand('SELECT * FROM user_calon WHERE id=:id')->bindValue(':id', $model->user_calon_id)->queryOne();
+                $interviewer = Yii::$app->db->createCommand('SELECT ui.*, u.email FROM user_interviewer AS ui LEFT JOIN user AS u ON ui.user_id = u.id WHERE ui.id=:id')->bindValue(':id', $model->user_interviewer_id)->queryOne();
+                
+                // Send Email to pelamar
+                $params = [
+                    'is_pelamar' => true,
+                    'kandidat' => $kandidat['nama_calon'],
+                    'tanggal' => $model->tanggal,
+                    'lokasi' => '',
+                ];
+
+                $mailer = Yii::$app->mailer->compose('@app/mail/user/information-jadwal-wawancara', ['params' => $params])
+                        ->setFrom(Yii::$app->params['noReplyEmail'])
+                        ->setTo($kandidat['email'])
+                        ->setSubject('Informasi Jadwal Wawancara - ' . Yii::$app->name);
+                // End Send Email
+
+                // Send Email to Interviwer
+                $params2 = [
+                    'is_pelamar' => false,
+                    'interviewer' => $interviewer['nama_pewawancara'],
+                    'tanggal' => $model->tanggal,
+                    'lokasi' => '',
+                    'kandidat' => $kandidat['nama_calon'],
+                    'phone' => $kandidat['phone'],
+                    'cv' => $kandidat['cv'],
+                ];
+                
+                $mailer2 = Yii::$app->mailer->compose('@app/mail/user/information-jadwal-wawancara', ['params' => $params2])
+                        ->setFrom(Yii::$app->params['noReplyEmail'])
+                        ->setTo($interviewer['email'])
+                        ->setSubject('Informasi Jadwal Wawancara - ' . Yii::$app->name);
+                // End Send Email
+
+                if ($mailer->send() && $mailer2->send() && $model->save()) {
                     $transaction->commit();
-                    Yii::$app->session->setFlash('success', ' Data telah disimpan!');
+                    Yii::$app->session->setFlash('success', ' Data telah disimpan! Dan informasi tersebut telah dikirim ke kandidat dan pewawancara via email.');
                     return $this->redirect(['index']);
                 }
 //end if (save)
@@ -186,7 +221,7 @@ class JadwalWawancaraController extends Controller {
         $dataInterviewer = (new \yii\db\Query())
                 ->select(['id', 'nama_pewawancara'])
                 ->from('user_interviewer')
-                ->where(['not in', 'id', $interviewerId])
+//                ->where(['not in', 'id', $interviewerId])
                 ->all();
 
         $data = ArrayHelper::map($dataInterviewer, 'id', 'nama_pewawancara');

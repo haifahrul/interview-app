@@ -3,7 +3,6 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use app\models\UserCalon;
-use app\models\UserPewawancara;
 use app\models\UserInterviewer;
 
 /* @var $model app\models\JadwalWawancara */
@@ -29,7 +28,7 @@ use app\models\UserInterviewer;
 
             <?= $form->field($model, 'tanggal')->textInput(['type' => 'date']) ?>
             <?= $form->field($model, 'user_calon_id')->dropDownList(UserCalon::getCalonList(), ['prompt' => '']) ?>
-            <?= $form->field($model, 'user_interviewer_id')->dropDownList(['prompt' => '']) ?>
+            <?= $form->field($model, 'user_interviewer_id')->dropDownList(UserInterviewer::getInterviewerList(), ['prompt' => '']) ?>
 
             <div class="col-md-2"></div>
             <div class="form-group">
@@ -42,5 +41,5 @@ use app\models\UserInterviewer;
     </div>
 
 <?php 
-    $this->registerJs('getListInterviewer();');   
+    //$this->registerJs('getListInterviewer();');   
 ?>

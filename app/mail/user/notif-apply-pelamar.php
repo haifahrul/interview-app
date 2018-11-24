@@ -26,9 +26,9 @@ use \yii\helpers\HtmlPurifier;
             <th>No. Telp/HP</th>
             <td><?= $params['no_telp'] ?></td>
         </tr>
-        <tr>
+<!--        <tr>
             <th>Berkas File CV</th>
             <td><a href="<?= $params['cv'] ?>">Download</a></td>
-        </tr>
+        </tr>-->
     </tbody>
 </table>
