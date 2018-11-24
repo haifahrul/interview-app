@@ -24,7 +24,7 @@ $this->params['title'] = $this->title;
         <p>
             <?php
             if (Yii::$app->user->can('Interviewer')) {
-                echo Html::a('<span class="fa fa-arrow-left"></span>', ['/site/index'], ['class' => 'btn btn-default btn-sm', 'title' => Yii::t('app', 'Back')]);
+                echo Html::a('<span class="fa fa-arrow-left"></span>', ['/admin/site/index'], ['class' => 'btn btn-default btn-sm', 'title' => Yii::t('app', 'Back')]);
             } else {
                 echo Buttons::goToIndex();
             }
@@ -33,7 +33,7 @@ $this->params['title'] = $this->title;
             &nbsp &nbsp
             <?php
             if (Yii::$app->user->can('Interviewer')) {
-                echo Html::a('<span class="fa fa-arrow-circle-o-right"></span> Mulai Interview', ['/mulai-interview/create', 'id' => $model->id], ['class' => 'btn btn-success btn-sm', 'title' => Yii::t('app', 'Mulai Interview')]);
+                echo Html::a('<span class="fa fa-arrow-circle-o-right"></span> Mulai Interview', ['/admin/mulai-interview/create', 'id' => $model->id], ['class' => 'btn btn-success btn-sm', 'title' => Yii::t('app', 'Mulai Interview')]);
                 echo '&nbsp &nbsp';
             }
 

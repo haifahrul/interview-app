@@ -89,7 +89,7 @@ $this->params['title'] = 'List' . $this->title;
                             'buttons' => [
                                 'view' => function ($url, $model) {
                                     $icon = '<span class="btn btn-xs btn-default"><i class="fa fa-search-plus"></i></span>';
-                                    $url = ['/jadwal-wawancara/view', 'id' => $model['id']];
+                                    $url = ['/admin/jadwal-wawancara/view', 'id' => $model['id']];
 
                                     return Html::a($icon, $url, [
                                             'title' => Yii::t('app', 'View'),
@@ -102,7 +102,7 @@ $this->params['title'] = 'List' . $this->title;
                                 },
                                 'interview' => function ($url, $model) {
                                     $icon = '<span class="btn btn-xs btn-success"><i class="fa fa-arrow-circle-o-right"></i> Mulai Interview</span>';
-                                    $url = ['/mulai-interview/create', 'id' => $model['id']];
+                                    $url = ['/admin/mulai-interview/create', 'id' => $model['id']];
 
                                     return Html::a($icon, $url, [
                                             'title' => Yii::t('app', 'Mulai Interview'),

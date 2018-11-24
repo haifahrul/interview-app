@@ -25,6 +25,10 @@ $fieldOptions2 = [
     <!-- <div class="login-logo">
         <img width="100%" src="<?= Yii::$app->urlManager->baseUrl . '/images/image3.jpg' ?>">        
     </div> -->
+    <div class="text-center">
+        <h2>Login</h2>
+    </div>
+    <hr>
     <div class="login-box-body">        
         <!--<p class="login-box-msg">Sign in to start your session</p>-->
 
