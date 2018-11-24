@@ -7,8 +7,8 @@ $permissions = require(__DIR__ . '/permissions.php');
 $db = require(__DIR__ . '/db.php');
 
 $config = [
-    'id' => 'wawancarafti',
-    'name' => 'wawancarafti',
+    'id' => 'App Interview',
+    'name' => 'App Interview',
     'homeUrl' => '/',
     'timeZone' => 'Asia/Jakarta',
     'language' => 'id-ID',

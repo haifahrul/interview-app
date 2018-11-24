@@ -12,5 +12,5 @@ use yii\helpers\Url;
     <div class="pull-right hidden-xs">
         <b>Version</b> 1.0
     </div>
-    <strong>Copyright &copy; <?= date('Y') ?> <a href="#" target="_blank">Yarsi Formulir</a></strong>. All rights reserved.
+    <strong>Copyright &copy; <?= date('Y') ?> <a href="#" target="_blank"><?= Yii::$app->name ?></a></strong>. All rights reserved.
 </footer>
