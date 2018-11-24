@@ -7,7 +7,7 @@ use \yii\helpers\HtmlPurifier;
 <table>
     <tbody>
         <tr>
-            <th>Nama Pelamar</th>
+            <th>Nama Kandidat</th>
             <td><?= $params['nama'] ?></td>
         </tr>
         <tr>
