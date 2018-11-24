@@ -77,9 +77,9 @@ class UserInterviewerController extends Controller
                 ];
 
                 $mailer = Yii::$app->mailer->compose('@app/mail/user/information-account', ['params' => $params])
-                    ->setFrom('mailer@afsyah.com')
+                    ->setFrom(Yii::$app->params['resetEmail'])
                     ->setTo($modelUser->email)
-                    ->setSubject('Informasi Pembuatan Akun Anda - Yarsi Formulir');
+                    ->setSubject('Informasi Pembuatan Akun Anda - ' . Yii::$app->name);
                 // End Send Email
 
                 if ($modelUser->validate() && $modelUser->save()) {

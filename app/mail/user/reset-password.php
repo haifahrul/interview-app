@@ -1,10 +1,6 @@
-<p>Berikut ini adalah informasi akun Anda untuk login ke aplikasi <?= \Yii::$app->name ?></p>
+<p>Berikut ini adalah informasi reset password Anda :</p>
 <table>
     <tbody>
-        <tr>
-            <th>Nama</th>
-            <td><?= $params['nama'] ?></td>
-        </tr>
         <tr>
             <th>Username</th>
             <td><?= $params['email'] ?></td>

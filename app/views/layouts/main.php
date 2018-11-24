@@ -18,8 +18,8 @@ AppAsset::register($this);
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <?= Html::csrfMetaTags() ?>
-		<link rel="shortcut icon" href="favicon.ico" />
-		<link rel="icon" type="image/x-icon" href="favicon.ico" />
+        <link rel="shortcut icon" href="favicon.ico" />
+        <link rel="icon" type="image/x-icon" href="favicon.ico" />
         <title><?= Html::encode($this->title) ?></title>
         <?php $this->head() ?>
     </head>
@@ -73,11 +73,34 @@ AppAsset::register($this);
             ?>
 
             <div class="container">
-<?=
-Breadcrumbs::widget([
-    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-])
-?>
+                <?=
+                Breadcrumbs::widget([
+                    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                ])
+                ?>
+                <?php
+                if (Yii::$app->session->hasFlash('success') || Yii::$app->session->hasFlash('warning') || Yii::$app->session->hasFlash('danger')):
+                    echo app\widgets\toastr\ToastrFlash::widget([
+                        'options' => [
+                            "closeButton" => false,
+                            "debug" => false,
+                            "newestOnTop" => false,
+                            "progressBar" => true,
+                            "positionClass" => "toast-top-right",
+                            "preventDuplicates" => false,
+                            "onclick" => null,
+                            "showDuration" => "300",
+                            "hideDuration" => "1000",
+                            "timeOut" => "10000",
+                            "extendedTimeOut" => "1000",
+                            "showEasing" => "swing",
+                            "hideEasing" => "linear",
+                            "showMethod" => "fadeIn",
+                            "hideMethod" => "fadeOut"
+                        ]
+                    ]);
+                endif;
+                ?>
                 <?= $content ?>
             </div>
         </div>

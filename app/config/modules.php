@@ -10,14 +10,14 @@ return [
 //    'mimin' => [
 //        'class' => '\hscstudio\mimin\Module',
 //    ],
-    'admin' => [
+    'webmaster' => [
         'class' => 'app\widgets\admin\Module',
         'layout' => 'left-menu',
         'mainLayout' => '@app/themes/adminlte/layouts/main.php',
         'menus' => [
-//            'assignment' => [
-//                'label' => Yii::t('app', 'Memberikan Akses')
-//            ],
+            'assignment' => [
+                'label' => Yii::t('app', 'Memberikan Akses')
+            ],
             'role' => [
                 'label' => Yii::t('app', 'Penugasan (Roles)')
             ],

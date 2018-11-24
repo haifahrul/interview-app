@@ -8,15 +8,13 @@
 
 <div class="register-box">
     <div class="register-logo">
-        <a href="../../index2.html"><b>Admin</b>LTE</a>
+        <a href="../../index2.html"><b>Apply Lamaran</b></a>
     </div>
 
     <div class="register-box-body">
-        <p class="login-box-msg">Register a new membership</p>
-
         <form action="../../index.html" method="post">
             <div class="form-group has-feedback">
-                <input type="text" class="form-control" placeholder="Full name">
+                <input type="text" class="form-control" placeholder="Nama Lengkap">
                 <span class="glyphicon glyphicon-user form-control-feedback"></span>
             </div>
             <div class="form-group has-feedback">

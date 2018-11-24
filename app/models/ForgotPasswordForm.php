@@ -13,8 +13,8 @@ use yii\base\Model;
  */
 class ForgotPasswordForm extends Model {
 
-    public $username;
     public $email;
+    public $password_hash;
     private $_user = false;
 
     /**
@@ -24,39 +24,8 @@ class ForgotPasswordForm extends Model {
         return [
             // username and password are both required
             [['email'], 'required'],
-            // rememberMe must be a boolean value
-            ['rememberMe', 'boolean'],
-            // password is validated by validatePassword()
-            ['password', 'validatePassword'],
+            ['email', 'email'],
         ];
-    }
-
-    /**
-     * Validates the password.
-     * This method serves as the inline validation for password.
-     *
-     * @param string $attribute the attribute currently being validated
-     * @param array $params the additional name-value pairs given in the rule
-     */
-    public function validatePassword($attribute, $params) {
-        if (!$this->hasErrors()) {
-            $user = $this->getUser();
-
-            if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, 'Incorrect username or password.');
-            }
-        }
-    }
-
-    /**
-     * Logs in a user using the provided username and password.
-     * @return bool whether the user is logged in successfully
-     */
-    public function login() {
-        if ($this->validate()) {
-            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
-        }
-        return false;
     }
 
     /**
@@ -66,10 +35,19 @@ class ForgotPasswordForm extends Model {
      */
     public function getUser() {
         if ($this->_user === false) {
-            $this->_user = User::findByUsername($this->username);
+            $this->_user = User::findByEmail($this->email);
         }
 
         return $this->_user;
+    }
+
+    /**
+     * Generates password hash from password and sets it to the model
+     *
+     * @param string $password
+     */
+    public function setPassword($password) {
+        $this->password_hash = Yii::$app->security->generatePasswordHash($password);
     }
 
 }

@@ -1,16 +1,8 @@
-@font-face {
-    font-family: 'BROADW';
-    src: url('../fonts/BROADW.eot');
-    src: local('BROADW'), url('../fonts/BROADW.woff') format('woff'), url('../fonts/BROADW.ttf') format('truetype');
-}
-
-.font-broadway {
-    font-family: 'BROADW' !important;
-}
-
-html,
-body {
+body,
+html {
     height: 100%;
+    background-color: #f2f3f4;
+    color: #4d4d4d;
 }
 
 .wrap {
@@ -24,16 +16,58 @@ body {
     padding: 70px 15px 20px;
 }
 
+.wrap-2 {
+    min-height: 100%;
+    height: auto;
+    margin: 0 auto -60px;
+    padding: 0 0 0px;
+}
+
+.wrap-2 > .container {
+    padding: 70px 15px 20px;
+}
+
 .footer {
     height: 60px;
     background-color: #f5f5f5;
     border-top: 1px solid #ddd;
     padding-top: 20px;
 }
+.footer {
+    background-color: #fff;
+    height: auto;
+}
+.footer .copyright {
+    margin-bottom: 20px;
+}
+.footer-1-title {
+    margin-top: 30px;
+}
+.footer h3 {
+    font-weight: 500;
+    color: #316a29;
+}
+.footer ul li, .footer ul li a {
+    list-style: none;
+    color: #333;
+    line-height: 1.6;
+    text-decoration: none;
+}
+.footer ul li a:hover {
+    color: #009688;
+}
+.footer ul {
+    margin-left: -38px;
+}
+.footer p a {
+    color: #009688;
+    text-decoration: none;
+}
 
 .jumbotron {
     text-align: center;
     background-color: transparent;
+    margin-bottom: 0px;
 }
 
 .jumbotron .btn {
@@ -47,7 +81,8 @@ body {
 }
 
 /* add sorting icons to gridview sort links */
-a.asc:after, a.desc:after {
+a.asc:after,
+a.desc:after {
     position: relative;
     top: 1px;
     display: inline-block;
@@ -59,11 +94,13 @@ a.asc:after, a.desc:after {
 }
 
 a.asc:after {
-    content: /*"\e113"*/ "\e151";
+    /*"\e113"*/
+    content: "\e151";
 }
 
 a.desc:after {
-    content: /*"\e114"*/ "\e152";
+    /*"\e114"*/
+    content: "\e152";
 }
 
 .sort-numerical a.asc:after {
@@ -97,22 +134,13 @@ a.desc:after {
     background: #fdf7f7;
     border-left: 3px solid #eed3d7;
     padding: 10px 20px;
-    margin: 0 0 15px 0;
+    margin: 0 0 15px;
 }
 
 /* align the logout "link" (button in form) of the navbar */
 .nav li > form > button.logout {
     padding: 15px;
     border: none;
-}
-
-@media(max-width:767px) {
-    .nav li > form > button.logout {
-        display:block;
-        text-align: left;
-        width: 100%;
-        padding: 10px 15px;
-    }
 }
 
 .nav > li > form > button.logout:focus,
@@ -124,103 +152,107 @@ a.desc:after {
     outline: none;
 }
 
-.form-horizontal .control-label {padding-top: 0px;}
-.form-group {margin-bottom: 0px;}
-.form-control {height: 24px; padding: 0 0 0 10px}        
-textarea.form-control {height: 40px;}
-input[type="text"] {height: 24px}      
-#button_tambah {margin-left: -30px}
-
-.input-sm.select2-container--krajee .select2-selection--single, .input-group-sm .select2-container--krajee .select2-selection--single {
-    height: 24px;
+.text-50 {
+    font-size: 50px;
 }
 
-.input-sm.select2-container--krajee .select2-selection--single .select2-selection__arrow, .input-group-sm .select2-container--krajee .select2-selection--single .select2-selection__arrow {
-    height: 23px;
+.text-32 {
+    font-size: 32px;
 }
 
-.select2-container--krajee .select2-selection--single {
-    height: 24px;
+.text-18 {
+    font-size: 18px;
 }
 
-.select2-container--krajee .select2-selection--single .select2-selection__arrow {
-    height: 23px;
+.text-16 {
+    font-size: 16px;
 }
 
-.close {
-    color: red; 
-    opacity: 1;
-    font-size: 27px;    
+.text-green {
+    color: #316a29;
 }
 
-button.close:hover {
-    opacity: 1;
-    color: red;
+.text-semibold {
+    font-weight: 600;
 }
 
-.table-slim  > thead > tr > th, 
-.table-slim  > tbody > tr > th, 
-.table-slim  > tfoot > tr > th, 
-.table-slim  > thead > tr > td, 
-.table-slim  > tbody > tr > td, 
-.table-slim  > tfoot > tr > td {
-    /*line-height: 0.2;*/
-    padding: 4px;
-    line-height: 1;
-    vertical-align: middle;
+.btn-success {
+    background: #00796B;
+    color: #fff;
+    border-color: #00796B;
 }
 
-table.table-nota {
-    border: 1px solid #000;
+.btn-success:hover {
+    background: #00695C;
+    border-color: #00695C;
 }
 
-table.table-nota  > thead > tr > th, 
-table.table-nota  > tbody > tr > th, 
-table.table-nota  > tfoot > tr > th, 
-table.table-nota  > thead > tr > td, 
-table.table-nota  > tbody > tr > td, 
-table.table-nota  > tfoot > tr > td {
-    border: 1px solid #000;
+.progress-bar {
+    background-color: #4DC7A0;
+}
+.progress {
+    /*background-color: #fff;*/
 }
 
-/* CUSTOM MODAL BOOTSTRAP */
-@media (min-width: 992px) {
-    .modal-xlg {
-        width: 90%;
-        margin: 30px auto;
+.navbar-default {
+    background: #fff;
+}
+
+.navbar-default .navbar-toggle {
+    border-color: transparent;
+    margin-top: 14px;
+}
+
+.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
+    border-color: transparent;
+    background-color: transparent;
+}
+
+.owl-carousel {
+    position: relative;
+}
+.owl-next,
+.owl-prev {
+    position: absolute;
+    top: 50%;
+    margin-top: -10px;
+    /* Half of the prev/next buttons height here in negatives to center them perfectly*/
+}
+.owl-prev {
+    left: 0;
+}
+.owl-next {
+    right: 0;
+}
+.owl-carousel .owl-item img {
+    /*height: 260px;*/
+    height: 470px;
+    /*width: 80%;*/
+    /*margin-left: 10%;*/
+}
+
+.owl-carousel .owl-nav button.owl-next,
+.owl-carousel .owl-nav button.owl-prev,
+.owl-carousel button.owl-dot {
+    font-size: 20px;
+    margin-top: -15px;
+}
+
+.owl-carousel .owl-nav button.owl-next:hover,
+.owl-carousel .owl-nav button.owl-prev:hover {
+    background: none;
+    color: #5cb85c;
+}
+
+@media(max-width:767px) {
+    .nav li > form > button.logout {
+        display: block;
+        text-align: left;
+        width: 100%;
+        padding: 10px 15px;
     }
 }
-@media (min-width: 768px) {
-    #box-header-fixed {
-        top: 49px;
-    }
-    .pagination-summary {
-        float:none;
-    }
-}
 
-.float-right {
-    float: right;
+.borderless td, .borderless th {
+    border: none;
 }
-
-.pagination-summary {
-    padding: 5px;
-    margin-right: 5px;
-    float:left;
-}
-.page-size {
-    float: right;
-    padding: 3px;
-    margin-left: 10px;
-    /*margin-top: 7px;*/
-}
-.pagination {
-    margin: 0;
-}
-
-.no-wrap {
-    white-space: nowrap;
-}
-
-.top10 {margin-top: 10}
-.box-header {background: #fff};

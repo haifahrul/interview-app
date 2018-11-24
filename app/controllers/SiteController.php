@@ -16,6 +16,7 @@ use app\models\UserProfile;
 use app\models\search\UserCalonSearch;
 use app\models\search\JadwalWawancaraSearch;
 use \app\models\ForgotPasswordForm;
+use \app\models\User;
 
 //class SiteController extends \app\modules\log\controllers\MainController 
 class SiteController extends Controller {
@@ -99,8 +100,8 @@ class SiteController extends Controller {
      * @return string
      */
     public function actionIndex() {
-        return $this->render('index');
-//        return $this->redirect(['/jadwal-wawancara/index']);
+//        return $this->render('index');
+        return $this->redirect('login');
         // if (Yii::$app->user->can('Administrator') || Yii::$app->user->can('Super User')) {
         //     $searchModel = new UserCalonSearch();
         //     $dataProvider = $searchModel->searchBeranda(Yii::$app->request->queryParams);
@@ -127,13 +128,17 @@ class SiteController extends Controller {
 //        $this->layout = 'main-login';
 
         if (!Yii::$app->user->isGuest) {
+            if (Yii::$app->user->can('Super User') || Yii::$app->user->can('Interviewer')) {
+                return $this->redirect(['/admin/site/index']);
+            }
+
             return $this->goHome();
         }
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
 
-            if (YIi::$app->user->can('Super User')) {
+            if (Yii::$app->user->can('Super User') || Yii::$app->user->can('Interviewer')) {
                 return $this->redirect(['/admin/site/index']);
             }
 
@@ -184,6 +189,42 @@ class SiteController extends Controller {
 
     public function actionForgotPassword() {
         $model = new ForgotPasswordForm();
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $transaction = Yii::$app->db->beginTransaction();
+            if (!empty($model->getUser())) {
+                $email = $model->getUser()->email;
+                $resetPassword = strtolower(Yii::$app->globalFunction->generateRandomString(8));
+                $model->setPassword($resetPassword);
+                $updatePassword = Yii::$app->db->createCommand('UPDATE user SET `password_hash`=:password, `password_default`=:password_default WHERE email=:email')->bindValues([':password' => $model->password_hash, ':password_default' => $resetPassword, ':email' => $email]);
+
+                // Send Email
+                $params = [
+                    'email' => $email,
+                    'password' => $resetPassword,
+                ];
+
+                $mailer = Yii::$app->mailer->compose('@app/mail/user/reset-password', ['params' => $params])
+                        ->setFrom(Yii::$app->params['resetEmail'])
+                        ->setTo($email)
+                        ->setSubject('Informasi Pembuatan Akun Anda - ' . Yii::$app->name);
+                // End Send Email
+
+                if ($updatePassword->execute()) {
+                    $transaction->commit();
+                    Yii::$app->session->setFlash('success', 'Silahkan cek email Anda');
+                    Yii::$app->session['is-reset-password'] = true;
+
+                    return $this->render('forgot-password', [
+                                'model' => $model
+                    ]);
+                }
+            }
+            $transaction->rollBack();
+            Yii::$app->session->setFlash('danger', 'Akun anda tidak ditemukan');
+        }
+
+        Yii::$app->session['is-reset-password'] = false;
         return $this->render('forgot-password', [
                     'model' => $model
         ]);
