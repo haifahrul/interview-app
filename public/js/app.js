@@ -190,10 +190,10 @@ $(document).ready(function () {
 function getListInterviewer() {
     $("#jadwalwawancara-user_calon_id").change(function () {
         var id = $(this).val();
-        
+
         $.ajax({
             type: "POST",
-            url: '/jadwal-wawancara/ajax-get-list-interviewer',
+            url: '/admin/jadwal-wawancara/ajax-get-list-interviewer',
             data: {calon_id: id},
             success: function (data) {
                 $('#jadwalwawancara-user_interviewer_id').find('option').remove().end().append('<option value=""></option>').val('');

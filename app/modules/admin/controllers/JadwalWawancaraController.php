@@ -1,4 +1,5 @@
 <?php
+
 namespace app\modules\admin\controllers;
 
 use app\models\JadwalWawancara;
@@ -13,11 +14,9 @@ use yii\helpers\ArrayHelper;
 /**
  * created haifahrul
  */
-class JadwalWawancaraController extends Controller
-{
+class JadwalWawancaraController extends Controller {
 
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -28,29 +27,27 @@ class JadwalWawancaraController extends Controller
         ];
     }
 
-    public function actionIndex()
-    {
+    public function actionIndex() {
         if (Yii::$app->user->can('Administrator') || Yii::$app->user->can('Super User')) {
             $searchModel = new JadwalWawancaraSearch();
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
             return $this->render('index', [
-                    'searchModel' => $searchModel,
-                    'dataProvider' => $dataProvider,
+                        'searchModel' => $searchModel,
+                        'dataProvider' => $dataProvider,
             ]);
         } else if (Yii::$app->user->can('Interviewer')) {
             $searchModel = new JadwalWawancaraSearch();
             $dataProvider = $searchModel->searchInterviewer(Yii::$app->request->queryParams);
 
             return $this->render('index-interviewer', [
-                'searchModel' => $searchModel,
-                'dataProvider' => $dataProvider,
+                        'searchModel' => $searchModel,
+                        'dataProvider' => $dataProvider,
             ]);
         }
     }
 
-    public function actionView($id)
-    {
+    public function actionView($id) {
         $model = $this->findModel($id);
 
         if (!empty($model->userCalon->cv)) {
@@ -59,21 +56,12 @@ class JadwalWawancaraController extends Controller
             $downloadCv = null;
         }
 
-        if (Yii::$app->request->isAjax) {
-            return $this->renderAjax('view', [
+        return $this->render('view', [
                     'model' => $model,
-                    'downloadCv' => $downloadCv,
-            ]);
-        } else {
-            return $this->render('view', [
-                    'model' => $model,
-                    'downloadCv' => $downloadCv,
-            ]);
-        }
+        ]);
     }
 
-    public function actionCreate($id = null)
-    {
+    public function actionCreate($id = null) {
         $model = new JadwalWawancara();
         $is_ajax = Yii::$app->request->isAjax;
         $postdata = Yii::$app->request->post();
@@ -101,17 +89,16 @@ class JadwalWawancaraController extends Controller
         if ($is_ajax) {
 //render view
             return $this->renderAjax('create', [
-                    'model' => $model,
+                        'model' => $model,
             ]);
         } else {
             return $this->render('create', [
-                    'model' => $model,
+                        'model' => $model,
             ]);
         }
     }
 
-    public function actionUpdate($id)
-    {
+    public function actionUpdate($id) {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
@@ -125,17 +112,16 @@ class JadwalWawancaraController extends Controller
 
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('update', [
-                    'model' => $model,
+                        'model' => $model,
             ]);
         } else {
             return $this->render('update', [
-                    'model' => $model,
+                        'model' => $model,
             ]);
         }
     }
 
-    public function actionDelete($id)
-    {
+    public function actionDelete($id) {
         $transaction = Yii::$app->db->beginTransaction();
         try {
 
@@ -156,8 +142,7 @@ class JadwalWawancaraController extends Controller
     }
 
 // hapus menggunakan ajax
-    public function actionDeleteItems()
-    {
+    public function actionDeleteItems() {
         $status = 0;
         if (isset($_POST['keys'])) {
             $keys = $_POST['keys'];
@@ -186,35 +171,35 @@ class JadwalWawancaraController extends Controller
         $calonId = $_POST['calon_id'];
 
         $dataFormulir = Yii::$app->db->createCommand('SELECT interviewer_id FROM formulir f WHERE f.calon_id=:calon_id')->bindValue(':calon_id', $calonId)->queryAll();
-        
+
         $interviewerId = [];
         foreach ($dataFormulir as $key => $value) {
             $interviewerId[] = $value['interviewer_id'];
         }
 
         $dataJadwal = Yii::$app->db->createCommand('SELECT user_interviewer_id FROM jadwal_wawancara f WHERE f.user_calon_id=:user_calon_id')->bindValue(':user_calon_id', $calonId)->queryAll();
-        
+
         foreach ($dataJadwal as $key => $value) {
             $interviewerId[] = $value['user_interviewer_id'];
         }
 
         $dataInterviewer = (new \yii\db\Query())
-            ->select(['id', 'nama_pewawancara'])
-            ->from('user_interviewer')
-            ->where(['not in', 'id', $interviewerId])
-            ->all();
+                ->select(['id', 'nama_pewawancara'])
+                ->from('user_interviewer')
+                ->where(['not in', 'id', $interviewerId])
+                ->all();
 
         $data = ArrayHelper::map($dataInterviewer, 'id', 'nama_pewawancara');
 
         echo json_encode($data);
     }
 
-    protected function findModel($id)
-    {
+    protected function findModel($id) {
         if (($model = JadwalWawancara::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
 }

@@ -13,7 +13,6 @@ $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Jadwal Wawancara'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
-
 ?>
 
 <div class="box">
@@ -28,7 +27,6 @@ $this->params['title'] = $this->title;
             } else {
                 echo Buttons::goToIndex();
             }
-
             ?>
             &nbsp &nbsp
             <?php
@@ -36,13 +34,11 @@ $this->params['title'] = $this->title;
                 echo Html::a('<span class="fa fa-arrow-circle-o-right"></span> Mulai Interview', ['/admin/mulai-interview/create', 'id' => $model->id], ['class' => 'btn btn-success btn-sm', 'title' => Yii::t('app', 'Mulai Interview')]);
                 echo '&nbsp &nbsp';
             }
-
             ?> 
             <?php
             if (Helper::checkRoute('delete')) {
                 echo Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary btn-sm']);
             }
-
             ?>
             <?php
             if (Helper::checkRoute('delete')) {
@@ -54,7 +50,6 @@ $this->params['title'] = $this->title;
                     ],
                 ]);
             }
-
             ?>
         </p>
         <?php
@@ -71,7 +66,6 @@ $this->params['title'] = $this->title;
             // 'timestamp',
             ],
         ])
-
         ?>
     </div>
 </div>
@@ -99,11 +93,11 @@ $this->params['title'] = $this->title;
                 [
                     'attribute' => 'userCalon.cv',
                     'format' => 'raw',
-                    'value' => !empty($downloadCv) ? $downloadCv : 'File tidak tersedia'
+                    'value' => !empty($model['userCalon']['cv']) ?
+                            Html::a('Download', [Yii::$app->params['uploadUrl'] . 'cv/' . $model['userCalon']['cv']], ['target' => '_blank']) : 'File tidak tersedia'
                 ]
             ],
         ])
-
         ?>
     </div>
 </div>
