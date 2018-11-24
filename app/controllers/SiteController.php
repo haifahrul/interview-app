@@ -128,7 +128,8 @@ class SiteController extends Controller {
 //        $this->layout = 'main-login';
 
         if (!Yii::$app->user->isGuest) {
-            if (Yii::$app->user->can('Super User') || Yii::$app->user->can('Interviewer')) {
+            $user = Yii::$app->user;
+            if ($user->can('Super User') || $user->can('Interviewer') || $user->can('Administrator')) {
                 return $this->redirect(['/admin/site/index']);
             }
 
