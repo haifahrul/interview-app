@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = 'Detail Wawancara';
         <div class="row">
             <div class="col-xs-12 col-md-6">
                 <div class="row">
-                    <label class="control-label col-xs-12 col-md-4">Nama Calon</label>
+                    <label class="control-label col-xs-12 col-md-4">Nama Kandidat</label>
                     <div class="col-xs-12 col-md-6">
                         <div class="form-control">
                             <?php echo $model->calon->nama_calon ?>

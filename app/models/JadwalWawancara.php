@@ -72,7 +72,7 @@ class JadwalWawancara extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'tanggal' => Yii::t('app', 'Tanggal'),
-            'user_calon_id' => Yii::t('app', 'Nama Calon'),
+            'user_calon_id' => Yii::t('app', 'Nama Kandidat'),
             'user_interviewer_id' => Yii::t('app', 'Nama Interviewer'),
             'status' => Yii::t('app', 'Status'),
             'timestamp' => Yii::t('app', 'Timestamp'),

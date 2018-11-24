@@ -88,7 +88,7 @@ class Formulir extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'calon_id' => Yii::t('app', 'Nama Calon'),
+            'calon_id' => Yii::t('app', 'Nama Kandidat'),
             'interviewer_id' => Yii::t('app', 'Nama Interviewer'),
             'tanggal_wawancara' => Yii::t('app', 'Tanggal Wawancara'),
             'catatan' => Yii::t('app', 'Catatan'),
