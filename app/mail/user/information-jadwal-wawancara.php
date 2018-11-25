@@ -1,6 +1,6 @@
 <?php
 
-use Yii;
+
 ?>
 
 <?php if ($params['is_pelamar']) { ?>
@@ -11,7 +11,7 @@ use Yii;
         <tbody>
             <tr>
                 <th>Tanggal : </th>
-                <td><?= Yii::$app->formatter->asDate($params['tanggal']) ?></td>
+                <td><?= \Yii::$app->formatter->asDate($params['tanggal']) ?></td>
             </tr>
     <!--            <tr>
                 <th>Lokasi</th>
@@ -31,7 +31,7 @@ use Yii;
         <tbody>
             <tr>
                 <th>Tanggal : </th>
-                <td><?= Yii::$app->formatter->asDate($params['tanggal']) ?></td>
+                <td><?= \Yii::$app->formatter->asDate($params['tanggal']) ?></td>
             </tr>
     <!--            <tr>
                 <th>Lokasi</th>
