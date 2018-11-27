@@ -56,6 +56,9 @@ use yii\captcha\Captcha;
         ?>
         
         <?= $form->field($modelUploadCv, 'fileCv')->fileInput(['maxlength' => true]) ?>
+        <p>
+            Note: File pdf terdiri dari foto, surat lamaran, cv, dan fotocopy ijazah.
+        </p>
 
         <div class="form-group">
             <?= Html::submitButton('Submit', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
