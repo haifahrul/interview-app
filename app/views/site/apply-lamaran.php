@@ -40,7 +40,7 @@ use yii\captcha\Captcha;
         $form->field($model, 'jabatan_yang_dilamar', [
             'options' => ['class' => 'form-group has-feedback'],
             'inputTemplate' => "{input}<span class='glyphicon glyphicon-user form-control-feedback'></span>"
-        ])->textarea(['rows' => 6])
+        ])->textarea(['rows' => 6])->label('Bagian yang dilamar')
         ?>
         <?=
         $form->field($model, 'phone', [
