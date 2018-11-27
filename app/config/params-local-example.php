@@ -1,8 +1,9 @@
 <?php
 
 return [
-    'brand' => 'SIPPKM',
+    'brand' => 'Interview App',
     'adminEmail' => 'sippkm@gmail.com',
+    'noReplyEmail' => 'no-reply@afsyah.com',
     // Storage
     'uploadPath' => Yii::getAlias('@web') . '/uploads/',
     // URL
