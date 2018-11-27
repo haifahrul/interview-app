@@ -11,11 +11,6 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
-
--- Dumping database structure for yarsi_ibnu
-CREATE DATABASE IF NOT EXISTS `yarsi_ibnu` /*!40100 DEFAULT CHARACTER SET latin1 */;
-USE `yarsi_ibnu`;
-
 -- Dumping structure for table yarsi_ibnu.aspek_penilaian
 CREATE TABLE IF NOT EXISTS `aspek_penilaian` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -102,7 +97,7 @@ CREATE TABLE IF NOT EXISTS `auth_assignment` (
   CONSTRAINT `auth_assignment_ibfk_1` FOREIGN KEY (`item_name`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table yarsi_ibnu.auth_assignment: ~3 rows (approximately)
+-- Dumping data for table yarsi_ibnu.auth_assignment: ~4 rows (approximately)
 /*!40000 ALTER TABLE `auth_assignment` DISABLE KEYS */;
 REPLACE INTO `auth_assignment` (`item_name`, `user_id`, `created_at`) VALUES
 	('Administrator', '2', NULL);
@@ -129,7 +124,7 @@ CREATE TABLE IF NOT EXISTS `auth_item` (
   CONSTRAINT `auth_item_ibfk_1` FOREIGN KEY (`rule_name`) REFERENCES `auth_rule` (`name`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table yarsi_ibnu.auth_item: ~285 rows (approximately)
+-- Dumping data for table yarsi_ibnu.auth_item: ~263 rows (approximately)
 /*!40000 ALTER TABLE `auth_item` DISABLE KEYS */;
 REPLACE INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
 	('/*', 2, NULL, NULL, NULL, 1543052767, 1543052767);
@@ -669,7 +664,7 @@ CREATE TABLE IF NOT EXISTS `auth_item_child` (
   CONSTRAINT `auth_item_child_ibfk_2` FOREIGN KEY (`child`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table yarsi_ibnu.auth_item_child: ~39 rows (approximately)
+-- Dumping data for table yarsi_ibnu.auth_item_child: ~38 rows (approximately)
 /*!40000 ALTER TABLE `auth_item_child` DISABLE KEYS */;
 REPLACE INTO `auth_item_child` (`parent`, `child`) VALUES
 	('Super User', '/*');
@@ -1135,14 +1130,14 @@ CREATE TABLE IF NOT EXISTS `user` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
--- Dumping data for table yarsi_ibnu.user: ~2 rows (approximately)
+-- Dumping data for table yarsi_ibnu.user: ~3 rows (approximately)
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 REPLACE INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `password_reset_token`, `password_default`, `email`, `status`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES
 	(1, 'superuser', NULL, '$2y$13$IpMBKpF85EKNA/Pxqk06H.BjjOaPz/.Ol1e.PJfGYWIJoOOI0YSFO', NULL, NULL, 'superuser@gmail.com', 10, 1509549909, 1526294085, 1, 1);
 REPLACE INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `password_reset_token`, `password_default`, `email`, `status`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES
 	(2, 'admin', NULL, '$2y$13$me/6YM31QFhxlM6DY8UYDuWnYE/EUNXpghP/xVg8ql6JiZX5LteK.', NULL, NULL, NULL, 10, NULL, NULL, NULL, NULL);
 REPLACE INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `password_reset_token`, `password_default`, `email`, `status`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES
-	(15, 'haifahrul@gmail.com', NULL, '$2y$13$V8In0fZUiguxIXi60JS1YOSwb0yi8EU5AYboNFWVRjAxNMFzwAjuy', NULL, 'zrxyhifa', 'haifahrul@gmail.com', 10, 1530636027, 1530636027, NULL, NULL);
+	(15, 'razak@gmail.com', NULL, '$2y$13$V8In0fZUiguxIXi60JS1YOSwb0yi8EU5AYboNFWVRjAxNMFzwAjuy', NULL, 'zrxyhifa', 'razak@gmail.com', 10, 1530636027, 1543084870, NULL, NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 
 -- Dumping structure for table yarsi_ibnu.user_calon
@@ -1164,16 +1159,26 @@ CREATE TABLE IF NOT EXISTS `user_calon` (
   KEY `user_id` (`user_id`),
   CONSTRAINT `FK_user_calon_keputusan_tipe` FOREIGN KEY (`keputusan_id`) REFERENCES `keputusan_tipe` (`id`),
   CONSTRAINT `FK_user_calon_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 
--- Dumping data for table yarsi_ibnu.user_calon: ~3 rows (approximately)
+-- Dumping data for table yarsi_ibnu.user_calon: ~8 rows (approximately)
 /*!40000 ALTER TABLE `user_calon` DISABLE KEYS */;
 REPLACE INTO `user_calon` (`id`, `user_id`, `nama_calon`, `usia`, `pendidikan`, `jabatan_yang_dilamar`, `phone`, `email`, `keputusan_id`, `cv`, `cv_extension`, `status`) VALUES
-	(1, NULL, 'Ibnu', 24, 'S1 Teknik Informatika', 'Backend Programmer', '085712345678', 'ibnu@gmail.com', NULL, NULL, NULL, 2);
+	(1, NULL, 'Ibnu', 24, 'S1 Teknik Informatika', 'Backend Programmers\r\n', '085712345678', 'ibnu@gmail.com', NULL, 'd0d0defb889e6011987d431fe903d931c8965a85.pdf', 'pdf', 2);
 REPLACE INTO `user_calon` (`id`, `user_id`, `nama_calon`, `usia`, `pendidikan`, `jabatan_yang_dilamar`, `phone`, `email`, `keputusan_id`, `cv`, `cv_extension`, `status`) VALUES
 	(5, NULL, 'Kandidat 1', 22, '1. 2asdas\r\n12.asd', 'as', '0857', 'haifahrul@gmail.com', NULL, '63f6dd17e596a32fb491891803ba1c646d207f9c.pdf', NULL, 2);
 REPLACE INTO `user_calon` (`id`, `user_id`, `nama_calon`, `usia`, `pendidikan`, `jabatan_yang_dilamar`, `phone`, `email`, `keputusan_id`, `cv`, `cv_extension`, `status`) VALUES
 	(14, NULL, 'Kandidat 2', 22, '1. 2asdas\r\n12.asd', 'as', '0857', 'haifahrul@gmail.com', NULL, '22dbcfd6a538079a8ed0ab33e913fa18ad4fbf53.pdf', NULL, 2);
+REPLACE INTO `user_calon` (`id`, `user_id`, `nama_calon`, `usia`, `pendidikan`, `jabatan_yang_dilamar`, `phone`, `email`, `keputusan_id`, `cv`, `cv_extension`, `status`) VALUES
+	(15, NULL, 'asddasdasd', 2, 'asdasda', 'aasda', '085710568571', 'razakibnu95@gmail.com', NULL, 'c54f4b87c647fbee68faf14b543f8cf0667fb52d.pdf', NULL, 2);
+REPLACE INTO `user_calon` (`id`, `user_id`, `nama_calon`, `usia`, `pendidikan`, `jabatan_yang_dilamar`, `phone`, `email`, `keputusan_id`, `cv`, `cv_extension`, `status`) VALUES
+	(16, NULL, 'asd', 2, 'adasd', 'asd', '123', 'haifahrul@gmail.com', NULL, 'e180c592cd052aacc1e7f9d25a6bc5c979236a50.pdf', NULL, 2);
+REPLACE INTO `user_calon` (`id`, `user_id`, `nama_calon`, `usia`, `pendidikan`, `jabatan_yang_dilamar`, `phone`, `email`, `keputusan_id`, `cv`, `cv_extension`, `status`) VALUES
+	(17, NULL, 'asd', 2, 'adasd', 'asd', '123', 'haifahrul@gmail.com', NULL, '316f967062d83222e20a56ea2eb90428f2cf0ff0.pdf', NULL, 2);
+REPLACE INTO `user_calon` (`id`, `user_id`, `nama_calon`, `usia`, `pendidikan`, `jabatan_yang_dilamar`, `phone`, `email`, `keputusan_id`, `cv`, `cv_extension`, `status`) VALUES
+	(18, NULL, 'asd', 2, 'adasd', 'asd', '123', 'haifahrul@gmail.com', NULL, 'adc4082ca7d7d75f028c6a34e4b425baa864b6b2.pdf', NULL, 2);
+REPLACE INTO `user_calon` (`id`, `user_id`, `nama_calon`, `usia`, `pendidikan`, `jabatan_yang_dilamar`, `phone`, `email`, `keputusan_id`, `cv`, `cv_extension`, `status`) VALUES
+	(19, NULL, 'asd', 2, 'adasd', 'asd', '123', 'haifahrul@gmail.com', NULL, '14b45f9bed45bc9b34db5eb98ea2c1536068fae1.pdf', NULL, 2);
 /*!40000 ALTER TABLE `user_calon` ENABLE KEYS */;
 
 -- Dumping structure for table yarsi_ibnu.user_interviewer
@@ -1196,7 +1201,7 @@ CREATE TABLE IF NOT EXISTS `user_interviewer` (
 -- Dumping data for table yarsi_ibnu.user_interviewer: ~1 rows (approximately)
 /*!40000 ALTER TABLE `user_interviewer` DISABLE KEYS */;
 REPLACE INTO `user_interviewer` (`id`, `user_id`, `nama_pewawancara`, `jabatan_id`, `fakultas_unit_id`, `is_active`) VALUES
-	(5, 15, 'Fahrul Pewawancara', 1, 1, 1);
+	(5, 15, ' Pewawancara', 1, 1, 1);
 /*!40000 ALTER TABLE `user_interviewer` ENABLE KEYS */;
 
 -- Dumping structure for table yarsi_ibnu.user_profile
@@ -1214,7 +1219,7 @@ CREATE TABLE IF NOT EXISTS `user_profile` (
   CONSTRAINT `FK_user_profile_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table yarsi_ibnu.user_profile: ~0 rows (approximately)
+-- Dumping data for table yarsi_ibnu.user_profile: ~1 rows (approximately)
 /*!40000 ALTER TABLE `user_profile` DISABLE KEYS */;
 REPLACE INTO `user_profile` (`user_id`, `firstname`, `lastname`, `no_telp`, `avatar`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES
 	(1, 'AFS', '', '', '8a954ac7fa30824c1b75850d546afe256b4f6078.png', NULL, 1526294044, NULL, 1);
