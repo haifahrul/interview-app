@@ -23,6 +23,13 @@ class UploadCv extends Model
         ];
     }
     
+     public function attributeLabels()
+    {
+        return [
+            'fileCv' => 'Dokumen Lamaran',
+        ];
+    }
+    
     public function upload()
     {
         if ($this->validate()) {
