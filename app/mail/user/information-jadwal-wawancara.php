@@ -38,7 +38,7 @@
                 <td><?= $params['lokasi'] ?></td>
             </tr>-->
             <tr>
-                <th>Nama Kandidat : </th>
+                <th>Nama Pelamar : </th>
                 <td><?= $params['kandidat'] ?></td>
             </tr>
             <tr>

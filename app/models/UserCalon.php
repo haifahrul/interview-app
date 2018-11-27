@@ -85,7 +85,7 @@ class UserCalon extends \yii\db\ActiveRecord {
             'phone' => Yii::t('app', 'No Telp'),
             'email' => Yii::t('app', 'Email'),
             'keputusan_id' => Yii::t('app', 'Keputusan'),
-            'cv' => Yii::t('app', 'File CV'),
+            'cv' => Yii::t('app', 'Dokumen Lamaran'),
         ];
     }
 

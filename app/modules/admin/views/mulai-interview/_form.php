@@ -17,7 +17,7 @@ use yii\bootstrap\ActiveForm;
         <div class="row">
             <div class="col-md-6">
                 <div class="row">
-                    <label class="control-label col-sm-4">Nama Kandidat</label>
+                    <label class="control-label col-sm-4">Nama Pelamar</label>
                     <div class="col-sm-6">
                         <div class="form-control">
                             <?php echo $modelJadwal->userCalon->nama_calon ?>

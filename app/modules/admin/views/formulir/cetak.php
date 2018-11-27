@@ -37,7 +37,7 @@ $this->registerCss($script)
         <div class="row">
             <div class="col-xs-6 col-md-6">
                 <div class="row">
-                    <label class="control-label col-xs-5 col-md-4">Nama Kandidat</label>
+                    <label class="control-label col-xs-5 col-md-4">Nama Pelamar</label>
                     <div class="col-xs-7 col-md-6">
                         <div class="">
                             <?php echo $model->calon->nama_calon ?>
