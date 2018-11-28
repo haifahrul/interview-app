@@ -1,12 +1,13 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use yii\bootstrap\ActiveForm;
 
 /* @var $model app\models\Formulir */
 /* @var $form yii\widgets\ActiveForm 
   author A. Fakhrurozi S.
  */
+
 ?>
 <div class="box">
     <div class="box-header">
@@ -94,7 +95,7 @@ use yii\widgets\ActiveForm;
 
         <p>Berilah penilaian dengan mengisi pada kolom yang sesuai dengan kriteria penilaian</p>
 
-        <?php $form = ActiveForm::begin(['id' => 'form-interview']); ?>
+        <form id=form-interview action="create?id=<?= $modelJadwal->id ?>" method="post">
 
         <div class="table-responsive">
             <table class="table table-condensed table-bordered table-hover">
@@ -107,10 +108,10 @@ use yii\widgets\ActiveForm;
                 <tbody>
                     <?php
                     $dataArray = 0;
-                    $i = 0;
                     foreach ($modelAskepPenilaian as $key => $dataAspekPenilaian) {
                         $no = 1;
                         if ($dataArray === 0) {
+
                             ?>
                             <tr>
                                 <th colspan="1"><?= $key ?></th>
@@ -118,38 +119,37 @@ use yii\widgets\ActiveForm;
                             </tr>
                             <?php
                         } else {
+
                             ?>
                             <tr>
                                 <th colspan="2"><?= $key ?></th>
                             </tr>
                             <?php
                         }
-                        foreach ($dataAspekPenilaian as $key2 => $value) {
-                            $modelKriPen[$i] = $modelKriPen[0];
+                        foreach ($dataAspekPenilaian as $k => $value) {
+                            
                             ?>
                             <tr>
                                 <td><?= $no . '. ' . $value ?></td>
                                 <td>
-                                    <?= $form->field($modelKriPen[$i], "[{$i}]aspek_penilaian_id")->hiddenInput(['value' => $key2])->label(false) ?>
-                                    <?=
-                                    $form->field($modelKriPen[$i], "[{$i}]kriteria_penilaian")->dropDownList([
-                                        1 => 1,
-                                        2 => 2,
-                                        3 => 3,
-                                        4 => 4,
-                                        5 => 5,
-                                        6 => 6,
-                                        7 => 7,
-                                            ], ['prompt' => ''])->label(false)
-                                    ?>
+                                    <select id="formulirkriteriapenilaian-kriteria_penilaian" class="form-control" name="FormulirKriteriaPenilaian[kriteria_penilaian][<?= $k ?>]" aria-required="true" aria-invalid="true">
+                                        <option></option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                    </select>
                                 </td>
                             </tr>
                             <?php
                             $no++;
-                            $i++;
                         }
                         $dataArray++;
                     }
+
                     ?>
                 </tbody>
                 <thead>
@@ -163,48 +163,84 @@ use yii\widgets\ActiveForm;
                     <?php
                     $no = 1;
                     for ($a = 0; $a < 3; $a++) {
-                        $modelKomPos[$a] = $modelKomPos[0];
+
                         ?>
                         <tr>
                             <td>
-                                <label style="font-weight: normal" class="pull-left" for="formulirkompetensiposisi-aspek_penilaian"><?= $no ?>.</label>
-                                <div class="col-sm-11">
-                                    <?= $form->field($modelKomPos[$a], "[{$a}]aspek_penilaian")->textInput()->label(false) ?>
+                                <?php // $form->field($modelKomPos, 'aspek_penilaian')->textInput()->label($no)   ?>
+                                <div class="form-group field-formulirkompetensiposisi-aspek_penilaian">
+                                    <label style="font-weight: normal" class="pull-left" for="formulirkompetensiposisi-aspek_penilaian"><?= $no ?>.</label>
+                                    <div class="col-sm-11">
+                                        <input type="text" id="formulirkompetensiposisi-aspek_penilaian" class="form-control" name="FormulirKompetensiPosisi[aspek_penilaian][<?= $a ?>]">
+                                        <div class="help-block help-block-error "></div>
+                                    </div>
+
                                 </div>
                             </td>
                             <td>
-                                <?=
-                                $form->field($modelKomPos[$a], "[{$a}]kriteria_penilaian")->dropDownList([
-                                    1 => 1,
-                                    2 => 2,
-                                    3 => 3,
-                                    4 => 4,
-                                    5 => 5,
-                                    6 => 6,
-                                    7 => 7,
-                                        ], ['prompt' => ''])->label(false)
-                                ?>
+                                <select id="formulirkompetensiposisi-kriteria_penilaian" class="form-control" name="FormulirKompetensiPosisi[kriteria_penilaian][<?= $a ?>]" aria-required="true" aria-invalid="true">
+                                    <option value=""></option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                </select>
                             </td>
                         </tr>
                         <?php
                         $no++;
                     }
+
                     ?>
                 </tbody>
             </table>
 
             <label class="control-label col-sm-3">Catatan dari interviewer mengenai calon : </label>
             <div class="col-sm-5">
-                <?= $form->field($model, 'catatan')->textarea(['style' => 'height: auto', 'maxlength' => true, 'rows' => 5])->label(false) ?>
+                <div class="">
+                    <textarea id="formulir-catatan" class="form-control" name="Formulir[catatan]"></textarea>
+                    <div class="help-block help-block-error "></div>
+                </div>
             </div>
         </div>
 
         <div class="form-group pull-right">
-            <?= Html::submitButton('<i class="glyphicon glyphicon-floppy-disk glyphicon-sm"> </i> Selesai & Simpan', ['class' => 'btn btn-primary btn-sm'])
-            ?> &nbsp
+            <?= Html::submitButton('<i class="glyphicon glyphicon-floppy-disk glyphicon-sm"> </i> Selesai & Simpan', ['class' => 'btn btn-primary btn-sm', 'data' => [
+                                                // 'confirm' => 'asd',
+                                                'method' => 'post',
+                                            ]]) ?> &nbsp
             <?= Html::a('<i class="glyphicon glyphicon-remove glyphicon-sm"></i> ' . Yii::t('app', 'Cancel'), Yii::$app->request->referrer, ['class' => 'btn btn-danger btn-sm']) ?>
         </div>
 
-        <?php ActiveForm::end(); ?>
+        </form>
     </div>
 </div>
+
+<?php
+$script = <<<JS
+$('body').on('beforeSubmit', 'form#{$model->formName()}', function () {
+     var form = $(this);
+         if (form.find('.has-error').length) {
+              return false;
+         }
+         // submit form
+         $.ajax({
+              url: form.attr('action'),
+              type: 'post',
+              data: form.serialize(),
+              success: function (response) {
+                form.trigger("reset");
+                $.pjax.reload({container:'#grid'});
+                
+              }
+         });
+   
+     return false;
+});
+JS;
+//$this->registerJs($script);
+
+?>

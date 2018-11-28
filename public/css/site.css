@@ -256,3 +256,14 @@ a.desc:after {
 .borderless td, .borderless th {
     border: none;
 }
+
+#form-interview .form-control {
+    height: 27px;
+    padding: 0px 9px;
+    margin-bottom: -15px;
+}
+
+#form-interview p.help-block, #form-interview div.help-block {
+    margin-top: 15px;
+    margin-bottom: -15px;
+}

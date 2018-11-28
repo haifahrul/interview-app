@@ -1,4 +1,5 @@
 <?php
+
 namespace app\models;
 
 use Yii;
@@ -16,8 +17,7 @@ use yii\behaviors\BlameableBehavior;
  * @property AspekPenilaian $aspekPenilaian
  * @property Formulir $formulir
  */
-class FormulirKriteriaPenilaian extends \yii\db\ActiveRecord
-{
+class FormulirKriteriaPenilaian extends \yii\db\ActiveRecord {
 //    public function behaviors() {
 //        return [
 //            [
@@ -38,18 +38,17 @@ class FormulirKriteriaPenilaian extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'formulir_kriteria_penilaian';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
 //            [['formulir_id', 'aspek_penilaian_id'], 'required'],
+            [['kriteria_penilaian'], 'required'],
             [['formulir_id', 'aspek_penilaian_id', 'kriteria_penilaian'], 'integer'],
             [['aspek_penilaian_id'], 'exist', 'skipOnError' => true, 'targetClass' => AspekPenilaian::className(), 'targetAttribute' => ['aspek_penilaian_id' => 'id']],
             [['formulir_id'], 'exist', 'skipOnError' => true, 'targetClass' => Formulir::className(), 'targetAttribute' => ['formulir_id' => 'id']],
@@ -59,8 +58,7 @@ class FormulirKriteriaPenilaian extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'id' => Yii::t('app', 'ID'),
             'formulir_id' => Yii::t('app', 'Formulir ID'),
@@ -72,16 +70,15 @@ class FormulirKriteriaPenilaian extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getAspekPenilaian()
-    {
+    public function getAspekPenilaian() {
         return $this->hasOne(AspekPenilaian::className(), ['id' => 'aspek_penilaian_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getFormulir()
-    {
+    public function getFormulir() {
         return $this->hasOne(Formulir::className(), ['id' => 'formulir_id']);
     }
+
 }

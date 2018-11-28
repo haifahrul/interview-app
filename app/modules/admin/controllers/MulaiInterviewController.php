@@ -55,53 +55,59 @@ class MulaiInterviewController extends Controller {
         // CHeck if calon sudah di interview
         if (empty(JadwalWawancara::findOne(['id' => $id, 'status' => 1]))) {
             $model = new Formulir();
-            $modelKriPen = new FormulirKriteriaPenilaian();
-            $modelKomPos = new FormulirKompetensiPosisi();
+            $modelKriPen = [new FormulirKriteriaPenilaian()];
+            $modelKomPos = [new FormulirKompetensiPosisi()];
             $modelJadwal = $this->findModelJadwal($id);
             $modelAskepPenilaianQuery = Yii::$app->db->createCommand('SELECT ap.id, ap.nama, apt.nama as `group`, ap.is_active FROM aspek_penilaian as ap JOIN aspek_penilaian_tipe as apt ON apt.id=ap.aspek_penilaian_tipe_id WHERE ap.is_active=1 ORDER BY apt.`order`')->queryAll();
             $modelAskepPenilaian = ArrayHelper::map($modelAskepPenilaianQuery, 'id', 'nama', 'group');
-
             $model->calon_id = $modelJadwal->user_calon_id;
             $model->interviewer_id = $modelJadwal->user_interviewer_id;
             $model->tanggal_wawancara = $modelJadwal->tanggal;
-
-            $is_ajax = Yii::$app->request->isAjax;
             $postData = Yii::$app->request->post();
 
-            if ($model->load($postData) && ($modelKriPen->load($postData)) && ($modelKomPos->load($postData))) {
+            if ($model->load($postData)) {
+
+                $modelKriPen = Model::createMultiple(FormulirKriteriaPenilaian::classname());
+                Model::loadMultiple($modelKriPen, Yii::$app->request->post());
+
+                $modelKomPos = Model::createMultiple(FormulirKompetensiPosisi::classname());
+                Model::loadMultiple($modelKomPos, Yii::$app->request->post());
+
+                $isValidModelsKriPen = Model::validateMultiple($modelKriPen);
+                $isValidModelsKomPos = Model::validateMultiple($modelKomPos);
+
                 $transaction = Yii::$app->db->beginTransaction();
                 try {
-                    if ($model->save()) {
+                    if ($model->save() && ($isValidModelsKriPen && $isValidModelsKomPos)) {
                         $skor = [];
-                        foreach ($modelKriPen->attributes['kriteria_penilaian'] as $key => $value) {
+                        foreach ($modelKriPen as $key => $val) {
                             $insertKriPen = new FormulirKriteriaPenilaian();
                             $insertKriPen->formulir_id = $model->id;
-                            $insertKriPen->aspek_penilaian_id = $key;
-                            $insertKriPen->kriteria_penilaian = $value;
+                            $insertKriPen->aspek_penilaian_id = $val->attributes['aspek_penilaian_id'];
+                            $insertKriPen->kriteria_penilaian = $val->attributes['kriteria_penilaian'];
                             $insertKriPen->save();
 
-                            if (!empty($value)) {
-                                $skor[] = $value;
+                            if (!empty($val->attributes['aspek_penilaian_id'])) {
+                                $skor[] = $val->attributes['kriteria_penilaian'];
                             }
                         }
 
-                        $arrayKomPosPenilaian = $modelKomPos->attributes['kriteria_penilaian'];
-                        foreach ($modelKomPos->attributes['aspek_penilaian'] as $key => $value) {
+                        foreach ($modelKomPos as $key => $val) {
                             $insertKomPos = new FormulirKompetensiPosisi();
                             $insertKomPos->formulir_id = $model->id;
-                            $insertKomPos->aspek_penilaian = $value;
-                            $insertKomPos->kriteria_penilaian = $arrayKomPosPenilaian[$key];
+                            $insertKomPos->aspek_penilaian = $val->attributes['aspek_penilaian'];
+                            $insertKomPos->kriteria_penilaian = $val->attributes['kriteria_penilaian'];
+//                            $insertKomPos->kriteria_penilaian = $arrayKomPosPenilaian[$key];
                             $insertKomPos->save();
 
-                            if (!empty($arrayKomPosPenilaian[$key])) {
-                                $skor[] = $arrayKomPosPenilaian[$key];
+                            if (!empty($val->attributes['aspek_penilaian'])) {
+                                $skor[] = $val->attributes['kriteria_penilaian'];
                             }
                         }
 
                         $modelJadwal->status = 1; // Sudah di wawancara
                         $modelJadwal->update();
 
-                        // $this->findModelCalon($model->);
                         // Hitung Nilai
                         $jumlahPertanyaan = count($skor) * 7;
                         $skor = array_sum($skor);
@@ -132,23 +138,15 @@ class MulaiInterviewController extends Controller {
                     Yii::$app->session->setFlash('danger', ' Data gagal disimpan!');
                     throw $e;
                 }
-            } else if ($is_ajax) {
-                return $this->renderAjax('create', [
-                            'model' => $model,
-                            'modelJadwal' => $modelJadwal,
-                            'modelKriPen' => $modelKriPen,
-                            'modelKomPos' => $modelKomPos,
-                            'modelAskepPenilaian' => $modelAskepPenilaian
-                ]);
-            } else {
-                return $this->render('create', [
-                            'model' => $model,
-                            'modelJadwal' => $modelJadwal,
-                            'modelKriPen' => $modelKriPen,
-                            'modelKomPos' => $modelKomPos,
-                            'modelAskepPenilaian' => $modelAskepPenilaian
-                ]);
             }
+
+            return $this->render('create', [
+                        'model' => $model,
+                        'modelJadwal' => $modelJadwal,
+                        'modelKriPen' => $modelKriPen,
+                        'modelKomPos' => $modelKomPos,
+                        'modelAskepPenilaian' => $modelAskepPenilaian
+            ]);
         } else {
             Yii::$app->session->setFlash('danger', ' Data yang Anda cari tidak ditemukan atau Kandidat sudah di Wawancara!');
             return $this->redirect(['/admin/site/index']);

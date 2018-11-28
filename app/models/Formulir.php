@@ -1,4 +1,5 @@
 <?php
+
 namespace app\models;
 
 use Yii;
@@ -24,10 +25,9 @@ use yii\behaviors\BlameableBehavior;
  * @property FormulirKompetensiPosisi[] $formulirKompetensiPosisis
  * @property FormulirKriteriaPenilaian[] $formulirKriteriaPenilaians
  */
-class Formulir extends \yii\db\ActiveRecord
-{
+class Formulir extends \yii\db\ActiveRecord {
 
-    const SCENARIO_KEPUTUSAN_INTERVIEWER = 'keputusanInterviewer'; 
+    const SCENARIO_KEPUTUSAN_INTERVIEWER = 'keputusanInterviewer';
 
     // public function behaviors() {
     //     return [
@@ -49,13 +49,11 @@ class Formulir extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'formulir';
     }
 
-    public function scenarios()
-    {
+    public function scenarios() {
         $scenarios = parent::scenarios();
         $scenarios[self::SCENARIO_KEPUTUSAN_INTERVIEWER] = ['keputusan_interviewer'];
         return $scenarios;
@@ -64,8 +62,7 @@ class Formulir extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
 //            [['calon_id', 'interviewer_id', 'tanggal_wawancara', 'catatan', 'keputusan_id', 'nilai'], 'required'],
             [['calon_id', 'interviewer_id', 'tanggal_wawancara'], 'required'],
@@ -84,8 +81,7 @@ class Formulir extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'id' => Yii::t('app', 'ID'),
             'calon_id' => Yii::t('app', 'Nama Pelamar'),
@@ -102,48 +98,42 @@ class Formulir extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getKeputusan()
-    {
+    public function getKeputusan() {
         return $this->hasOne(KeputusanTipe::className(), ['id' => 'keputusan_id'])->from(['keputusan' => KeputusanTipe::tableName()]);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getKeputusanInterviewer()
-    {
+    public function getKeputusanInterviewer() {
         return $this->hasOne(KeputusanTipe::className(), ['id' => 'keputusan_interviewer'])->from(['keputusan_interviewer' => KeputusanTipe::tableName()]);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCalon()
-    {
+    public function getCalon() {
         return $this->hasOne(UserCalon::className(), ['id' => 'calon_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getInterviewer()
-    {
+    public function getInterviewer() {
         return $this->hasOne(UserInterviewer::className(), ['id' => 'interviewer_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getFormulirKompetensiPosisis()
-    {
+    public function getFormulirKompetensiPosisis() {
         return $this->hasMany(FormulirKompetensiPosisi::className(), ['formulir_id' => 'id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getFormulirKriteriaPenilaians()
-    {
+    public function getFormulirKriteriaPenilaians() {
         return $this->hasMany(FormulirKriteriaPenilaian::className(), ['formulir_id' => 'id']);
     }
 
@@ -152,4 +142,5 @@ class Formulir extends \yii\db\ActiveRecord
 
         var_dump($jumlahPertanyaan);
     }
+
 }
