@@ -29,9 +29,9 @@ phpunit.phar
 tests/_output/*
 tests/_support/_generated
 /app/config/db.php
-
 /app/config/db-local.php
 /app/config/web-local.php
+/app/config/param-local.php
 /yii
 /index.php
 

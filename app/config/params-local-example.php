@@ -2,7 +2,7 @@
 
 return [
     'brand' => 'Interview App',
-    'adminEmail' => 'sippkm@gmail.com',
+    'adminEmail' => 'admin@afsyah.com',
     'noReplyEmail' => 'no-reply@afsyah.com',
     // Storage
     'uploadPath' => Yii::getAlias('@web') . '/uploads/',
