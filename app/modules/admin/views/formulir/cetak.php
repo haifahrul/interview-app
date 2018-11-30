@@ -29,7 +29,6 @@ table > thead > tr > th > p {
 
 ';
 $this->registerCss($script)
-
 ?>
 <div class="box">
     <div class="formulir-form box-body">
@@ -129,7 +128,6 @@ $this->registerCss($script)
                     foreach ($modelKriPen as $key => $dataAspekPenilaian) {
                         $no = 1;
                         if ($dataArray === 0) {
-
                             ?>
                             <tr>
                                 <th colspan="1"><?= $key ?></th>
@@ -137,7 +135,6 @@ $this->registerCss($script)
                             </tr>
                             <?php
                         } else {
-
                             ?>
                             <tr>
                                 <th colspan="2"><?= $key ?></th>
@@ -145,7 +142,6 @@ $this->registerCss($script)
                             <?php
                         }
                         foreach ($dataAspekPenilaian as $k => $value) {
-
                             ?>
                             <tr>
                                 <td><?= $no . '. ' . $k ?></td>
@@ -158,7 +154,6 @@ $this->registerCss($script)
                         }
                         $dataArray++;
                     }
-
                     ?>
                 </tbody>
                 <thead>
@@ -175,7 +170,6 @@ $this->registerCss($script)
                         if (empty($value['aspek_penilaian'])) {
                             continue;
                         }
-
                         ?>
                         <tr>
                             <td>
@@ -200,13 +194,12 @@ $this->registerCss($script)
                         <?php
                         $no++;
                     }
-
                     ?>
                 </tbody>
             </table>
         </div>
         <div class="row">
-            <div class="col-xs-12">
+            <div class="col-xs-6">
                 <p>
                     <b>Catatan dari interviewer mengenai calon :</b> 
                     <?= Html::encode($model->catatan) ?>
@@ -218,6 +211,11 @@ $this->registerCss($script)
                     <b>Keputusan Interviewer &nbsp &nbsp :</b>
                     <?= !empty($model->keputusan_interviewer) ? KeputusanTipe::getListData($model->keputusan_interviewer) : '-' ?>
                 </p>
+            </div>
+            <div class="col-xs-6 pull-right">
+                Tanggal, <?= Yii::$app->formatter->asDate($model->tanggal_wawancara) ?>
+                <br><br><br><br>
+                <h5><b>( <?= $model->interviewer->nama_pewawancara ?> )</b></h5>
             </div>
         </div>
     </div>
@@ -232,5 +230,4 @@ $script = <<<JS
     
 JS;
 $this->registerJs($script);
-
 ?>

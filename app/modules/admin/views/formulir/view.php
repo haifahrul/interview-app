@@ -12,7 +12,6 @@ use app\models\KeputusanTipe;
 $this->title = Yii::t('app', 'Detail Wawancara');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Hasil Wawancara'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = 'Detail Wawancara';
-
 ?>
 <div class="box">
     <div class="box-header">
@@ -114,7 +113,6 @@ $this->params['breadcrumbs'][] = 'Detail Wawancara';
                     foreach ($modelKriPen as $key => $dataAspekPenilaian) {
                         $no = 1;
                         if ($dataArray === 0) {
-
                             ?>
                             <tr>
                                 <th colspan="1"><?= $key ?></th>
@@ -122,7 +120,6 @@ $this->params['breadcrumbs'][] = 'Detail Wawancara';
                             </tr>
                             <?php
                         } else {
-
                             ?>
                             <tr>
                                 <th colspan="2"><?= $key ?></th>
@@ -130,7 +127,6 @@ $this->params['breadcrumbs'][] = 'Detail Wawancara';
                             <?php
                         }
                         foreach ($dataAspekPenilaian as $k => $value) {
-
                             ?>
                             <tr>
                                 <td><?= $no . '. ' . $k ?></td>
@@ -143,7 +139,6 @@ $this->params['breadcrumbs'][] = 'Detail Wawancara';
                         }
                         $dataArray++;
                     }
-
                     ?>
                 </tbody>
                 <thead>
@@ -160,7 +155,6 @@ $this->params['breadcrumbs'][] = 'Detail Wawancara';
                         if (empty($value['aspek_penilaian'])) {
                             continue;
                         }
-
                         ?>
                         <tr>
                             <td>
@@ -185,7 +179,6 @@ $this->params['breadcrumbs'][] = 'Detail Wawancara';
                         <?php
                         $no++;
                     }
-
                     ?>
                 </tbody>
             </table>
@@ -224,10 +217,9 @@ $this->params['breadcrumbs'][] = 'Detail Wawancara';
                 <?php if (Yii::$app->user->can('Interviewer')) { ?>
                     <?php
                     $form = ActiveForm::begin([
-                            'id' => 'keputusan-intervewer-form',
-                            'options' => ['class' => 'form-horizontal'],
-                        ])
-
+                                'id' => 'keputusan-intervewer-form',
+                                'options' => ['class' => 'form-horizontal'],
+                            ])
                     ?>                    
                     <?= $form->field($model, 'keputusan_interviewer')->dropDownList(KeputusanTipe::getListData(), ['prompt' => ''])->label(false) ?>
                     <div class="form-group">
@@ -239,6 +231,11 @@ $this->params['breadcrumbs'][] = 'Detail Wawancara';
                 <?php } else { ?>
                     <?= !empty($model->keputusan_interviewer) ? KeputusanTipe::getListData($model->keputusan_interviewer) : '-' ?>
                 <?php } ?>
+            </div>
+            <div class="col-md-2 pull-right">
+                Tanggal, <?= Yii::$app->formatter->asDate($model->tanggal_wawancara) ?>
+                <br><br><br><br>
+                <h5><b>( <?= $model->interviewer->nama_pewawancara ?> )</b></h5>
             </div>
         </div>
     </div>
