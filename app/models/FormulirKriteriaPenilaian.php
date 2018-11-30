@@ -48,7 +48,7 @@ class FormulirKriteriaPenilaian extends \yii\db\ActiveRecord {
     public function rules() {
         return [
 //            [['formulir_id', 'aspek_penilaian_id'], 'required'],
-            [['kriteria_penilaian'], 'required'],
+//            [['kriteria_penilaian'], 'required'],
             [['formulir_id', 'aspek_penilaian_id', 'kriteria_penilaian'], 'integer'],
             [['aspek_penilaian_id'], 'exist', 'skipOnError' => true, 'targetClass' => AspekPenilaian::className(), 'targetAttribute' => ['aspek_penilaian_id' => 'id']],
             [['formulir_id'], 'exist', 'skipOnError' => true, 'targetClass' => Formulir::className(), 'targetAttribute' => ['formulir_id' => 'id']],
