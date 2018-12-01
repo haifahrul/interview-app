@@ -97,7 +97,6 @@ class MulaiInterviewController extends Controller {
                             $insertKomPos->formulir_id = $model->id;
                             $insertKomPos->aspek_penilaian = $val->attributes['aspek_penilaian'];
                             $insertKomPos->kriteria_penilaian = $val->attributes['kriteria_penilaian'];
-//                            $insertKomPos->kriteria_penilaian = $arrayKomPosPenilaian[$key];
                             $insertKomPos->save();
 
                             if (!empty($val->attributes['aspek_penilaian'])) {
@@ -108,24 +107,55 @@ class MulaiInterviewController extends Controller {
                         $modelJadwal->status = 1; // Sudah di wawancara
                         $modelJadwal->update();
 
-                        // Hitung Nilai
-                        $jumlahPertanyaan = count($skor) * 7;
-                        $skor = array_sum($skor);
-                        $x_rataRataIdeal = number_format((int) $jumlahPertanyaan / 2, 2);
-                        $s_tandarDeviasi = number_format($x_rataRataIdeal / 3, 2);
-                        $z_nilai = 1.00;
+                        $nilai = array_sum($skor);
 
-                        $min = number_format($x_rataRataIdeal - ($z_nilai * $s_tandarDeviasi), 2);
-                        $max = number_format($x_rataRataIdeal + ($z_nilai * $s_tandarDeviasi), 2);
-
-                        $model->nilai = $skor;
-                        if ($skor < $min) {
-                            $model->keputusan_id = 3; // Ditolak
-                        } elseif ($skor >= $min && $skor <= $max) {
-                            $model->keputusan_id = 2; // Dipertimbangkan
-                        } elseif ($skor > $max) {
-                            $model->keputusan_id = 1; // Disaranakan
+                        $countNilai = 0;
+                        foreach ($skor as $val) {
+                            if (!empty($val)) {
+                                $countNilai += 1;
+                            }
                         }
+
+                        $result = $nilai / $countNilai;
+                        $getKeputusanTipe = Yii::$app->db->createCommand('SELECT * FROM keputusan_tipe WHERE is_active=1 ORDER BY range_nilai_1 ASC')->queryAll();
+
+                        foreach ($getKeputusanTipe as $key => $val) {
+                            if ($key == 0) {
+                                if ($result < $val['range_nilai_2']) {
+                                    $keputusan = $val['id'];
+                                    break;
+                                }
+                            } else {
+                                if ($result >= $val['range_nilai_1'] && $result <= $val['range_nilai_2']) {
+                                    $keputusan = $val['id'];
+                                    break;
+                                }
+                            }
+                        }
+                        $model->nilai = $result;
+                        $model->keputusan_id = (int) $keputusan;
+
+                        // Hitung Nilai
+                        /*
+                         * perhitungan sebelum revisi (awal)
+                          $jumlahPertanyaan = count($skor) * 7;
+                          $skor = array_sum($skor);
+                          $x_rataRataIdeal = number_format((int) $jumlahPertanyaan / 2, 2);
+                          $s_tandarDeviasi = number_format($x_rataRataIdeal / 3, 2);
+                          $z_nilai = 1.00;
+
+                          $min = number_format($x_rataRataIdeal - ($z_nilai * $s_tandarDeviasi), 2);
+                          $max = number_format($x_rataRataIdeal + ($z_nilai * $s_tandarDeviasi), 2);
+
+                          $model->nilai = $skor;
+                          if ($skor < $min) {
+                          $model->keputusan_id = 3; // Ditolak
+                          } elseif ($skor >= $min && $skor <= $max) {
+                          $model->keputusan_id = 2; // Dipertimbangkan
+                          } elseif ($skor > $max) {
+                          $model->keputusan_id = 1; // Disaranakan
+                          } */
+
                         $model->update();
                         // End Hitung Nilai
 
