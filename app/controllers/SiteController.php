@@ -20,6 +20,7 @@ use \app\models\User;
 use \app\models\UserCalon;
 use \app\models\UploadCv;
 use \yii\web\UploadedFile;
+use \yii\helpers\ArrayHelper;
 
 //class SiteController extends \app\modules\log\controllers\MainController 
 class SiteController extends Controller {
@@ -239,15 +240,33 @@ class SiteController extends Controller {
         $modelUploadCv = new UploadCv();
         $model->status = 2;
         $postdata = Yii::$app->request->post();
+        $queryJabatans = Yii::$app->db->createCommand('SELECT * FROM jabatan WHERE is_active=1 && is_apply=1')->queryAll();
+        $jabatans = ArrayHelper::map($queryJabatans, 'id', 'nama');
 
         if ($model->load($postdata) && $model->validate()) {
             $transaction = Yii::$app->db->beginTransaction();
             try {
-
                 $modelUploadCv->fileCv = UploadedFile::getInstance($modelUploadCv, 'fileCv');
-                if ($modelUploadCv->upload()) {
+
+                /* Check usia */
+                $dateNow = date('Y-m-d');
+                $tanggalLahr = $model->tanggal_lahir;
+                $usia = Yii::$app->globalFunction->dateDifference($dateNow, $tanggalLahr, '%y');
+                if (($usia <= 25) || ($usia >= 45)) {
+                    Yii::$app->session->setFlash('danger', ' Cek tanggal lahir Anda!. Batas usia minimal 25 dan maksimal 45');
+                    return $this->render('apply-lamaran', [
+                                'model' => $model,
+                                'modelUploadCv' => $modelUploadCv,
+                                'jabatans' => $jabatans
+                    ]);
+                }
+
+                $jabatanApply = Yii::$app->db->createCommand('SELECT nama FROM jabatan WHERE id = :id')->bindValue(':id', $model->jabatan_yang_dilamar)->queryScalar();
+
+                if ($modelUploadCv->upload($jabatanApply, $model->nama_calon)) {
                     // if file is uploaded successfully
                     $model->cv = $modelUploadCv->filename;
+                    $model->usia = $usia;
 
                     // Send Email
                     $params = [
@@ -284,6 +303,7 @@ class SiteController extends Controller {
         return $this->render('apply-lamaran', [
                     'model' => $model,
                     'modelUploadCv' => $modelUploadCv,
+                    'jabatans' => $jabatans
         ]);
     }
 

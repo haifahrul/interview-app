@@ -25,10 +25,10 @@ use yii\captcha\Captcha;
         ])->textInput(['autofocus' => true])
         ?>
         <?=
-        $form->field($model, 'usia', [
+        $form->field($model, 'tanggal_lahir', [
             'options' => ['class' => 'form-group has-feedback'],
             'inputTemplate' => "{input}<span class='glyphicon glyphicon-user form-control-feedback'></span>"
-        ])->textInput(['type' => 'number'])
+        ])->textInput(['type' => 'date'])
         ?>
         <?=
         $form->field($model, 'pendidikan', [
@@ -40,7 +40,7 @@ use yii\captcha\Captcha;
         $form->field($model, 'jabatan_yang_dilamar', [
             'options' => ['class' => 'form-group has-feedback'],
             'inputTemplate' => "{input}<span class='glyphicon glyphicon-user form-control-feedback'></span>"
-        ])->textarea(['rows' => 6])->label('Bagian yang dilamar')
+        ])->dropDownList($jabatans, ['prompt' => 'Pilih jabatan yang dilamar'])->label('Bagian yang dilamar')
         ?>
         <?=
         $form->field($model, 'phone', [
@@ -54,10 +54,10 @@ use yii\captcha\Captcha;
             'inputTemplate' => "{input}<span class='glyphicon glyphicon-envelope form-control-feedback'></span>"
         ])->textInput(['type' => 'email'])
         ?>
-        
+
         <?= $form->field($modelUploadCv, 'fileCv')->fileInput(['maxlength' => true]) ?>
         <p>
-            Note: File pdf terdiri dari foto, surat lamaran, cv, dan fotocopy ijazah.
+            Note: File zip terdiri dari foto, surat lamaran, cv, dan fotocopy ijazah.
         </p>
 
         <div class="form-group">
