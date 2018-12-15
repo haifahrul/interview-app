@@ -83,6 +83,7 @@ class JadwalWawancaraController extends Controller {
                     'is_pelamar' => true,
                     'kandidat' => $kandidat['nama_calon'],
                     'tanggal' => $model->tanggal,
+                    'waktu' => $model->waktu,
                     'lokasi' => '',
                 ];
 
@@ -97,6 +98,7 @@ class JadwalWawancaraController extends Controller {
                     'is_pelamar' => false,
                     'interviewer' => $interviewer['nama_pewawancara'],
                     'tanggal' => $model->tanggal,
+                    'waktu' => $model->waktu,
                     'lokasi' => '',
                     'kandidat' => $kandidat['nama_calon'],
                     'phone' => $kandidat['phone'],
