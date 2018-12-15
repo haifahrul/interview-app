@@ -27,6 +27,7 @@ use app\models\UserInterviewer;
         ]); ?>
 
             <?= $form->field($model, 'tanggal')->textInput(['type' => 'date']) ?>
+            <?= $form->field($model, 'waktu')->textInput(['type' => 'time']) ?>
             <?= $form->field($model, 'user_calon_id')->dropDownList(UserCalon::getCalonList(), ['prompt' => '']) ?>
             <?= $form->field($model, 'user_interviewer_id')->dropDownList(UserInterviewer::getInterviewerList(), ['prompt' => '']) ?>
 

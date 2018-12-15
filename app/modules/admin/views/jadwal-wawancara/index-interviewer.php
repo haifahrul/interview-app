@@ -13,12 +13,11 @@ use app\messages\Text;
 $this->title = Yii::t('app', 'Jadwal Wawancara');
 //$this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = 'List' . $this->title;
-
 ?>
 <div class="box">
     <div class="box-body">
         <div class="jadwal-wawancara-index">
-            <?php // echo $this->render('_search', ['model' => $searchModel]);  ?>
+            <?php // echo $this->render('_search', ['model' => $searchModel]);   ?>
             <p>
             <h3>Jadwal Wawancara</h3>
             <div class="pull-right">
@@ -26,7 +25,6 @@ $this->params['title'] = 'List' . $this->title;
                 \app\widgets\PageSize::widget([
                     'id' => 'select_page'
                 ]);
-
                 ?>
             </div>
             </p>
@@ -67,6 +65,7 @@ $this->params['title'] = 'List' . $this->title;
                         ],
                         // 'id',
                         'tanggal:date',
+                        'waktu:time',
                         [
                             'attribute' => 'user_calon_id',
                             'value' => function($data) {
@@ -92,10 +91,10 @@ $this->params['title'] = 'List' . $this->title;
                                     $url = ['/admin/jadwal-wawancara/view', 'id' => $model['id']];
 
                                     return Html::a($icon, $url, [
-                                            'title' => Yii::t('app', 'View'),
-                                            'url' => $url,
-                                            'id' => 'btn-view',
-                                            'data-pjax' => 0,
+                                                'title' => Yii::t('app', 'View'),
+                                                'url' => $url,
+                                                'id' => 'btn-view',
+                                                'data-pjax' => 0,
 //                            'data-toggle' => 'modal',
 //                            'data-target' => '#modal-view',
                                     ]);
@@ -105,10 +104,10 @@ $this->params['title'] = 'List' . $this->title;
                                     $url = ['/admin/mulai-interview/create', 'id' => $model['id']];
 
                                     return Html::a($icon, $url, [
-                                            'title' => Yii::t('app', 'Mulai Interview'),
-                                            'url' => $url,
-                                            'id' => 'btn-view',
-                                            'data-pjax' => 0,
+                                                'title' => Yii::t('app', 'Mulai Interview'),
+                                                'url' => $url,
+                                                'id' => 'btn-view',
+                                                'data-pjax' => 0,
 //                            'data-toggle' => 'modal',
 //                            'data-target' => '#modal-view',
                                     ]);
@@ -117,7 +116,6 @@ $this->params['title'] = 'List' . $this->title;
                         ],
                     ],
                 ]);
-
                 ?>
                 <?php Pjax::end() ?>
             </div>

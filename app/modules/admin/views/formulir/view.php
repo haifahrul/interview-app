@@ -86,10 +86,10 @@ $this->params['breadcrumbs'][] = 'Detail Wawancara';
                     </div>
                 </div>
                 <div class="row">
-                    <label class="control-label col-xs-12 col-md-4">Tanggal Wawancara</label>
+                    <label class="control-label col-xs-12 col-md-4">Tanggal/Waktu Wawancara</label>
                     <div class="col-xs-12 col-md-6">
                         <div class="form-control">
-                            <?php echo Yii::$app->formatter->asDate($model->tanggal_wawancara) ?>
+                            <?php echo Yii::$app->formatter->asDate($model->tanggal_wawancara) . ' / ' . Yii::$app->formatter->asTime($model->waktu) ?>
                         </div>
                         <div class="help-block help-block-error"></div>
                     </div>

@@ -81,10 +81,10 @@ use yii\widgets\ActiveForm;
                     </div>
                 </div>
                 <div class="row">
-                    <label class="control-label col-sm-4">Tanggal Wawancara</label>
+                    <label class="control-label col-sm-4">Tanggal/Waktu Wawancara</label>
                     <div class="col-sm-6">
                         <div class="form-control">
-                            <?php echo Yii::$app->formatter->asDate($modelJadwal->tanggal) ?>
+                            <?php echo Yii::$app->formatter->asDate($modelJadwal->tanggal) . ' / ' . Yii::$app->formatter->asTime($modelJadwal->waktu) ?>
                         </div>
                         <div class="help-block help-block-error"></div>
                     </div>

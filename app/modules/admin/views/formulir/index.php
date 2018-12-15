@@ -72,6 +72,7 @@ $this->params['title'] = 'List' . $this->title;
                         ],
                         // 'id',
                         'tanggal_wawancara:date',
+                        'waktu:time',
                         [
                             'attribute' => 'calon_id',
                             'value' => function ($data) {

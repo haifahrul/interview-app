@@ -58,6 +58,7 @@ $this->params['title'] = $this->title;
             'attributes' => [
                 // 'id',
                 'tanggal:date',
+                'waktu:time',
                 'userInterviewer.nama_pewawancara',
                 [
                     'attribute' => 'status',
