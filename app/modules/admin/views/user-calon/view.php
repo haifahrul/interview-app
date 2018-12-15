@@ -9,7 +9,7 @@ use app\widgets\admin\components\Helper;
 /* @var $model app\models\UserCalon */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Data Calon'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Data Pelamar'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
 ?>
@@ -17,7 +17,7 @@ $this->params['title'] = $this->title;
 <div class="box">
     <div class="user-calon-view box-body">
 
-        <h1><?php Html::encode($this->title) ?></h1>
+        <h3><?= Html::encode('Detail Data Pelamar') ?></h3>
         <p>
             <?php
             if (Helper::checkRoute('update')) {

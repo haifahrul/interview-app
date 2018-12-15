@@ -14,7 +14,7 @@ use app\models\UserCalon;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\search\UserCalonSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-$this->title = Yii::t('app', 'Data Calon');
+$this->title = Yii::t('app', 'Data Pelamar');
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = 'List' . $this->title;
 ?>
@@ -23,6 +23,7 @@ $this->params['title'] = 'List' . $this->title;
         <div class="user-calon-index">
             <?php // echo $this->render('_search', ['model' => $searchModel]);  ?>
             <p>
+            <h3> <?= Html::encode($this->title) ?> </h3>
             <div class="pull-right">
                 <?=
                 \app\widgets\PageSize::widget([
