@@ -12,7 +12,7 @@ $this->params['title'] = $this->title;
 ?>
 <div class="aspek-penilaian-create">
 
-    <h1><?php Html::encode($this->title) ?></h1>
+    <h3><?= Html::encode($this->title) ?></h3>
 
     <?= $this->render('_form', [
         'model' => $model,
