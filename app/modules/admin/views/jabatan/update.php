@@ -5,19 +5,21 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Jabatan */
 
-$this->title = Yii::t('app', 'Update {modelClass}: ', [
-    'modelClass' => 'Jabatan',
-]) . ' ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Jabatans'), 'url' => ['index']];
+$this->title = Yii::t('app', 'Update {modelClass} ', [
+            'modelClass' => 'Jabatan',
+        ]);
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Jabatan'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 ?>
 <div class="jabatan-update">
 
-    <h1><?php //Html::encode($this->title) ?></h1>
+    <h3><?= Html::encode($this->title) ?></h3>
 
-    <?= $this->render('_form', [
+    <?=
+    $this->render('_form', [
         'model' => $model,
-    ]) ?>
+    ])
+    ?>
 
 </div>
