@@ -29,6 +29,7 @@ use yii\helpers\Url;
 class UserCalon extends \yii\db\ActiveRecord {
 
     public $verifyCode;
+    public $tanggal_lahir;
 
     // public function behaviors() {
     //     return [
@@ -61,7 +62,7 @@ class UserCalon extends \yii\db\ActiveRecord {
         return [
             [['user_id', 'keputusan_id'], 'integer'],
             ['usia', 'number'],
-            [['nama_calon', 'usia', 'pendidikan', 'jabatan_yang_dilamar', 'phone', 'email'], 'required'],
+            [['nama_calon', 'pendidikan', 'jabatan_yang_dilamar', 'phone', 'email', 'tanggal_lahir'], 'required'],
             [['pendidikan', 'jabatan_yang_dilamar'], 'string'],
             [['nama_calon', 'phone'], 'string', 'max' => 50],
             [['cv', 'cv_extension'], 'string'],
