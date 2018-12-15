@@ -1,5 +1,5 @@
 -- --------------------------------------------------------
--- Host:                         127.0.0.1
+-- Host:                         localhost
 -- Server version:               5.7.24-0ubuntu0.18.04.1 - (Ubuntu)
 -- Server OS:                    Linux
 -- HeidiSQL Version:             9.5.0.5196
@@ -97,7 +97,7 @@ CREATE TABLE IF NOT EXISTS `auth_assignment` (
   CONSTRAINT `auth_assignment_ibfk_1` FOREIGN KEY (`item_name`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table yarsi_ibnu.auth_assignment: ~4 rows (approximately)
+-- Dumping data for table yarsi_ibnu.auth_assignment: ~3 rows (approximately)
 /*!40000 ALTER TABLE `auth_assignment` DISABLE KEYS */;
 REPLACE INTO `auth_assignment` (`item_name`, `user_id`, `created_at`) VALUES
 	('Administrator', '2', NULL);
@@ -124,7 +124,7 @@ CREATE TABLE IF NOT EXISTS `auth_item` (
   CONSTRAINT `auth_item_ibfk_1` FOREIGN KEY (`rule_name`) REFERENCES `auth_rule` (`name`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table yarsi_ibnu.auth_item: ~263 rows (approximately)
+-- Dumping data for table yarsi_ibnu.auth_item: ~285 rows (approximately)
 /*!40000 ALTER TABLE `auth_item` DISABLE KEYS */;
 REPLACE INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
 	('/*', 2, NULL, NULL, NULL, 1543052767, 1543052767);
@@ -664,7 +664,7 @@ CREATE TABLE IF NOT EXISTS `auth_item_child` (
   CONSTRAINT `auth_item_child_ibfk_2` FOREIGN KEY (`child`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table yarsi_ibnu.auth_item_child: ~38 rows (approximately)
+-- Dumping data for table yarsi_ibnu.auth_item_child: ~39 rows (approximately)
 /*!40000 ALTER TABLE `auth_item_child` DISABLE KEYS */;
 REPLACE INTO `auth_item_child` (`parent`, `child`) VALUES
 	('Super User', '/*');
@@ -676,6 +676,8 @@ REPLACE INTO `auth_item_child` (`parent`, `child`) VALUES
 	('Basic Access', '/admin/default/index');
 REPLACE INTO `auth_item_child` (`parent`, `child`) VALUES
 	('Data Master', '/admin/fakultas-unit/*');
+REPLACE INTO `auth_item_child` (`parent`, `child`) VALUES
+	('Administrator', '/admin/formulir/cetak');
 REPLACE INTO `auth_item_child` (`parent`, `child`) VALUES
 	('Interviewer', '/admin/formulir/cetak');
 REPLACE INTO `auth_item_child` (`parent`, `child`) VALUES
@@ -704,6 +706,8 @@ REPLACE INTO `auth_item_child` (`parent`, `child`) VALUES
 	('Interviewer', '/admin/jadwal-wawancara/view');
 REPLACE INTO `auth_item_child` (`parent`, `child`) VALUES
 	('Interviewer - Jadwal Wawancara', '/admin/jadwal-wawancara/view');
+REPLACE INTO `auth_item_child` (`parent`, `child`) VALUES
+	('Data Master', '/admin/keputusan-tipe/*');
 REPLACE INTO `auth_item_child` (`parent`, `child`) VALUES
 	('Interviewer', '/admin/mulai-interview/*');
 REPLACE INTO `auth_item_child` (`parent`, `child`) VALUES
@@ -779,6 +783,7 @@ CREATE TABLE IF NOT EXISTS `formulir` (
   `calon_id` int(11) NOT NULL,
   `interviewer_id` int(11) NOT NULL,
   `tanggal_wawancara` date NOT NULL,
+  `waktu` time NOT NULL,
   `catatan` longtext,
   `keputusan_id` int(11) DEFAULT NULL,
   `keputusan_interviewer` int(11) DEFAULT NULL,
@@ -793,16 +798,16 @@ CREATE TABLE IF NOT EXISTS `formulir` (
   CONSTRAINT `FK_formulir_keputusan_tipe_2` FOREIGN KEY (`keputusan_interviewer`) REFERENCES `keputusan_tipe` (`id`),
   CONSTRAINT `FK_formulir_user_calon` FOREIGN KEY (`calon_id`) REFERENCES `user_calon` (`id`),
   CONSTRAINT `FK_formulir_user_interviewer` FOREIGN KEY (`interviewer_id`) REFERENCES `user_interviewer` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=235 DEFAULT CHARSET=utf8;
 
--- Dumping data for table yarsi_ibnu.formulir: ~3 rows (approximately)
+-- Dumping data for table yarsi_ibnu.formulir: ~2 rows (approximately)
 /*!40000 ALTER TABLE `formulir` DISABLE KEYS */;
-REPLACE INTO `formulir` (`id`, `calon_id`, `interviewer_id`, `tanggal_wawancara`, `catatan`, `keputusan_id`, `keputusan_interviewer`, `nilai`, `timestamp`) VALUES
-	(52, 1, 5, '2018-07-12', '', 2, 2, 0, '2018-11-24 17:29:41');
-REPLACE INTO `formulir` (`id`, `calon_id`, `interviewer_id`, `tanggal_wawancara`, `catatan`, `keputusan_id`, `keputusan_interviewer`, `nilai`, `timestamp`) VALUES
-	(53, 14, 5, '2018-01-02', 'asd', 3, NULL, 2, '2018-11-24 20:36:12');
-REPLACE INTO `formulir` (`id`, `calon_id`, `interviewer_id`, `tanggal_wawancara`, `catatan`, `keputusan_id`, `keputusan_interviewer`, `nilai`, `timestamp`) VALUES
-	(54, 5, 5, '2018-01-01', 'mantab', 2, 1, 4, '2018-11-24 20:37:56');
+REPLACE INTO `formulir` (`id`, `calon_id`, `interviewer_id`, `tanggal_wawancara`, `waktu`, `catatan`, `keputusan_id`, `keputusan_interviewer`, `nilai`, `timestamp`) VALUES
+	(232, 14, 5, '2018-01-02', '02:00:00', '', 1, NULL, 26, '2018-12-02 02:23:12');
+REPLACE INTO `formulir` (`id`, `calon_id`, `interviewer_id`, `tanggal_wawancara`, `waktu`, `catatan`, `keputusan_id`, `keputusan_interviewer`, `nilai`, `timestamp`) VALUES
+	(233, 5, 5, '2018-01-01', '01:00:00', '', 2, NULL, 4, '2018-12-02 02:23:59');
+REPLACE INTO `formulir` (`id`, `calon_id`, `interviewer_id`, `tanggal_wawancara`, `waktu`, `catatan`, `keputusan_id`, `keputusan_interviewer`, `nilai`, `timestamp`) VALUES
+	(234, 1, 5, '2018-01-01', '13:00:00', '', 3, NULL, 1, '2018-12-16 01:55:28');
 /*!40000 ALTER TABLE `formulir` ENABLE KEYS */;
 
 -- Dumping structure for table yarsi_ibnu.formulir_kompetensi_posisi
@@ -814,28 +819,28 @@ CREATE TABLE IF NOT EXISTS `formulir_kompetensi_posisi` (
   PRIMARY KEY (`id`),
   KEY `formulir_id` (`formulir_id`),
   CONSTRAINT `FK_formulir_kompetensi_posisi_formulir` FOREIGN KEY (`formulir_id`) REFERENCES `formulir` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=146 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=533 DEFAULT CHARSET=utf8;
 
--- Dumping data for table yarsi_ibnu.formulir_kompetensi_posisi: ~9 rows (approximately)
+-- Dumping data for table yarsi_ibnu.formulir_kompetensi_posisi: ~6 rows (approximately)
 /*!40000 ALTER TABLE `formulir_kompetensi_posisi` DISABLE KEYS */;
 REPLACE INTO `formulir_kompetensi_posisi` (`id`, `formulir_id`, `aspek_penilaian`, `kriteria_penilaian`) VALUES
-	(137, 52, '', NULL);
+	(524, 232, '', NULL);
 REPLACE INTO `formulir_kompetensi_posisi` (`id`, `formulir_id`, `aspek_penilaian`, `kriteria_penilaian`) VALUES
-	(138, 52, '', NULL);
+	(525, 232, '', NULL);
 REPLACE INTO `formulir_kompetensi_posisi` (`id`, `formulir_id`, `aspek_penilaian`, `kriteria_penilaian`) VALUES
-	(139, 52, '', NULL);
+	(526, 232, '', NULL);
 REPLACE INTO `formulir_kompetensi_posisi` (`id`, `formulir_id`, `aspek_penilaian`, `kriteria_penilaian`) VALUES
-	(140, 53, 'a', 2);
+	(527, 233, '', NULL);
 REPLACE INTO `formulir_kompetensi_posisi` (`id`, `formulir_id`, `aspek_penilaian`, `kriteria_penilaian`) VALUES
-	(141, 53, '', NULL);
+	(528, 233, '', NULL);
 REPLACE INTO `formulir_kompetensi_posisi` (`id`, `formulir_id`, `aspek_penilaian`, `kriteria_penilaian`) VALUES
-	(142, 53, '', NULL);
+	(529, 233, '', NULL);
 REPLACE INTO `formulir_kompetensi_posisi` (`id`, `formulir_id`, `aspek_penilaian`, `kriteria_penilaian`) VALUES
-	(143, 54, '', NULL);
+	(530, 234, '', NULL);
 REPLACE INTO `formulir_kompetensi_posisi` (`id`, `formulir_id`, `aspek_penilaian`, `kriteria_penilaian`) VALUES
-	(144, 54, 'asdasd', 4);
+	(531, 234, '', NULL);
 REPLACE INTO `formulir_kompetensi_posisi` (`id`, `formulir_id`, `aspek_penilaian`, `kriteria_penilaian`) VALUES
-	(145, 54, '', NULL);
+	(532, 234, '', NULL);
 /*!40000 ALTER TABLE `formulir_kompetensi_posisi` ENABLE KEYS */;
 
 -- Dumping structure for table yarsi_ibnu.formulir_kriteria_penilaian
@@ -849,136 +854,136 @@ CREATE TABLE IF NOT EXISTS `formulir_kriteria_penilaian` (
   KEY `aspek_penilaian_id` (`aspek_penilaian_id`),
   CONSTRAINT `FK_formulir_kriteria_penilaian_aspek_penilaian` FOREIGN KEY (`aspek_penilaian_id`) REFERENCES `aspek_penilaian` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_formulir_kriteria_penilaian_formulir` FOREIGN KEY (`formulir_id`) REFERENCES `formulir` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=1135 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3865 DEFAULT CHARSET=utf8;
 
--- Dumping data for table yarsi_ibnu.formulir_kriteria_penilaian: ~63 rows (approximately)
+-- Dumping data for table yarsi_ibnu.formulir_kriteria_penilaian: ~42 rows (approximately)
 /*!40000 ALTER TABLE `formulir_kriteria_penilaian` DISABLE KEYS */;
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1072, 52, 13, NULL);
+	(3802, 232, 13, 7);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1073, 52, 14, NULL);
+	(3803, 232, 14, 4);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1074, 52, 15, NULL);
+	(3804, 232, 15, 5);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1075, 52, 16, NULL);
+	(3805, 232, 16, 3);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1076, 52, 17, NULL);
+	(3806, 232, 17, 7);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1077, 52, 18, NULL);
+	(3807, 232, 18, NULL);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1078, 52, 19, NULL);
+	(3808, 232, 19, NULL);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1079, 52, 20, NULL);
+	(3809, 232, 20, NULL);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1080, 52, 21, NULL);
+	(3810, 232, 21, NULL);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1081, 52, 1, NULL);
+	(3811, 232, 1, NULL);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1082, 52, 2, NULL);
+	(3812, 232, 2, NULL);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1083, 52, 3, NULL);
+	(3813, 232, 3, NULL);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1084, 52, 4, NULL);
+	(3814, 232, 4, NULL);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1085, 52, 5, NULL);
+	(3815, 232, 5, NULL);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1086, 52, 6, NULL);
+	(3816, 232, 6, NULL);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1087, 52, 7, NULL);
+	(3817, 232, 7, NULL);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1088, 52, 8, NULL);
+	(3818, 232, 8, NULL);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1089, 52, 9, NULL);
+	(3819, 232, 9, NULL);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1090, 52, 10, NULL);
+	(3820, 232, 10, NULL);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1091, 52, 11, NULL);
+	(3821, 232, 11, NULL);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1092, 52, 12, NULL);
+	(3822, 232, 12, NULL);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1093, 53, 13, NULL);
+	(3823, 233, 13, 7);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1094, 53, 14, NULL);
+	(3824, 233, 14, 2);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1095, 53, 15, NULL);
+	(3825, 233, 15, 3);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1096, 53, 16, NULL);
+	(3826, 233, 16, 4);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1097, 53, 17, NULL);
+	(3827, 233, 17, NULL);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1098, 53, 18, NULL);
+	(3828, 233, 18, NULL);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1099, 53, 19, NULL);
+	(3829, 233, 19, NULL);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1100, 53, 20, NULL);
+	(3830, 233, 20, NULL);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1101, 53, 21, NULL);
+	(3831, 233, 21, NULL);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1102, 53, 1, NULL);
+	(3832, 233, 1, NULL);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1103, 53, 2, NULL);
+	(3833, 233, 2, NULL);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1104, 53, 3, NULL);
+	(3834, 233, 3, NULL);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1105, 53, 4, NULL);
+	(3835, 233, 4, NULL);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1106, 53, 5, NULL);
+	(3836, 233, 5, NULL);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1107, 53, 6, NULL);
+	(3837, 233, 6, NULL);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1108, 53, 7, NULL);
+	(3838, 233, 7, NULL);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1109, 53, 8, NULL);
+	(3839, 233, 8, NULL);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1110, 53, 9, NULL);
+	(3840, 233, 9, NULL);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1111, 53, 10, NULL);
+	(3841, 233, 10, NULL);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1112, 53, 11, NULL);
+	(3842, 233, 11, NULL);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1113, 53, 12, NULL);
+	(3843, 233, 12, NULL);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1114, 54, 13, NULL);
+	(3844, 234, 13, 1);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1115, 54, 14, NULL);
+	(3845, 234, 14, 1);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1116, 54, 15, NULL);
+	(3846, 234, 15, 1);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1117, 54, 16, NULL);
+	(3847, 234, 16, 1);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1118, 54, 17, NULL);
+	(3848, 234, 17, 1);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1119, 54, 18, NULL);
+	(3849, 234, 18, NULL);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1120, 54, 19, NULL);
+	(3850, 234, 19, NULL);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1121, 54, 20, NULL);
+	(3851, 234, 20, NULL);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1122, 54, 21, NULL);
+	(3852, 234, 21, NULL);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1123, 54, 1, NULL);
+	(3853, 234, 1, NULL);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1124, 54, 2, NULL);
+	(3854, 234, 2, NULL);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1125, 54, 3, NULL);
+	(3855, 234, 3, NULL);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1126, 54, 4, NULL);
+	(3856, 234, 4, NULL);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1127, 54, 5, NULL);
+	(3857, 234, 5, NULL);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1128, 54, 6, NULL);
+	(3858, 234, 6, NULL);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1129, 54, 7, NULL);
+	(3859, 234, 7, NULL);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1130, 54, 8, NULL);
+	(3860, 234, 8, NULL);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1131, 54, 9, NULL);
+	(3861, 234, 9, NULL);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1132, 54, 10, NULL);
+	(3862, 234, 10, NULL);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1133, 54, 11, NULL);
+	(3863, 234, 11, NULL);
 REPLACE INTO `formulir_kriteria_penilaian` (`id`, `formulir_id`, `aspek_penilaian_id`, `kriteria_penilaian`) VALUES
-	(1134, 54, 12, NULL);
+	(3864, 234, 12, NULL);
 /*!40000 ALTER TABLE `formulir_kriteria_penilaian` ENABLE KEYS */;
 
 -- Dumping structure for table yarsi_ibnu.jabatan
@@ -986,21 +991,25 @@ CREATE TABLE IF NOT EXISTS `jabatan` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nama` varchar(50) NOT NULL,
   `is_active` tinyint(4) NOT NULL DEFAULT '1' COMMENT '1. Active, 2. Non Active',
+  `is_apply` tinyint(4) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
--- Dumping data for table yarsi_ibnu.jabatan: ~2 rows (approximately)
+-- Dumping data for table yarsi_ibnu.jabatan: ~3 rows (approximately)
 /*!40000 ALTER TABLE `jabatan` DISABLE KEYS */;
-REPLACE INTO `jabatan` (`id`, `nama`, `is_active`) VALUES
-	(1, 'HRD', 1);
-REPLACE INTO `jabatan` (`id`, `nama`, `is_active`) VALUES
-	(2, 'Staf HRD', 1);
+REPLACE INTO `jabatan` (`id`, `nama`, `is_active`, `is_apply`) VALUES
+	(1, 'HRD', 1, 2);
+REPLACE INTO `jabatan` (`id`, `nama`, `is_active`, `is_apply`) VALUES
+	(2, 'Staf HRD', 1, 2);
+REPLACE INTO `jabatan` (`id`, `nama`, `is_active`, `is_apply`) VALUES
+	(3, 'Dosen', 1, 1);
 /*!40000 ALTER TABLE `jabatan` ENABLE KEYS */;
 
 -- Dumping structure for table yarsi_ibnu.jadwal_wawancara
 CREATE TABLE IF NOT EXISTS `jadwal_wawancara` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `tanggal` date NOT NULL,
+  `waktu` time NOT NULL,
   `user_calon_id` int(11) NOT NULL,
   `user_interviewer_id` int(11) NOT NULL,
   `status` tinyint(4) NOT NULL DEFAULT '2' COMMENT '1. Sudah di Interview, 2. Belum di Interview',
@@ -1010,14 +1019,18 @@ CREATE TABLE IF NOT EXISTS `jadwal_wawancara` (
   KEY `user_interviewer_id` (`user_interviewer_id`),
   CONSTRAINT `FK_jadwal_wawancara_user_calon` FOREIGN KEY (`user_calon_id`) REFERENCES `user_calon` (`id`),
   CONSTRAINT `FK_jadwal_wawancara_user_interviewer` FOREIGN KEY (`user_interviewer_id`) REFERENCES `user_interviewer` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
--- Dumping data for table yarsi_ibnu.jadwal_wawancara: ~2 rows (approximately)
+-- Dumping data for table yarsi_ibnu.jadwal_wawancara: ~3 rows (approximately)
 /*!40000 ALTER TABLE `jadwal_wawancara` DISABLE KEYS */;
-REPLACE INTO `jadwal_wawancara` (`id`, `tanggal`, `user_calon_id`, `user_interviewer_id`, `status`, `timestamp`) VALUES
-	(12, '2018-01-01', 5, 5, 1, '2018-11-24 20:37:56');
-REPLACE INTO `jadwal_wawancara` (`id`, `tanggal`, `user_calon_id`, `user_interviewer_id`, `status`, `timestamp`) VALUES
-	(13, '2018-01-02', 14, 5, 1, '2018-11-24 20:36:12');
+REPLACE INTO `jadwal_wawancara` (`id`, `tanggal`, `waktu`, `user_calon_id`, `user_interviewer_id`, `status`, `timestamp`) VALUES
+	(12, '2018-01-01', '07:59:00', 5, 5, 1, '2018-12-16 01:44:01');
+REPLACE INTO `jadwal_wawancara` (`id`, `tanggal`, `waktu`, `user_calon_id`, `user_interviewer_id`, `status`, `timestamp`) VALUES
+	(13, '2018-01-02', '09:00:00', 14, 5, 1, '2018-12-16 01:44:03');
+REPLACE INTO `jadwal_wawancara` (`id`, `tanggal`, `waktu`, `user_calon_id`, `user_interviewer_id`, `status`, `timestamp`) VALUES
+	(14, '2018-01-01', '13:00:00', 1, 5, 1, '2018-12-16 01:55:28');
+REPLACE INTO `jadwal_wawancara` (`id`, `tanggal`, `waktu`, `user_calon_id`, `user_interviewer_id`, `status`, `timestamp`) VALUES
+	(15, '2018-01-01', '03:30:00', 21, 5, 2, '2018-12-16 02:00:00');
 /*!40000 ALTER TABLE `jadwal_wawancara` ENABLE KEYS */;
 
 -- Dumping structure for table yarsi_ibnu.keputusan_tipe
@@ -1033,11 +1046,11 @@ CREATE TABLE IF NOT EXISTS `keputusan_tipe` (
 -- Dumping data for table yarsi_ibnu.keputusan_tipe: ~3 rows (approximately)
 /*!40000 ALTER TABLE `keputusan_tipe` DISABLE KEYS */;
 REPLACE INTO `keputusan_tipe` (`id`, `nama`, `range_nilai_1`, `range_nilai_2`, `is_active`) VALUES
-	(1, 'Disarankan', 108.33, 161, 1);
+	(1, 'Disarankan', 5, 7, 1);
 REPLACE INTO `keputusan_tipe` (`id`, `nama`, `range_nilai_1`, `range_nilai_2`, `is_active`) VALUES
-	(2, 'Dipertimbangkan', 53.68, 107.33, 1);
+	(2, 'Dipertimbangkan', 4, 5, 1);
 REPLACE INTO `keputusan_tipe` (`id`, `nama`, `range_nilai_1`, `range_nilai_2`, `is_active`) VALUES
-	(3, 'Ditolak', 0, 52.68, 1);
+	(3, 'Ditolak', 0, 4, 1);
 /*!40000 ALTER TABLE `keputusan_tipe` ENABLE KEYS */;
 
 -- Dumping structure for table yarsi_ibnu.login_attempt
@@ -1128,7 +1141,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `created_by` int(11) DEFAULT NULL,
   `updated_by` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table yarsi_ibnu.user: ~3 rows (approximately)
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
@@ -1138,6 +1151,8 @@ REPLACE INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `password_re
 	(2, 'admin', NULL, '$2y$13$me/6YM31QFhxlM6DY8UYDuWnYE/EUNXpghP/xVg8ql6JiZX5LteK.', NULL, NULL, NULL, 10, NULL, NULL, NULL, NULL);
 REPLACE INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `password_reset_token`, `password_default`, `email`, `status`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES
 	(15, 'razak@gmail.com', NULL, '$2y$13$V8In0fZUiguxIXi60JS1YOSwb0yi8EU5AYboNFWVRjAxNMFzwAjuy', NULL, 'zrxyhifa', 'razak@gmail.com', 10, 1530636027, 1543084870, NULL, NULL);
+REPLACE INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `password_reset_token`, `password_default`, `email`, `status`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES
+	(16, 'interviewer', NULL, '$2y$13$me/6YM31QFhxlM6DY8UYDuWnYE/EUNXpghP/xVg8ql6JiZX5LteK.', NULL, NULL, 'haifahrul@gmail.com', 10, NULL, NULL, NULL, NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 
 -- Dumping structure for table yarsi_ibnu.user_calon
@@ -1145,6 +1160,7 @@ CREATE TABLE IF NOT EXISTS `user_calon` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) DEFAULT NULL,
   `nama_calon` varchar(50) NOT NULL,
+  `tanggal_lahir` date DEFAULT NULL,
   `usia` tinyint(4) NOT NULL,
   `pendidikan` longtext NOT NULL,
   `jabatan_yang_dilamar` text NOT NULL,
@@ -1159,26 +1175,30 @@ CREATE TABLE IF NOT EXISTS `user_calon` (
   KEY `user_id` (`user_id`),
   CONSTRAINT `FK_user_calon_keputusan_tipe` FOREIGN KEY (`keputusan_id`) REFERENCES `keputusan_tipe` (`id`),
   CONSTRAINT `FK_user_calon_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 
--- Dumping data for table yarsi_ibnu.user_calon: ~8 rows (approximately)
+-- Dumping data for table yarsi_ibnu.user_calon: ~10 rows (approximately)
 /*!40000 ALTER TABLE `user_calon` DISABLE KEYS */;
-REPLACE INTO `user_calon` (`id`, `user_id`, `nama_calon`, `usia`, `pendidikan`, `jabatan_yang_dilamar`, `phone`, `email`, `keputusan_id`, `cv`, `cv_extension`, `status`) VALUES
-	(1, NULL, 'Ibnu', 24, 'S1 Teknik Informatika', 'Backend Programmers\r\n', '085712345678', 'ibnu@gmail.com', NULL, 'd0d0defb889e6011987d431fe903d931c8965a85.pdf', 'pdf', 2);
-REPLACE INTO `user_calon` (`id`, `user_id`, `nama_calon`, `usia`, `pendidikan`, `jabatan_yang_dilamar`, `phone`, `email`, `keputusan_id`, `cv`, `cv_extension`, `status`) VALUES
-	(5, NULL, 'Kandidat 1', 22, '1. 2asdas\r\n12.asd', 'as', '0857', 'haifahrul@gmail.com', NULL, '63f6dd17e596a32fb491891803ba1c646d207f9c.pdf', NULL, 2);
-REPLACE INTO `user_calon` (`id`, `user_id`, `nama_calon`, `usia`, `pendidikan`, `jabatan_yang_dilamar`, `phone`, `email`, `keputusan_id`, `cv`, `cv_extension`, `status`) VALUES
-	(14, NULL, 'Kandidat 2', 22, '1. 2asdas\r\n12.asd', 'as', '0857', 'haifahrul@gmail.com', NULL, '22dbcfd6a538079a8ed0ab33e913fa18ad4fbf53.pdf', NULL, 2);
-REPLACE INTO `user_calon` (`id`, `user_id`, `nama_calon`, `usia`, `pendidikan`, `jabatan_yang_dilamar`, `phone`, `email`, `keputusan_id`, `cv`, `cv_extension`, `status`) VALUES
-	(15, NULL, 'asddasdasd', 2, 'asdasda', 'aasda', '085710568571', 'razakibnu95@gmail.com', NULL, 'c54f4b87c647fbee68faf14b543f8cf0667fb52d.pdf', NULL, 2);
-REPLACE INTO `user_calon` (`id`, `user_id`, `nama_calon`, `usia`, `pendidikan`, `jabatan_yang_dilamar`, `phone`, `email`, `keputusan_id`, `cv`, `cv_extension`, `status`) VALUES
-	(16, NULL, 'asd', 2, 'adasd', 'asd', '123', 'haifahrul@gmail.com', NULL, 'e180c592cd052aacc1e7f9d25a6bc5c979236a50.pdf', NULL, 2);
-REPLACE INTO `user_calon` (`id`, `user_id`, `nama_calon`, `usia`, `pendidikan`, `jabatan_yang_dilamar`, `phone`, `email`, `keputusan_id`, `cv`, `cv_extension`, `status`) VALUES
-	(17, NULL, 'asd', 2, 'adasd', 'asd', '123', 'haifahrul@gmail.com', NULL, '316f967062d83222e20a56ea2eb90428f2cf0ff0.pdf', NULL, 2);
-REPLACE INTO `user_calon` (`id`, `user_id`, `nama_calon`, `usia`, `pendidikan`, `jabatan_yang_dilamar`, `phone`, `email`, `keputusan_id`, `cv`, `cv_extension`, `status`) VALUES
-	(18, NULL, 'asd', 2, 'adasd', 'asd', '123', 'haifahrul@gmail.com', NULL, 'adc4082ca7d7d75f028c6a34e4b425baa864b6b2.pdf', NULL, 2);
-REPLACE INTO `user_calon` (`id`, `user_id`, `nama_calon`, `usia`, `pendidikan`, `jabatan_yang_dilamar`, `phone`, `email`, `keputusan_id`, `cv`, `cv_extension`, `status`) VALUES
-	(19, NULL, 'asd', 2, 'adasd', 'asd', '123', 'haifahrul@gmail.com', NULL, '14b45f9bed45bc9b34db5eb98ea2c1536068fae1.pdf', NULL, 2);
+REPLACE INTO `user_calon` (`id`, `user_id`, `nama_calon`, `tanggal_lahir`, `usia`, `pendidikan`, `jabatan_yang_dilamar`, `phone`, `email`, `keputusan_id`, `cv`, `cv_extension`, `status`) VALUES
+	(1, NULL, 'Ibnu', NULL, 24, 'S1 Teknik Informatika', 'Backend Programmers\r\n', '085712345678', 'ibnu@gmail.com', NULL, 'd0d0defb889e6011987d431fe903d931c8965a85.pdf', 'pdf', 2);
+REPLACE INTO `user_calon` (`id`, `user_id`, `nama_calon`, `tanggal_lahir`, `usia`, `pendidikan`, `jabatan_yang_dilamar`, `phone`, `email`, `keputusan_id`, `cv`, `cv_extension`, `status`) VALUES
+	(5, NULL, 'Kandidat 1', NULL, 22, '1. 2asdas\r\n12.asd', 'as', '0857', 'haifahrul@gmail.com', NULL, '63f6dd17e596a32fb491891803ba1c646d207f9c.pdf', NULL, 2);
+REPLACE INTO `user_calon` (`id`, `user_id`, `nama_calon`, `tanggal_lahir`, `usia`, `pendidikan`, `jabatan_yang_dilamar`, `phone`, `email`, `keputusan_id`, `cv`, `cv_extension`, `status`) VALUES
+	(14, NULL, 'Kandidat 2', NULL, 22, '1. 2asdas\r\n12.asd', 'as', '0857', 'haifahrul@gmail.com', NULL, '22dbcfd6a538079a8ed0ab33e913fa18ad4fbf53.pdf', NULL, 2);
+REPLACE INTO `user_calon` (`id`, `user_id`, `nama_calon`, `tanggal_lahir`, `usia`, `pendidikan`, `jabatan_yang_dilamar`, `phone`, `email`, `keputusan_id`, `cv`, `cv_extension`, `status`) VALUES
+	(15, NULL, 'asddasdasd', NULL, 2, 'asdasda', 'aasda', '085710568571', 'razakibnu95@gmail.com', NULL, 'c54f4b87c647fbee68faf14b543f8cf0667fb52d.pdf', NULL, 2);
+REPLACE INTO `user_calon` (`id`, `user_id`, `nama_calon`, `tanggal_lahir`, `usia`, `pendidikan`, `jabatan_yang_dilamar`, `phone`, `email`, `keputusan_id`, `cv`, `cv_extension`, `status`) VALUES
+	(16, NULL, 'asd', NULL, 2, 'adasd', 'asd', '123', 'haifahrul@gmail.com', NULL, 'e180c592cd052aacc1e7f9d25a6bc5c979236a50.pdf', NULL, 2);
+REPLACE INTO `user_calon` (`id`, `user_id`, `nama_calon`, `tanggal_lahir`, `usia`, `pendidikan`, `jabatan_yang_dilamar`, `phone`, `email`, `keputusan_id`, `cv`, `cv_extension`, `status`) VALUES
+	(17, NULL, 'asd', NULL, 2, 'adasd', 'asd', '123', 'haifahrul@gmail.com', NULL, '316f967062d83222e20a56ea2eb90428f2cf0ff0.pdf', NULL, 2);
+REPLACE INTO `user_calon` (`id`, `user_id`, `nama_calon`, `tanggal_lahir`, `usia`, `pendidikan`, `jabatan_yang_dilamar`, `phone`, `email`, `keputusan_id`, `cv`, `cv_extension`, `status`) VALUES
+	(18, NULL, 'asd', NULL, 2, 'adasd', 'asd', '123', 'haifahrul@gmail.com', NULL, 'adc4082ca7d7d75f028c6a34e4b425baa864b6b2.pdf', NULL, 2);
+REPLACE INTO `user_calon` (`id`, `user_id`, `nama_calon`, `tanggal_lahir`, `usia`, `pendidikan`, `jabatan_yang_dilamar`, `phone`, `email`, `keputusan_id`, `cv`, `cv_extension`, `status`) VALUES
+	(19, NULL, 'asd', NULL, 2, 'adasd', 'asd', '123', 'haifahrul@gmail.com', NULL, '14b45f9bed45bc9b34db5eb98ea2c1536068fae1.pdf', NULL, 2);
+REPLACE INTO `user_calon` (`id`, `user_id`, `nama_calon`, `tanggal_lahir`, `usia`, `pendidikan`, `jabatan_yang_dilamar`, `phone`, `email`, `keputusan_id`, `cv`, `cv_extension`, `status`) VALUES
+	(20, NULL, 'asdasd', NULL, 26, 'asd', '3', '085710568571', 'haifahrul@gmail.com', NULL, '2018-12-16 01-06-00_Dosen_asdasd.zip', NULL, 2);
+REPLACE INTO `user_calon` (`id`, `user_id`, `nama_calon`, `tanggal_lahir`, `usia`, `pendidikan`, `jabatan_yang_dilamar`, `phone`, `email`, `keputusan_id`, `cv`, `cv_extension`, `status`) VALUES
+	(21, NULL, 'Fahrul', NULL, 26, 'sada', '3', '085710568571', 'haifahrul@gmail.com', NULL, '2018-12-16 01-09-07_Dosen_ asda.zip', NULL, 2);
 /*!40000 ALTER TABLE `user_calon` ENABLE KEYS */;
 
 -- Dumping structure for table yarsi_ibnu.user_interviewer
@@ -1198,7 +1218,7 @@ CREATE TABLE IF NOT EXISTS `user_interviewer` (
   CONSTRAINT `FK_user_interviewer_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
--- Dumping data for table yarsi_ibnu.user_interviewer: ~1 rows (approximately)
+-- Dumping data for table yarsi_ibnu.user_interviewer: ~2 rows (approximately)
 /*!40000 ALTER TABLE `user_interviewer` DISABLE KEYS */;
 REPLACE INTO `user_interviewer` (`id`, `user_id`, `nama_pewawancara`, `jabatan_id`, `fakultas_unit_id`, `is_active`) VALUES
 	(5, 15, ' Pewawancara', 1, 1, 1);
@@ -1219,7 +1239,7 @@ CREATE TABLE IF NOT EXISTS `user_profile` (
   CONSTRAINT `FK_user_profile_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table yarsi_ibnu.user_profile: ~1 rows (approximately)
+-- Dumping data for table yarsi_ibnu.user_profile: ~0 rows (approximately)
 /*!40000 ALTER TABLE `user_profile` DISABLE KEYS */;
 REPLACE INTO `user_profile` (`user_id`, `firstname`, `lastname`, `no_telp`, `avatar`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES
 	(1, 'AFS', '', '', '8a954ac7fa30824c1b75850d546afe256b4f6078.png', NULL, 1526294044, NULL, 1);
