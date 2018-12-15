@@ -63,6 +63,7 @@ class MulaiInterviewController extends Controller {
             $model->calon_id = $modelJadwal->user_calon_id;
             $model->interviewer_id = $modelJadwal->user_interviewer_id;
             $model->tanggal_wawancara = $modelJadwal->tanggal;
+            $model->waktu = $modelJadwal->waktu;
             $postData = Yii::$app->request->post();
 
             if ($model->load($postData)) {
