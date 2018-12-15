@@ -11,6 +11,7 @@ use yii\behaviors\BlameableBehavior;
  *
  * @property integer $id
  * @property string $tanggal
+ * @property string $waktu
  * @property integer $user_calon_id
  * @property integer $user_interviewer_id
  * @property integer $status
@@ -56,7 +57,7 @@ class JadwalWawancara extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['tanggal', 'user_calon_id', 'user_interviewer_id'], 'required'],
+            [['tanggal', 'waktu', 'user_calon_id', 'user_interviewer_id'], 'required'],
             [['tanggal', 'timestamp'], 'safe'],
             [['user_calon_id', 'user_interviewer_id', 'status'], 'integer'],
             [['user_calon_id'], 'exist', 'skipOnError' => true, 'targetClass' => UserCalon::className(), 'targetAttribute' => ['user_calon_id' => 'id']],
@@ -72,6 +73,7 @@ class JadwalWawancara extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'tanggal' => Yii::t('app', 'Tanggal'),
+            'waktu' => Yii::t('app', 'Waktu'),
             'user_calon_id' => Yii::t('app', 'Nama Pelamar'),
             'user_interviewer_id' => Yii::t('app', 'Nama Interviewer'),
             'status' => Yii::t('app', 'Status'),

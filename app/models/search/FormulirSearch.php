@@ -18,7 +18,7 @@ class FormulirSearch extends Formulir
     {
         return [
             [['id', 'calon_id'], 'integer'],
-            [['tanggal_wawancara', 'catatan', 'timestamp', 'interviewer_id', 'keputusan_id', 'keputusan_interviewer'], 'safe'],
+            [['tanggal_wawancara', 'waktu', 'catatan', 'timestamp', 'interviewer_id', 'keputusan_id', 'keputusan_interviewer'], 'safe'],
             [['nilai'], 'number'],
             ['page', 'safe']
         ];
@@ -56,6 +56,7 @@ class FormulirSearch extends Formulir
         $query->andFilterWhere(['like', 'user_calon.nama_calon', $this->calon_id])
             ->andFilterWhere(['like', 'user_interviewer.nama_pewawancara', $this->interviewer_id])
             ->andFilterWhere(['like', 'tanggal_wawancara', $this->tanggal_wawancara])
+            ->andFilterWhere(['like', 'formulir.waktu', $this->waktu])
             ->andFilterWhere(['like', 'catatan', $this->catatan]);
 
         return $dataProvider;
@@ -87,6 +88,7 @@ class FormulirSearch extends Formulir
         $query->andFilterWhere(['like', 'user_calon.nama_calon', $this->calon_id])
             ->andFilterWhere(['like', 'user_interviewer.nama_pewawancara', $this->interviewer_id])
             ->andFilterWhere(['like', 'tanggal_wawancara', $this->tanggal_wawancara])
+            ->andFilterWhere(['like', 'formulir.waktu', $this->waktu])
             ->andFilterWhere(['like', 'catatan', $this->catatan]);
 
         return $dataProvider;

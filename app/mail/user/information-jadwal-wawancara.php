@@ -13,6 +13,10 @@
                 <th>Tanggal : </th>
                 <td><?= \Yii::$app->formatter->asDate($params['tanggal']) ?></td>
             </tr>
+            <tr>
+                <th>Waktu : </th>
+                <td><?= \Yii::$app->formatter->asTime($params['waktu']) ?></td>
+            </tr>
     <!--            <tr>
                 <th>Lokasi</th>
                 <td><?= $params['lokasi'] ?></td>
@@ -32,6 +36,10 @@
             <tr>
                 <th>Tanggal : </th>
                 <td><?= \Yii::$app->formatter->asDate($params['tanggal']) ?></td>
+            </tr>
+            <tr>
+                <th>Waktu : </th>
+                <td><?= \Yii::$app->formatter->asTime($params['waktu']) ?></td>
             </tr>
     <!--            <tr>
                 <th>Lokasi</th>

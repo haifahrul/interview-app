@@ -13,6 +13,7 @@ use yii\behaviors\BlameableBehavior;
  * @property integer $calon_id
  * @property integer $interviewer_id
  * @property string $tanggal_wawancara
+ * @property string $waktu
  * @property string $catatan
  * @property integer $keputusan_id
  * @property integer $keputusan_interviewer
@@ -65,7 +66,7 @@ class Formulir extends \yii\db\ActiveRecord {
     public function rules() {
         return [
 //            [['calon_id', 'interviewer_id', 'tanggal_wawancara', 'catatan', 'keputusan_id', 'nilai'], 'required'],
-            [['calon_id', 'interviewer_id', 'tanggal_wawancara'], 'required'],
+            [['calon_id', 'interviewer_id', 'tanggal_wawancara', 'waktu'], 'required'],
             ['keputusan_interviewer', 'integer'],
             [['calon_id', 'interviewer_id', 'keputusan_id'], 'safe'],
             [['tanggal_wawancara', 'timestamp'], 'safe'],
@@ -86,7 +87,8 @@ class Formulir extends \yii\db\ActiveRecord {
             'id' => Yii::t('app', 'ID'),
             'calon_id' => Yii::t('app', 'Nama Pelamar'),
             'interviewer_id' => Yii::t('app', 'Nama Interviewer'),
-            'tanggal_wawancara' => Yii::t('app', 'Tanggal Wawancara'),
+            'tanggal_wawancara' => Yii::t('app', 'Tanggal'),
+            'waktu' => Yii::t('app', 'Waktu'),
             'catatan' => Yii::t('app', 'Catatan'),
             'keputusan_id' => Yii::t('app', 'Keputusan by Sistem'),
             'keputusan_interviewer' => Yii::t('app', 'Keputusan Interviewer'),
