@@ -18,42 +18,40 @@ class LoginForm extends Model {
     public $rememberMe = true;
     private $_user = false;
 
-  //   public function behaviors() {
-		// $behaviors = parent::behaviors();
-
-		// $behaviors[] = [
-		//     'class' => '\app\components\loginAttempt\LoginAttemptBehavior',
-		//     // Amount of attempts in the given time period
-		//     'attempts' => 3,
-		//     // the duration, in seconds, for a regular failure to be stored for
-		//     // resets on new failure in 5 minutes
-		//     'duration' => 900,
-		//     // the duration, in seconds, to disable login after exceeding `attemps` 15 minutes
-		//     'disableDuration' => 900,
-		//     // the attribute used as the key in the database
-		//     // and add errors to
-		//     'usernameAttribute' => 'username',
-		//     // the attribute to check for errors
-		//     'passwordAttribute' => 'password',
-		//     // the validation message to return to `usernameAttribute`
-		//     'message' => 'Anda salah memasukkan username atau password selama 3x. Akun anda sementara di blok. Silahkan hubungi Administrator atau tunggu waktu reset ulang selama 15 menit.',
-		// ];
-
-		// return $behaviors;
-  //   }
+    //   public function behaviors() {
+    // $behaviors = parent::behaviors();
+    // $behaviors[] = [
+    //     'class' => '\app\components\loginAttempt\LoginAttemptBehavior',
+    //     // Amount of attempts in the given time period
+    //     'attempts' => 3,
+    //     // the duration, in seconds, for a regular failure to be stored for
+    //     // resets on new failure in 5 minutes
+    //     'duration' => 900,
+    //     // the duration, in seconds, to disable login after exceeding `attemps` 15 minutes
+    //     'disableDuration' => 900,
+    //     // the attribute used as the key in the database
+    //     // and add errors to
+    //     'usernameAttribute' => 'username',
+    //     // the attribute to check for errors
+    //     'passwordAttribute' => 'password',
+    //     // the validation message to return to `usernameAttribute`
+    //     'message' => 'Anda salah memasukkan username atau password selama 3x. Akun anda sementara di blok. Silahkan hubungi Administrator atau tunggu waktu reset ulang selama 15 menit.',
+    // ];
+    // return $behaviors;
+    //   }
 
     /**
      * @return array the validation rules.
      */
     public function rules() {
-		return [
-	// username and password are both required
-		    [['username', 'password'], 'required'],
-		    // rememberMe must be a boolean value
-		    ['rememberMe', 'boolean'],
-		    // password is validated by validatePassword()
-		    ['password', 'validatePassword'],
-		];
+        return [
+            // username and password are both required
+            [['username', 'password'], 'required'],
+            // rememberMe must be a boolean value
+            ['rememberMe', 'boolean'],
+            // password is validated by validatePassword()
+            ['password', 'validatePassword'],
+        ];
     }
 
     /**
@@ -64,13 +62,13 @@ class LoginForm extends Model {
      * @param array $params the additional name-value pairs given in the rule
      */
     public function validatePassword($attribute, $params) {
-	if (!$this->hasErrors()) {
-	    $user = $this->getUser();
+        if (!$this->hasErrors()) {
+            $user = $this->getUser();
 
-	    if (!$user || !$user->validatePassword($this->password)) {
-		$this->addError($attribute, 'Incorrect username or password.');
-	    }
-	}
+            if (!$user || !$user->validatePassword($this->password)) {
+                $this->addError($attribute, 'Incorrect username or password.');
+            }
+        }
     }
 
     /**
@@ -78,10 +76,10 @@ class LoginForm extends Model {
      * @return bool whether the user is logged in successfully
      */
     public function login() {
-	if ($this->validate()) {
-	    return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
-	}
-	return false;
+        if ($this->validate()) {
+            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
+        }
+        return false;
     }
 
     /**
@@ -91,10 +89,10 @@ class LoginForm extends Model {
      */
     public function getUser() {
         if ($this->_user === false) {
-           $this->_user = User::findByUsername($this->username);
+            $this->_user = !empty(User::findByUsername($this->username)) ? User::findByUsername($this->username) : User::findByEmail($this->username);
         }
 
-	return $this->_user;
+        return $this->_user;
     }
 
 }

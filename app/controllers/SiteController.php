@@ -215,7 +215,7 @@ class SiteController extends Controller {
                         ->setSubject('Informasi Pembuatan Akun Anda - ' . Yii::$app->name);
                 // End Send Email
 
-                if ($updatePassword->execute()) {
+                if ($updatePassword->execute() && $mailer->send()) {
                     $transaction->commit();
                     Yii::$app->session->setFlash('success', 'Silahkan cek email Anda');
                     Yii::$app->session['is-reset-password'] = true;
