@@ -34,6 +34,7 @@ class UserInterviewerSearch extends UserInterviewer
     {
         $query = UserInterviewer::find()->asArray();
         $query->joinWith(['jabatan', 'fakultasUnit', 'user']);
+        $query->orderBy('user_interviewer.id DESC');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

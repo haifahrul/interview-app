@@ -34,6 +34,7 @@ class UserCalonSearch extends UserCalon
     {
         $query = UserCalon::find()->asArray();
         $query->joinWith('keputusan');
+        $query->orderBy('id DESC');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
