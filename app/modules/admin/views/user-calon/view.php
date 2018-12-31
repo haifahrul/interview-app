@@ -46,7 +46,10 @@ $this->params['title'] = $this->title;
                 'nama_calon',
                 'usia',
                 'pendidikan:ntext',
-                'jabatan_yang_dilamar:ntext',
+                [
+                    'attribute' => 'jabatan_yang_dilamar',
+                    'value' => $model['jabatan']['nama']
+                ],
                 'phone',
                 'email:email',
                 [

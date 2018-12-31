@@ -33,7 +33,7 @@ class UserCalonSearch extends UserCalon
     public function search($params)
     {
         $query = UserCalon::find()->asArray();
-        $query->joinWith('keputusan');
+        $query->joinWith(['keputusan', 'jabatan']);
         $query->orderBy('id DESC');
 
         $dataProvider = new ActiveDataProvider([
@@ -55,7 +55,7 @@ class UserCalonSearch extends UserCalon
 
         $query->andFilterWhere(['like', 'nama_calon', $this->nama_calon])
             ->andFilterWhere(['like', 'pendidikan', $this->pendidikan])
-            ->andFilterWhere(['like', 'jabatan_yang_dilamar', $this->jabatan_yang_dilamar])
+            ->andFilterWhere(['like', 'jabatan.nama', $this->jabatan_yang_dilamar])
             ->andFilterWhere(['like', 'phone', $this->phone])
             ->andFilterWhere(['like', 'email', $this->email]);
 

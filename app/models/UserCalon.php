@@ -103,6 +103,13 @@ class UserCalon extends \yii\db\ActiveRecord {
     public function getUser() {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
+    
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getJabatan() {
+        return $this->hasOne(Jabatan::className(), ['id' => 'jabatan_yang_dilamar']);
+    }
 
     public static function getStatus($param = null) {
         $array = [

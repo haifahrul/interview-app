@@ -82,7 +82,12 @@ $this->params['title'] = 'List' . $this->title;
                         'nama_calon',
                         'usia',
                         // 'pendidikan:ntext',
-                        'jabatan_yang_dilamar:ntext',
+                        [
+                            'attribute' => 'jabatan_yang_dilamar',
+                            'value' => function ($d) {
+                                return $d['jabatan']['nama'];
+                            }
+                        ],
                         'phone',
                         'email:email',
                         [
