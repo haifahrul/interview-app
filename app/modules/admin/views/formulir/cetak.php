@@ -207,10 +207,12 @@ $this->registerCss($script)
                 <p>
                     <b>Keputusan dari sistem &nbsp &nbsp &nbsp : </b> <?= !empty($model->keputusan) ? $model->keputusan->nama : '-' ?>
                 </p>
+                <?php /*
                 <p>
                     <b>Keputusan Interviewer &nbsp &nbsp :</b>
                     <?= !empty($model->keputusan_interviewer) ? KeputusanTipe::getListData($model->keputusan_interviewer) : '-' ?>
                 </p>
+                 */ ?>
             </div>
             <div class="col-xs-6 pull-right">
                 Tanggal, <?= Yii::$app->formatter->asDate($model->tanggal_wawancara) ?>

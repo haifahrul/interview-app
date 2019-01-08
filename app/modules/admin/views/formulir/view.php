@@ -207,7 +207,7 @@ $this->params['breadcrumbs'][] = 'Detail Wawancara';
             </div>
         </div>
         <br>
-        <div class="row">
+        <?php /* <div class="row">
             <div class="col-xs-12 col-md-2">
                 <p>
                     <b>Keputusan Interviewer</b>
@@ -238,6 +238,8 @@ $this->params['breadcrumbs'][] = 'Detail Wawancara';
                 <h5><b>( <?= $model->interviewer->nama_pewawancara ?> )</b></h5>
             </div>
         </div>
+         */
+        ?>
     </div>
     <div class="panel-footer">
         <?= Html::a('<i class="glyphicon glyphicon-arrow-left glyphicon-xs"></i> ' . Yii::t('app', 'Kembali'), ['index'], ['class' => 'btn btn-default btn-md']) ?> &nbsp
